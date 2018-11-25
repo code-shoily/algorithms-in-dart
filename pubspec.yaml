@@ -1,0 +1,14 @@
+name: algorithms_in_dart
+description: A sample command-line application.
+# version: 1.0.0
+# homepage: https://www.example.com
+# author: Mafinar K <email@example.com>
+
+environment:
+  sdk: '>=2.1.0 <3.0.0'
+
+#dependencies:
+#  path: ^1.4.1
+
+dev_dependencies:
+  test: ^1.0.0
