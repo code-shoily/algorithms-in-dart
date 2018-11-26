@@ -18,3 +18,6 @@ List data structures are implemented under the package `lists`.
 
 `lib/lists/stack.dart`
 
+### Queue
+
+`lib/lists/queue.dart`
