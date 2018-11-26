@@ -4,5 +4,13 @@ Implementation of several algorithms with Dart programming language.
 
 I will be implementing algorithms (In random order, perhaps) with Dart as I am learning this simple language. This readme will be updated with each implementation.
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+Use `dartdoc` to generate documentation.
+
+## Lists
+
+List data structures are implemented under the package `lists`.
+
+### SinglyLinkedList
+
+`lib/lists/singly_linked_list.dart`
+
