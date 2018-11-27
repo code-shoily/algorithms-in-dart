@@ -14,6 +14,10 @@ List data structures are implemented under the package `lists`.
 
 `lib/lists/singly_linked_list.dart`
 
+### DoublyLinkedList
+
+`lib/lists/doubly_linked_list.dart`
+
 ### Stack
 
 `lib/lists/stack.dart`
