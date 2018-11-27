@@ -25,6 +25,12 @@ class CircularDoublyLinkedList<T> {
     return list;
   }
 
+  CircularDoublyLinkedList.fromList(List<T> list) : size = 0 {
+    for (var item in list) {
+      this.append(item);
+    }
+  }
+
   /// Checks if [this] is empty
   bool get isEmpty => this.size == 0;
 
