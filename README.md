@@ -18,6 +18,10 @@ List data structures are implemented under the package `lists`.
 
 `lib/lists/doubly_linked_list.dart`
 
+### CircularLinkedList
+
+`lib/lists/circular_singly_linked_list.dart` and `lib/lists/circular_doubly_linked_list.dart`
+
 ### Stack
 
 `lib/lists/stack.dart`

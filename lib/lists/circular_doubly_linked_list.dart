@@ -15,13 +15,16 @@ class CircularDoublyLinkedList<T> {
 
   /// Converts [this] into a [List]
   List<T> get toList {
-    var list = [];
-    var currentNode = head;
+    if (isEmpty) return [];
 
-    while (currentNode.next != head) {
-      list.add(currentNode);
+    var list = <T>[head.data];
+    var currentNode = head.next;
+
+    while (currentNode != head) {
+      list.add(currentNode.data);
       currentNode = currentNode.next;
     }
+
     return list;
   }
 
@@ -33,6 +36,19 @@ class CircularDoublyLinkedList<T> {
 
   /// Checks if [this] is empty
   bool get isEmpty => this.size == 0;
+
+  /// Returns the element [n].
+  ///
+  /// Since this is a circular linked list, if [n] is greater than the size,
+  /// it will still iterate, circling back to the beginning every time.
+  Node<T> at(int n) {
+    if (n < 0) throw "Index cannot be negative";
+
+    var currentNode = head;
+    for (var i = 0; i < n; i++, currentNode = currentNode.next);
+
+    return currentNode;
+  }
 
   /// Adds data to the end of the list
   void append(T data) {
