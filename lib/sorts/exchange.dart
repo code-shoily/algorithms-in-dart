@@ -39,3 +39,20 @@ List<T> oddEvenSort<T extends Comparable>(List<T> list,
 
   return list;
 }
+
+/// Gnome Sort
+List<T> gnomeSort<T extends Comparable>(List<T> list,
+    [Comparator<T> compareFn = ascendingFn]) {
+  var idx = 1;
+
+  while (idx < list.length) {
+    if (compareFn(list[idx - 1], list[idx])) {
+      idx++;
+    } else {
+      swap(list, idx - 1, idx);
+
+      if (--idx == 0) idx = 1;
+    }
+  }
+  return list;
+}

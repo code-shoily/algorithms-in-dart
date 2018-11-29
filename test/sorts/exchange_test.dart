@@ -42,4 +42,16 @@ void main() {
     expect(oddEvenSort(emptyList, ascendingFn), equals(emptyList));
     expect(oddEvenSort(emptyList, descendingFn), equals(emptyList));
   });
+
+  test("Gnome Sort", () {
+    expect(gnomeSort(randomList), equals(sortedRandomListAscending));
+    expect(
+        gnomeSort(randomList, ascendingFn), equals(sortedRandomListAscending));
+    expect(gnomeSort(randomList, descendingFn),
+        equals(sortedRandomListDescending));
+
+    expect(gnomeSort(emptyList), equals(emptyList));
+    expect(gnomeSort(emptyList, ascendingFn), equals(emptyList));
+    expect(gnomeSort(emptyList, descendingFn), equals(emptyList));
+  });
 }
