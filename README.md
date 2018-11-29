@@ -36,3 +36,8 @@ List data structures are implemented under the package `lists`.
 
 `lib/heaps/binary_heap.dart` - `BinaryHeap`, `MinHeap` and `MaxHeap`
 
+## Sorts
+
+## Basic Sorts
+
+`lib/sorts/basic.dart` - `Bubble Sort` and `Heap Sort`
