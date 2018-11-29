@@ -1,10 +1,11 @@
+/// Custom [Error] that's thrown whenever the index is invalid.
 class InvalidIndexError extends Error {
   toString() => "Invalid Index for this operation";
 }
 
 /// Comparison logic of two objects, based on which nature of heaps will
 /// be determined.
-typedef bool Comparator<T>(T parent, T child);
+typedef bool Comparer<T>(T parent, T child);
 
 /// Parent index of [idx]
 int parentOf(int idx) =>
@@ -25,12 +26,12 @@ int rightOf(int idx) => 2 * idx + 2;
 /// derive [MinHeap] or [MaxHeap] from it.
 class BinaryHeap<T> {
   /// The comparison function
-  Comparator compare;
+  Comparer compare;
 
   /// The implicit array of objects
   List<T> items;
 
-  BinaryHeap(Comparator<T> compare)
+  BinaryHeap(Comparer<T> compare)
       : this.compare = compare,
         this.items = <T>[];
 
