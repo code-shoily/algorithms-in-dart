@@ -20,8 +20,23 @@ List<T> bubbleSort<T>(List<T> list, [Comparer compareFn = ascendingFn]) {
   return list;
 }
 
+/// Insertion Sort
+List<T> insertionSort<T>(List<T> list, [Comparer compareFn = ascendingFn]) {
+  for (var i = 1; i < list.length; i++) {
+    var key = list[i];
+    var j = i - 1;
+    while (j >= 0 && !compareFn(list[j], key)) {
+      list[j + 1] = list[j];
+      j--;
+    }
+
+    list[j + 1] = key;
+  }
+  return list;
+}
+
 /// HeapSort
-List<T> heapSort<T>(List<T> list, [Comparer compareFn = ascending]) {
+List<T> heapSort<T>(List<T> list, [Comparer compareFn = ascendingFn]) {
   var sortedList = <T>[];
   var heap = BinaryHeap(compareFn)..insertMany(list);
 

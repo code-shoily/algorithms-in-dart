@@ -40,4 +40,4 @@ List data structures are implemented under the package `lists`.
 
 ## Basic Sorts
 
-`lib/sorts/basic.dart` - `Bubble Sort` and `Heap Sort`
+`lib/sorts/basic.dart` - `Bubble Sort`, `Insertion Sort` and `Heap Sort`

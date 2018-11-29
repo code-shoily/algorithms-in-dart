@@ -31,6 +31,18 @@ void main() {
     expect(bubbleSort(emptyList, descendingFn), equals(emptyList));
   });
 
+  test("Insertion Sort", () {
+    expect(insertionSort(randomList), equals(sortedRandomListAscending));
+    expect(insertionSort(randomList, ascendingFn),
+        equals(sortedRandomListAscending));
+    expect(insertionSort(randomList, descendingFn),
+        equals(sortedRandomListDescending));
+
+    expect(insertionSort(emptyList), equals(emptyList));
+    expect(insertionSort(emptyList, ascendingFn), equals(emptyList));
+    expect(insertionSort(emptyList, descendingFn), equals(emptyList));
+  });
+
   test("Heap Sort", () {
     expect(heapSort(randomList), equals(sortedRandomListAscending));
     expect(
