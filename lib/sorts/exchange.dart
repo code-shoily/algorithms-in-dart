@@ -7,10 +7,32 @@ List<T> bubbleSort<T extends Comparable>(List<T> list,
 
   for (var i = 0; i < size; i++) {
     for (var j = 1; j < (size - i); j++) {
-      if (!compareFn(list[j - 1], list[j])) {
-        var temp = list[j - 1];
-        list[j - 1] = list[j];
-        list[j] = temp;
+      if (!compareFn(list[j - 1], list[j])) swap(list, j, j - 1);
+    }
+  }
+
+  return list;
+}
+
+/// Odd/Even Sort
+List<T> oddEvenSort<T extends Comparable>(List<T> list,
+    [Comparator<T> compareFn = ascendingFn]) {
+  var sorted = false;
+
+  while (!sorted) {
+    sorted = true;
+
+    for (var i = 1; i < list.length - 1; i += 2) {
+      if (!compareFn(list[i], list[i + 1])) {
+        swap(list, i, i + 1);
+        sorted = false;
+      }
+    }
+
+    for (var i = 0; i < list.length - 1; i += 2) {
+      if (!compareFn(list[i], list[i + 1])) {
+        swap(list, i, i + 1);
+        sorted = false;
       }
     }
   }

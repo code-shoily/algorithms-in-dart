@@ -40,6 +40,8 @@ All base classes are in `lib/heaps/base.dart`
 
 ## Sorts
 
-`lib/sorts/exchantge.dart` - `Bubble Sort`
+`lib/sorts/exchantge.dart` - `Bubble Sort`, `Odd-Even Sort`
+
 `lib/sorts/insertion.dart` - `Insertion Sort`
+
 `lib/sorts/selection.dart` - `Heap Sort`

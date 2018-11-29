@@ -30,4 +30,16 @@ void main() {
     expect(bubbleSort(emptyList, ascendingFn), equals(emptyList));
     expect(bubbleSort(emptyList, descendingFn), equals(emptyList));
   });
+
+  test("Odd-Event Sort", () {
+    expect(oddEvenSort(randomList), equals(sortedRandomListAscending));
+    expect(oddEvenSort(randomList, ascendingFn),
+        equals(sortedRandomListAscending));
+    expect(oddEvenSort(randomList, descendingFn),
+        equals(sortedRandomListDescending));
+
+    expect(oddEvenSort(emptyList), equals(emptyList));
+    expect(oddEvenSort(emptyList, ascendingFn), equals(emptyList));
+    expect(oddEvenSort(emptyList, descendingFn), equals(emptyList));
+  });
 }
