@@ -1,43 +1,51 @@
 import "package:test/test.dart";
 
+import "package:algorithms_in_dart/heaps/base.dart";
 import "package:algorithms_in_dart/heaps/binary_heap.dart";
 
 void main() {
-  test("Test Left", () {
-    expect(leftOf(0), equals(1));
-    expect(leftOf(1), equals(3));
-    expect(leftOf(2), equals(5));
-    expect(leftOf(3), equals(7));
+  group("Index Mixin Tests", () {
+    var indexer;
+    setUp(() {
+      indexer = BinaryHeap((_1, _2) => true);
+    });
+    test("Test Left", () {
+      expect(indexer.leftOf(0), equals(1));
+      expect(indexer.leftOf(1), equals(3));
+      expect(indexer.leftOf(2), equals(5));
+      expect(indexer.leftOf(3), equals(7));
+    });
+
+    test("Test Right", () {
+      expect(indexer.rightOf(0), equals(2));
+      expect(indexer.rightOf(1), equals(4));
+      expect(indexer.rightOf(2), equals(6));
+      expect(indexer.rightOf(3), equals(8));
+    });
+
+    test("Test Parent", () {
+      expect(indexer.parentOf(0), equals(0));
+      expect(indexer.parentOf(1), equals(0));
+      expect(indexer.parentOf(2), equals(0));
+      expect(indexer.parentOf(3), equals(1));
+      expect(indexer.parentOf(4), equals(1));
+      expect(indexer.parentOf(5), equals(2));
+      expect(indexer.parentOf(6), equals(2));
+      expect(indexer.parentOf(7), equals(3));
+      expect(indexer.parentOf(8), equals(3));
+
+      var errors = <Error>[];
+
+      try {
+        indexer.parentOf(-1);
+      } on InvalidIndexError catch (e) {
+        errors.add(e);
+      }
+
+      expect(errors.length, equals(1));
+    });
   });
 
-  test("Test Right", () {
-    expect(rightOf(0), equals(2));
-    expect(rightOf(1), equals(4));
-    expect(rightOf(2), equals(6));
-    expect(rightOf(3), equals(8));
-  });
-
-  test("Test Parent", () {
-    expect(parentOf(0), equals(0));
-    expect(parentOf(1), equals(0));
-    expect(parentOf(2), equals(0));
-    expect(parentOf(3), equals(1));
-    expect(parentOf(4), equals(1));
-    expect(parentOf(5), equals(2));
-    expect(parentOf(6), equals(2));
-    expect(parentOf(7), equals(3));
-    expect(parentOf(8), equals(3));
-
-    var errors = <Error>[];
-
-    try {
-      parentOf(-1);
-    } on InvalidIndexError catch (e) {
-      errors.add(e);
-    }
-
-    expect(errors.length, equals(1));
-  });
   group("BINARY_TREE", () {
     BinaryHeap minHeap;
     BinaryHeap maxHeap;

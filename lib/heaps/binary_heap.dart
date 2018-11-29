@@ -1,21 +1,4 @@
-/// Custom [Error] that's thrown whenever the index is invalid.
-class InvalidIndexError extends Error {
-  toString() => "Invalid Index for this operation";
-}
-
-/// Comparison logic of two objects, based on which nature of heaps will
-/// be determined.
-typedef bool Comparer<T>(T parent, T child);
-
-/// Parent index of [idx]
-int parentOf(int idx) =>
-    idx >= 0 ? ((idx - 1) / 2).truncate() : throw InvalidIndexError();
-
-/// Left child index of [idx]
-int leftOf(int idx) => 2 * idx + 1;
-
-/// Right child index of [idx]
-int rightOf(int idx) => 2 * idx + 2;
+import "package:algorithms_in_dart/heaps/base.dart";
 
 /// A binary heap is a complete binary tree which holds heap property.
 ///
@@ -24,9 +7,9 @@ int rightOf(int idx) => 2 * idx + 2;
 /// [BinaryHeap] is a generic binary heap and takes in a function which determines
 /// the parent/child relationship/positioning. Based on particular functions, we can
 /// derive [MinHeap] or [MaxHeap] from it.
-class BinaryHeap<T> {
+class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
   /// The comparison function
-  Comparer compare;
+  Comparer<T> compare;
 
   /// The implicit array of objects
   List<T> items;
