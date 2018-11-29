@@ -29,3 +29,10 @@ List data structures are implemented under the package `lists`.
 ### Queue
 
 `lib/lists/queue.dart`
+
+## Heaps
+
+### BinaryHeap
+
+`lib/heaps/binary_heap.dart` - `BinaryHeap`, `MinHeap` and `MaxHeap`
+
