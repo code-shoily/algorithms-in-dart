@@ -11,3 +11,19 @@ List<T> heapSort<T extends Comparable>(List<T> list,
 
   return sortedList;
 }
+
+/// Selection Sort
+List<T> selectionSort<T extends Comparable>(List<T> list,
+    [Comparator<T> compareFn = ascendingFn]) {
+  for (var i = 0; i < list.length; i++) {
+    var idxToSwap = i;
+    for (var j = i + 1; j < list.length; j++) {
+      if (!compareFn(list[idxToSwap], list[j])) {
+        idxToSwap = j;
+      }
+    }
+    swap(list, i, idxToSwap);
+  }
+
+  return list;
+}

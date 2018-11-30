@@ -30,4 +30,16 @@ void main() {
     expect(heapSort(emptyList, ascendingFn), equals(emptyList));
     expect(heapSort(emptyList, descendingFn), equals(emptyList));
   });
+
+  test("Selection Sort", () {
+    expect(selectionSort(randomList), equals(sortedRandomListAscending));
+    expect(selectionSort(randomList, ascendingFn),
+        equals(sortedRandomListAscending));
+    expect(selectionSort(randomList, descendingFn),
+        equals(sortedRandomListDescending));
+
+    expect(selectionSort(emptyList), equals(emptyList));
+    expect(selectionSort(emptyList, ascendingFn), equals(emptyList));
+    expect(selectionSort(emptyList, descendingFn), equals(emptyList));
+  });
 }
