@@ -48,4 +48,4 @@ All base classes are in `lib/heaps/base.dart`
 
 `lib/sorts/selection.dart` - `Heap Sort`, `Selection Sort`
 
-`lib/sorts/pigeonhole.dart` - `Pigeonhole Sort`
+`lib/sorts/pigeonhole.dart` - `Pigeonhole Sort`, `Counting Sort`
