@@ -42,7 +42,7 @@ All base classes are in `lib/heaps/base.dart`
 
 `lib/sorts/common.dart` contains helper functions and typedefs for sorting algorithms.
 
-`lib/sorts/exchange.dart` - `Bubble Sort`, `Odd-Even Sort`, `Gnome Sort`
+`lib/sorts/exchange.dart` - `Bubble Sort`, `Odd-Even Sort`, `Gnome Sort`, `Quick Sort`
 
 `lib/sorts/insertion.dart` - `Insertion Sort`
 

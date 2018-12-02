@@ -56,3 +56,31 @@ List<T> gnomeSort<T extends Comparable>(List<T> list,
   }
   return list;
 }
+
+/// Quick Sort
+List<T> quickSort<T extends Comparable>(List<T> list,
+    [Comparator<T> compareFn = ascendingFn]) {
+  int _partition(List<T> list, int low, int high) {
+    var pivot = list[high], i = low;
+
+    for (var j = low; j < high; j++) {
+      if (!compareFn(pivot, list[j])) {
+        swap(list, i, j);
+        i++;
+      }
+    }
+    swap(list, i, high);
+    return i;
+  }
+
+  void _sort(List<T> list, int low, int high) {
+    if (low < high) {
+      var p = _partition(list, low, high);
+      _sort(list, low, p - 1);
+      _sort(list, p + 1, high);
+    }
+  }
+
+  _sort(list, 0, list.length - 1);
+  return list;
+}

@@ -14,6 +14,7 @@ bool ascendingFn<T extends Comparable>(a, b) => a.compareTo(b) <= 0;
 
 /// Swaps two elements in a [List]
 void swap<T extends Comparable>(List<T> list, int i, int j) {
+  if (i == j) return;
   T temp = list[i];
   list[i] = list[j];
   list[j] = temp;

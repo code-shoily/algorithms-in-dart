@@ -54,4 +54,16 @@ void main() {
     expect(gnomeSort(emptyList, ascendingFn), equals(emptyList));
     expect(gnomeSort(emptyList, descendingFn), equals(emptyList));
   });
+
+  test("Quick Sort", () {
+    expect(quickSort(randomList), equals(sortedRandomListAscending));
+    expect(
+        quickSort(randomList, ascendingFn), equals(sortedRandomListAscending));
+    expect(quickSort(randomList, descendingFn),
+        equals(sortedRandomListDescending));
+
+    expect(quickSort(emptyList), equals(emptyList));
+    expect(quickSort(emptyList, ascendingFn), equals(emptyList));
+    expect(quickSort(emptyList, descendingFn), equals(emptyList));
+  });
 }
