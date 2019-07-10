@@ -5,10 +5,10 @@ description: A sample command-line application.
 # author: Mafinar K <email@example.com>
 
 environment:
-  sdk: '>=2.1.0 <3.0.0'
+  sdk: '>=2.4.0 <3.0.0'
 
 #dependencies:
 #  path: ^1.4.1
 
 dev_dependencies:
-  test: ^1.0.0
+  test: ^1.6.5
