@@ -1,14 +1,14 @@
 name: algorithms_in_dart
-description: A sample command-line application.
+description: Implementation of algorithms with Dart.
 # version: 1.0.0
 # homepage: https://www.example.com
 # author: Mafinar K <email@example.com>
 
 environment:
-  sdk: '>=2.4.0 <3.0.0'
+  sdk: '>=2.7.0 <3.0.0'
 
 #dependencies:
 #  path: ^1.4.1
 
 dev_dependencies:
-  test: ^1.6.5
+  test:
