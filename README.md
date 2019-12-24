@@ -55,3 +55,5 @@ All base classes are in `lib/heaps/base.dart`
 ## Searching
 
 `lib/searching/linear.dart` - Linear Search
+
+`lib/searching/binary.dart` - Binary Search
