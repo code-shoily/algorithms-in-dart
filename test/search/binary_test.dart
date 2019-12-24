@@ -1,15 +1,15 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/searching/linear.dart';
+import 'package:algorithms_in_dart/search/binary.dart';
 
 void main() {
-  LinearSearch emptyList, randomList;
-  const sampleList1 = <int>[5, 34, 23, 1, -3, 54, 104, -45, 0, 7];
-  const sampleList2 = <int>[4, 8, 3, 0, -1];
+  BinarySearch emptyList, randomList;
+  const sampleList1 = <int>[-7, 2, 3, 45, 65, 78, 90, 200, 4540];
+  const sampleList2 = <int>[-1, 4, 6, 7, 10];
 
   setUp(() {
-    emptyList = LinearSearch(<int>[]);
-    randomList = LinearSearch(sampleList1);
+    emptyList = BinarySearch(<int>[]);
+    randomList = BinarySearch(sampleList1);
   });
 
   test("Search for an item", () {
