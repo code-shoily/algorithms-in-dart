@@ -51,3 +51,7 @@ All base classes are in `lib/heaps/base.dart`
 `lib/sorts/distribution.dart` - `Pigeonhole Sort`, `Counting Sort`
 
 `lib/sorts/merge.dart` - `Merge Sort`
+
+## Searching
+
+`lib/searching/linear.dart` - Linear Search
