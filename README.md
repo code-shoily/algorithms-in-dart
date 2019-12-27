@@ -57,3 +57,9 @@ All base classes are in `lib/heaps/base.dart`
 `lib/search/sequential.dart` - `Linear Search`
 
 `lib/search/interval.dart` - `Binary Search`
+
+## Trees
+
+### Binary Tree
+
+`lib/trees/binary.dart`
