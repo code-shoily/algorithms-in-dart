@@ -93,4 +93,22 @@ void main() {
       expect(tree.contains(i), isTrue);
     }
   });
+
+  test('Pre-order traversal', () {
+    expect(emptyTree.preOrder(), <int>[]);
+    expect(singleNodeTree.preOrder(), <int>[0]);
+    expect(tree.preOrder(), equals(<int>[11, -2, -3, 1, 0, 9, 21, 17]));
+  });
+
+  test('Post-order traversal', () {
+    expect(emptyTree.postOrder(), <int>[]);
+    expect(singleNodeTree.postOrder(), <int>[0]);
+    expect(tree.postOrder(), equals(<int>[-3, 0, 9, 1, -2, 17, 21, 11]));
+  });
+
+  test('In-order traversal', () {
+    expect(emptyTree.inOrder(), <int>[]);
+    expect(singleNodeTree.inOrder(), <int>[0]);
+    expect(tree.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 11, 17, 21]));
+  });
 }

@@ -67,4 +67,46 @@ class BinaryTree<T extends Comparable> {
         ? (root.left != null ? _compareAndCheck(root.left, value) : false)
         : (root.right != null ? _compareAndCheck(root.right, value) : false));
   }
+
+  /// PreOrder Traversal
+  List<T> preOrder() {
+    var result = <T>[];
+    _preOrder(_root, result);
+    return result;
+  }
+
+  void _preOrder(Node<T> node, List<T> list) {
+    if (node == null) return;
+    list.add(node.value);
+    _preOrder(node.left, list);
+    _preOrder(node.right, list);
+  }
+
+  /// PostOrder Traversal
+  List<T> postOrder() {
+    var result = <T>[];
+    _postOrder(_root, result);
+    return result;
+  }
+
+  void _postOrder(Node<T> node, List<T> list) {
+    if (node == null) return;
+    _postOrder(node.left, list);
+    _postOrder(node.right, list);
+    list.add(node.value);
+  }
+
+  /// In Order Traversal
+  List<T> inOrder() {
+    var result = <T>[];
+    _inOrder(_root, result);
+    return result;
+  }
+
+  void _inOrder(Node<T> node, List<T> list) {
+    if (node == null) return;
+    _inOrder(node.left, list);
+    list.add(node.value);
+    _inOrder(node.right, list);
+  }
 }
