@@ -1,8 +1,10 @@
 class Node<T extends Comparable> {
   /// Value of the node
   T value;
+
   /// Left node
   Node<T> left;
+
   /// Right node
   Node<T> right;
 
@@ -11,6 +13,7 @@ class Node<T extends Comparable> {
 
 class BinaryTree<T extends Comparable> {
   Node<T> _root;
+
   /// Root of the tree
   Node<T> get root => _root;
 
@@ -53,5 +56,15 @@ class BinaryTree<T extends Comparable> {
       else
         _compareAndAdd(root.right, newNode);
     }
+  }
+
+  /// Checks if `value` is contained in the tree
+  bool contains(T value) => isEmpty ? false : _compareAndCheck(_root, value);
+
+  bool _compareAndCheck(Node<T> root, T value) {
+    if (root.value == value) return true;
+    return (root.value.compareTo(value) >= 0
+        ? (root.left != null ? _compareAndCheck(root.left, value) : false)
+        : (root.right != null ? _compareAndCheck(root.right, value) : false));
   }
 }

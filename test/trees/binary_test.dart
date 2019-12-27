@@ -1,7 +1,8 @@
 import 'package:test/test.dart';
+
 import 'package:algorithms_in_dart/trees/binary.dart';
 
-main() {
+void main() {
   BinaryTree emptyTree, singleNodeTree, tree;
   setUp(() {
     emptyTree = BinaryTree();
@@ -80,5 +81,16 @@ main() {
     var tree = BinaryTree.fromList([1, 2, 3]);
     tree.nullify();
     expect(tree.isEmpty, isTrue);
+  });
+
+  test('Check contains', () {
+    expect(emptyTree.contains(10), isFalse);
+    expect(singleNodeTree.contains(10), isFalse);
+    expect(singleNodeTree.contains(0), isTrue);
+    expect(tree.contains(1230), isFalse);
+    
+    for (var i in [11, -2, 1, 0, 21, 17, 9, -3]) {
+      expect(tree.contains(i), isTrue);
+    }
   });
 }
