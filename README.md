@@ -63,3 +63,7 @@ All base classes are in `lib/heaps/base.dart`
 ### Binary Tree
 
 `lib/trees/binary.dart`
+
+## Math
+
+`lib/math/gcd_lcm.dart` - `GCD` and `LCM`
