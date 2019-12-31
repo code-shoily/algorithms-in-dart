@@ -66,4 +66,4 @@ All base classes are in `lib/heaps/base.dart`
 
 ## Math
 
-`lib/math/gcd_lcm.dart` - `GCD` and `LCM`
+`lib/math/common.dart` - `GCD`, `LCM`, `Factorial`
