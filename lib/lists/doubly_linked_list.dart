@@ -29,7 +29,7 @@ class DoublyLinkedList<T> {
 
   DoublyLinkedList.fromList(List<T> list) : size = 0 {
     for (var item in list) {
-      this.append(item);
+      append(item);
     }
   }
 
@@ -95,12 +95,12 @@ class DoublyLinkedList<T> {
 
   /// Insert [data] at [n] index
   void insert(T data, int n) {
-    Node<T> newNode = Node(data: data);
+    var newNode = Node(data: data);
 
     var nextNode = at(n);
 
     if (nextNode == null) {
-      throw "Invalid index";
+      throw 'Invalid index';
     } else {
       if (nextNode == head) {
         prepend(newNode.data);
@@ -117,7 +117,7 @@ class DoublyLinkedList<T> {
 
   /// Remove the last element
   Node<T> pop() {
-    if (isEmpty) throw "Cannot remove from empty list";
+    if (isEmpty) throw 'Cannot remove from empty list';
 
     var removeMe = tail;
     if (size == 1) {
@@ -134,7 +134,7 @@ class DoublyLinkedList<T> {
 
   /// Remove the first element
   Node<T> shift() {
-    if (isEmpty) throw "Cannot remove from empty list";
+    if (isEmpty) throw 'Cannot remove from empty list';
 
     var removeMe = head;
     if (size == 1) {
@@ -151,10 +151,10 @@ class DoublyLinkedList<T> {
 
   /// Remove from [n] index
   Node<T> remove(int n) {
-    Node<T> removeMe = at(n);
+    var removeMe = at(n);
 
     if (removeMe == null) {
-      throw "Invalid index";
+      throw 'Invalid index';
     } else {
       if (removeMe == head) {
         return shift();
@@ -171,13 +171,13 @@ class DoublyLinkedList<T> {
   }
 
   /// Set this list to empty
-  _makeEmpty() {
+  void _makeEmpty() {
     head = null;
     tail = null;
   }
 
   /// Set [node] as the only node for [this]
-  _setOnlyNode(Node node) {
+  void _setOnlyNode(Node node) {
     head = node;
     tail = node;
   }

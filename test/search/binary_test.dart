@@ -4,7 +4,7 @@ import 'package:algorithms_in_dart/search/interval.dart';
 
 void main() {
   const sampleList = <int>[-7, 2, 3, 45, 65, 78, 90, 200, 4540];
-  test("Search for an item", () {
+  test('Search for an item', () {
     for (var i = 0; i < sampleList.length; i++) {
       expect(binarySearch(sampleList, sampleList[i]), equals(i));
     }

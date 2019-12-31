@@ -10,8 +10,8 @@ class QueueNode<T> {
   QueueNode behind;
 
   QueueNode({this.data})
-      : this.ahead = null,
-        this.behind = null;
+      : ahead = null,
+        behind = null;
 }
 
 // A simple linked list based FIFO.
@@ -27,48 +27,48 @@ class Queue<T> {
 
   /// Create an empty [Queue]
   Queue()
-      : this._head = null,
-        this._tail = null,
-        this.size = 0;
+      : _head = null,
+        _tail = null,
+        size = 0;
 
   /// Show the first element and dequeue candidate
-  T get head => this._head?.data;
+  T get head => _head?.data;
 
   /// Show the most recently enqueued element
-  T get tail => this._tail?.data;
+  T get tail => _tail?.data;
 
   /// Check if the size of the queue is empty
-  bool get isEmpty => this._head == null;
+  bool get isEmpty => _head == null;
 
   /// Enqueue a new item to the Queue
   void enqueue(T data) {
     var newNode = QueueNode(data: data);
 
-    if (this.isEmpty) {
-      this._head = newNode;
+    if (isEmpty) {
+      _head = newNode;
     } else {
-      newNode.ahead = this._tail;
-      this._tail.behind = newNode;
+      newNode.ahead = _tail;
+      _tail.behind = newNode;
     }
 
-    this.size++;
-    this._tail = newNode;
+    size++;
+    _tail = newNode;
   }
 
   /// Dequeue the oldest item from the queue. Throw exception on empty queue
   T dequeue() {
-    if (this.isEmpty) throw Exception("Cannot dequeue from empty queue");
+    if (isEmpty) throw Exception('Cannot dequeue from empty queue');
 
-    var output = this._head;
+    var output = _head;
 
-    if (this._head.behind == null) {
-      this._head = null;
-      this._tail = null;
+    if (_head.behind == null) {
+      _head = null;
+      _tail = null;
     } else {
-      this._head = this._head.behind;
+      _head = _head.behind;
     }
 
-    this.size--;
+    size--;
     return output.data;
   }
 }

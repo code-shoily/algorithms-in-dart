@@ -1,6 +1,6 @@
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
-import "package:algorithms_in_dart/sorts/distribution.dart";
+import 'package:algorithms_in_dart/sorts/distribution.dart';
 
 void main() {
   List<int> randomList;
@@ -23,7 +23,7 @@ void main() {
     sortedPositiveRandomListDescending = [7, 5, 4, 2, 2, 1, 1];
   });
 
-  test("Pigeonhole Sort", () {
+  test('Pigeonhole Sort', () {
     expect(pigeonholeSort(randomList), equals(sortedRandomListAscending));
     expect(pigeonholeSort(randomList, desc: false),
         equals(sortedRandomListAscending));
@@ -35,7 +35,7 @@ void main() {
     expect(pigeonholeSort(emptyList, desc: true), equals(emptyList));
   });
 
-  test("Counting Sort", () {
+  test('Counting Sort', () {
     expect(countingSort(positiveRandomList),
         equals(sortedPositiveRandomListAscending));
     expect(countingSort(positiveRandomList, desc: false),

@@ -22,7 +22,9 @@ class BinaryTree<T extends Comparable> {
 
   /// Creates a binary tree with all values of `list` added
   BinaryTree.fromList(List<T> list) {
-    for (var value in list) add(value);
+    for (var value in list) {
+      add(value);
+    }
   }
 
   /// Creates a new tree with a single value of `value`
@@ -38,7 +40,7 @@ class BinaryTree<T extends Comparable> {
   void add(T value) {
     var node = Node(value);
     if (isEmpty) {
-      this._root = node;
+      _root = node;
     } else {
       _compareAndAdd(_root, node);
     }
@@ -46,15 +48,17 @@ class BinaryTree<T extends Comparable> {
 
   void _compareAndAdd(Node<T> root, Node<T> newNode) {
     if (root.value.compareTo(newNode.value) >= 0) {
-      if (root.left == null)
+      if (root.left == null) {
         root.left = newNode;
-      else
+      } else {
         _compareAndAdd(root.left, newNode);
+      }
     } else {
-      if (root.right == null)
+      if (root.right == null) {
         root.right = newNode;
-      else
+      } else {
         _compareAndAdd(root.right, newNode);
+      }
     }
   }
 

@@ -14,34 +14,34 @@ class Stack<T> {
   int size;
 
   Stack()
-      : this._top = null,
-        this.size = 0;
+      : _top = null,
+        size = 0;
 
   /// Checks if the stack is empty
-  bool get isEmpty => this._top == null;
+  bool get isEmpty => _top == null;
 
   /// Pops the top-most element of the stack.
   T pop() {
-    if (this.isEmpty) throw Exception("Cannot pop from an empty stack");
-    var output = this._top;
-    this._top = this._top.below;
-    this.size--;
+    if (isEmpty) throw Exception('Cannot pop from an empty stack');
+    var output = _top;
+    _top = _top.below;
+    size--;
 
     return output.data;
   }
 
   /// Returns the top-most element of the stack but keeps the stack unmodified
-  T peek() => this._top?.data;
+  T peek() => _top?.data;
 
   /// Adds a new element on top of the stack.
   void push(T data) {
-    var newNode = new StackNode(data: data);
-    if (this.isEmpty) {
-      this._top = newNode;
+    var newNode = StackNode(data: data);
+    if (isEmpty) {
+      _top = newNode;
     } else {
-      newNode.below = this._top;
-      this._top = newNode;
+      newNode.below = _top;
+      _top = newNode;
     }
-    this.size++;
+    size++;
   }
 }

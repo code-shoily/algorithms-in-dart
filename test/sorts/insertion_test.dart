@@ -1,6 +1,6 @@
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
-import "package:algorithms_in_dart/sorts/insertion.dart";
+import 'package:algorithms_in_dart/sorts/insertion.dart';
 
 void main() {
   List<int> randomList;
@@ -19,7 +19,7 @@ void main() {
     sortedRandomListDescending = [20, 4, 2, 2, 1, 0, -1];
   });
 
-  test("Insertion Sort", () {
+  test('Insertion Sort', () {
     expect(insertionSort(randomList), equals(sortedRandomListAscending));
     expect(insertionSort(randomList, ascendingFn),
         equals(sortedRandomListAscending));

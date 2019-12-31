@@ -10,18 +10,18 @@ void main() {
     tree = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
   });
 
-  test("Test empty tree", () {
+  test('Test empty tree', () {
     expect(emptyTree.isEmpty, isTrue);
     expect(singleNodeTree.isEmpty, isFalse);
     expect(tree.isEmpty, isFalse);
   });
 
-  test("Test single node", () {
+  test('Test single node', () {
     expect(singleNodeTree.root.value, equals(0));
     expect(tree.root.value, equals(11));
   });
 
-  test("Multiple node", () {
+  test('Multiple node', () {
     /*----------------------
                11
              /    \
@@ -88,7 +88,7 @@ void main() {
     expect(singleNodeTree.contains(10), isFalse);
     expect(singleNodeTree.contains(0), isTrue);
     expect(tree.contains(1230), isFalse);
-    
+
     for (var i in [11, -2, 1, 0, 21, 17, 9, -3]) {
       expect(tree.contains(i), isTrue);
     }

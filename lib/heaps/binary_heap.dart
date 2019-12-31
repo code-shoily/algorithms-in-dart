@@ -1,4 +1,4 @@
-import "package:algorithms_in_dart/heaps/base.dart";
+import 'package:algorithms_in_dart/heaps/base.dart';
 
 /// A binary heap is a complete binary tree which holds heap property.
 ///
@@ -15,13 +15,15 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
   List<T> items;
 
   BinaryHeap(Comparer<T> compare)
-      : this.compare = compare,
-        this.items = <T>[];
+      : compare = compare,
+        items = <T>[];
 
   /// Checks if this heap is empty
+  @override
   bool get isEmpty => items.isEmpty;
 
   /// Returns the size of the container
+  @override
   int get length => items.length;
 
   /// Swaps the items in [a] with [b] of [this]
@@ -38,10 +40,11 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
   /// must always be true for their hierarchical relationship to hold.
   ///
   /// For example, on a `min-heap`, compare function is `(a, b) => a < b`
+  @override
   void insert(T item) {
     items.add(item);
-    int i = items.length - 1;
-    int parent = parentOf(i);
+    var i = items.length - 1;
+    var parent = parentOf(i);
 
     while (parent != i && !compare(items[parent], items[i])) {
       swap(parent, i);
@@ -51,13 +54,15 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
   }
 
   /// Inserts all elements of a list into [this]
+  @override
   void insertMany(List<T> items) {
     for (var item in items) {
-      this.insert(item);
+      insert(item);
     }
   }
 
   /// Turns the sublist starting at index [idx] into a heap.
+  @override
   void heapify(int idx) {
     if (idx > length) throw InvalidIndexError();
 
@@ -82,6 +87,7 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
   /// Shows the root of the heap.
   ///
   /// For `min-heap` it's the smallest element and for `max-heap` it's the largest
+  @override
   T peek() {
     return items.first;
   }
@@ -90,6 +96,7 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
   ///
   /// For `min-heap` it's the smallest element and for `max-heap` it's the largest.
   /// The heap properties remain intact after removal.
+  @override
   T pop() {
     var result = items.first;
     items[0] = items.last;

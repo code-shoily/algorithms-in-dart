@@ -1,4 +1,4 @@
-typedef bool Comparator<T extends Comparable>(T left, T right);
+typedef Comparator<T extends Comparable> = bool Function(T left, T right);
 
 /// Makes sure left is less than right.
 ///
@@ -15,7 +15,7 @@ bool ascendingFn<T extends Comparable>(a, b) => a.compareTo(b) <= 0;
 /// Swaps two elements in a [List]
 void swap<T extends Comparable>(List<T> list, int i, int j) {
   if (i == j) return;
-  T temp = list[i];
+  var temp = list[i];
   list[i] = list[j];
   list[j] = temp;
 }
@@ -53,13 +53,13 @@ bool isReverseSorted<T extends Comparable>(List<T> list,
 Map<String, num> findMinMax(List<num> list) {
   if (list.isEmpty) return null;
 
-  num min = list[0];
-  num max = list[0];
+  var min = list[0];
+  var max = list[0];
 
   for (var item in list) {
     if (item < min) min = item;
     if (item > max) max = item;
   }
 
-  return {"min": min, "max": max};
+  return {'min': min, 'max': max};
 }

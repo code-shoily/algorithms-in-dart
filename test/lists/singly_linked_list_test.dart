@@ -9,11 +9,11 @@ void main() {
 
   setUp(() {
     emptyList = SinglyLinkedList();
-    listWithOneElement = SinglyLinkedList()..append("The One");
+    listWithOneElement = SinglyLinkedList()..append('The One');
     theStooges = SinglyLinkedList()
-      ..append("Moe")
-      ..append("Larry")
-      ..append("Curly");
+      ..append('Moe')
+      ..append('Larry')
+      ..append('Curly');
     lostNumbers = SinglyLinkedList.fromList([4, 8, 15, 16, 23, 42]);
   });
 
@@ -27,8 +27,8 @@ void main() {
 
   test('List Appends', () {
     expect(emptyList.toList, equals([]));
-    expect(listWithOneElement.toList, equals(["The One"]));
-    expect(theStooges.toList, equals(["Moe", "Larry", "Curly"]));
+    expect(listWithOneElement.toList, equals(['The One']));
+    expect(theStooges.toList, equals(['Moe', 'Larry', 'Curly']));
     expect(lostNumbers.toList, equals([4, 8, 15, 16, 23, 42]));
   });
 
@@ -47,13 +47,13 @@ void main() {
   });
 
   test('List Inserts', () {
-    listWithOneElement.insert("Mr Anderson", 0);
-    expect(listWithOneElement.toList, ["Mr Anderson", "The One"]);
+    listWithOneElement.insert('Mr Anderson', 0);
+    expect(listWithOneElement.toList, ['Mr Anderson', 'The One']);
 
-    theStooges.insert("Shemp", 2);
-    expect(theStooges.toList, ["Moe", "Larry", "Shemp", "Curly"]);
-    theStooges.insert("Joe", 0);
-    expect(theStooges.toList, ["Joe", "Moe", "Larry", "Shemp", "Curly"]);
+    theStooges.insert('Shemp', 2);
+    expect(theStooges.toList, ['Moe', 'Larry', 'Shemp', 'Curly']);
+    theStooges.insert('Joe', 0);
+    expect(theStooges.toList, ['Joe', 'Moe', 'Larry', 'Shemp', 'Curly']);
 
     var guessTheFormula = [4, 12, 8, 23, 15, 31, 16, 23, 55, 42];
     lostNumbers.insert(12, 1);
@@ -64,8 +64,8 @@ void main() {
   });
 
   test('List Removal', () {
-    var fullStoogesCast = ["Joe", "Moe", "Larry", "Shemp", "Curly"];
-    var mostAppearedCast = ["Moe", "Larry", "Curly"];
+    var fullStoogesCast = ['Joe', 'Moe', 'Larry', 'Shemp', 'Curly'];
+    var mostAppearedCast = ['Moe', 'Larry', 'Curly'];
     var fullStoogesCastList = SinglyLinkedList.fromList(fullStoogesCast);
     fullStoogesCastList.remove(0);
     fullStoogesCastList.remove(2);
@@ -84,21 +84,21 @@ void main() {
 
   test('List Peeks', () {
     expect(emptyList.peek(), equals(null));
-    expect(listWithOneElement.peek(), equals("The One"));
-    expect(theStooges.peek(), equals("Curly"));
+    expect(listWithOneElement.peek(), equals('The One'));
+    expect(theStooges.peek(), equals('Curly'));
     expect(lostNumbers.peek(), equals(42));
 
     // Original lists remained unchanged
     expect(emptyList.toList, equals([]));
-    expect(listWithOneElement.toList, equals(["The One"]));
-    expect(theStooges.toList, equals(["Moe", "Larry", "Curly"]));
+    expect(listWithOneElement.toList, equals(['The One']));
+    expect(theStooges.toList, equals(['Moe', 'Larry', 'Curly']));
     expect(lostNumbers.toList, equals([4, 8, 15, 16, 23, 42]));
   });
 
   test('List At', () {
     expect(emptyList.at(0), equals(null));
-    expect(listWithOneElement.at(0), equals("The One"));
-    expect(theStooges.at(1), equals("Larry"));
+    expect(listWithOneElement.at(0), equals('The One'));
+    expect(theStooges.at(1), equals('Larry'));
     expect(theStooges.at(-1), equals(null));
     expect(lostNumbers.at(13), equals(null));
 
@@ -109,19 +109,19 @@ void main() {
 
     // Original lists remained unchanged
     expect(emptyList.toList, equals([]));
-    expect(listWithOneElement.toList, equals(["The One"]));
-    expect(theStooges.toList, equals(["Moe", "Larry", "Curly"]));
+    expect(listWithOneElement.toList, equals(['The One']));
+    expect(theStooges.toList, equals(['Moe', 'Larry', 'Curly']));
     expect(lostNumbers.toList, equals([4, 8, 15, 16, 23, 42]));
   });
 
   test('List pops', () {
     // expect(emptyList.pop(), throwsException);
 
-    expect(listWithOneElement.pop(), equals("The One"));
+    expect(listWithOneElement.pop(), equals('The One'));
     expect(listWithOneElement.toList, equals([]));
 
-    expect(theStooges.pop(), equals("Curly"));
-    expect(theStooges.toList, equals(["Moe", "Larry"]));
+    expect(theStooges.pop(), equals('Curly'));
+    expect(theStooges.toList, equals(['Moe', 'Larry']));
 
     expect(lostNumbers.pop(), equals(42));
     expect(lostNumbers.toList, equals([4, 8, 15, 16, 23]));

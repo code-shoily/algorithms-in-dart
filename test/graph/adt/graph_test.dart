@@ -1,7 +1,6 @@
 import 'package:algorithms_in_dart/graph/adt/node.dart';
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/graph/adt/settings.dart';
 import 'package:algorithms_in_dart/graph/adt/graph.dart';
 
 void main() {

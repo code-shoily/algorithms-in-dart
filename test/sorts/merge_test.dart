@@ -1,6 +1,6 @@
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
-import "package:algorithms_in_dart/sorts/merge.dart";
+import 'package:algorithms_in_dart/sorts/merge.dart';
 
 void main() {
   List<int> randomList;
@@ -19,7 +19,7 @@ void main() {
     sortedRandomListDescending = [20, 4, 2, 2, 1, 0, -1];
   });
 
-  test("Merge Sort", () {
+  test('Merge Sort', () {
     expect(mergeSort(randomList), equals(sortedRandomListAscending));
     expect(
         mergeSort(randomList, ascendingFn), equals(sortedRandomListAscending));

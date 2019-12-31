@@ -1,5 +1,5 @@
-import "package:algorithms_in_dart/lists/circular_doubly_linked_list.dart";
-import "package:test/test.dart";
+import 'package:algorithms_in_dart/lists/circular_doubly_linked_list.dart';
+import 'package:test/test.dart';
 
 void main() {
   CircularDoublyLinkedList<String> emptyList;
@@ -10,25 +10,25 @@ void main() {
     emptyList = CircularDoublyLinkedList();
     singleItemList = CircularDoublyLinkedList()..append(42);
     dceuMovieListLol = CircularDoublyLinkedList.fromList(
-        ["Superman", "Batman v Superman", "Wonder Woman"]);
+        ['Superman', 'Batman v Superman', 'Wonder Woman']);
   });
 
-  test("List size", () {
+  test('List size', () {
     expect(emptyList.size, equals(0));
     expect(singleItemList.size, equals(1));
     expect(dceuMovieListLol.size, equals(3));
   });
 
-  test("Append", () {
+  test('Append', () {
     expect(emptyList.toList, equals([]));
     expect(singleItemList.toList, equals([42]));
     expect(dceuMovieListLol.toList,
-        equals(["Superman", "Batman v Superman", "Wonder Woman"]));
+        equals(['Superman', 'Batman v Superman', 'Wonder Woman']));
   });
 
-  test("Prepend", () {
-    emptyList.prepend("¯\_(ツ)_/¯");
-    expect(emptyList.toList, equals(["¯\_(ツ)_/¯"]));
+  test('Prepend', () {
+    emptyList.prepend('¯\_(ツ)_/¯');
+    expect(emptyList.toList, equals(['¯\_(ツ)_/¯']));
     expect(emptyList.size, equals(1));
 
     singleItemList
@@ -41,18 +41,18 @@ void main() {
     expect(singleItemList.size, equals(6));
   });
 
-  test("Pop", () {
+  test('Pop', () {
     var dceuMovieListLater = dceuMovieListLol
-      ..append("Suicide Squad")
-      ..append("Justice League");
+      ..append('Suicide Squad')
+      ..append('Justice League');
 
     expect(dceuMovieListLater.size, equals(5));
 
     var justiceLeague = dceuMovieListLater.pop();
     var suicideSquad = dceuMovieListLater.pop();
 
-    expect(justiceLeague.data, equals("Justice League"));
-    expect(suicideSquad.data, equals("Suicide Squad"));
+    expect(justiceLeague.data, equals('Justice League'));
+    expect(suicideSquad.data, equals('Suicide Squad'));
     expect(dceuMovieListLater.size, equals(3));
     expect(dceuMovieListLater.size, equals(dceuMovieListLol.size));
 
@@ -67,17 +67,17 @@ void main() {
     }
   });
 
-  test("Shift", () {
+  test('Shift', () {
     var theAnswerAgain = singleItemList.shift();
     expect(theAnswerAgain.data, equals(42));
     expect(singleItemList.isEmpty, equals(true));
 
     var superman = dceuMovieListLol.shift();
-    expect(superman.data, equals("Superman"));
+    expect(superman.data, equals('Superman'));
     expect(dceuMovieListLol.size, equals(2));
     var bVS = dceuMovieListLol.shift();
-    expect(bVS.data, equals("Batman v Superman"));
-    expect(dceuMovieListLol.toList, equals(["Wonder Woman"]));
+    expect(bVS.data, equals('Batman v Superman'));
+    expect(dceuMovieListLol.toList, equals(['Wonder Woman']));
     expect(dceuMovieListLol.size, equals(1));
 
     try {
@@ -87,16 +87,16 @@ void main() {
     }
   });
 
-  test("AT", () {
-    var flames = ["F", "L", "A", "M", "E", "S"];
+  test('AT', () {
+    var flames = ['F', 'L', 'A', 'M', 'E', 'S'];
     var flamesList = CircularDoublyLinkedList.fromList(flames);
 
-    expect(flamesList.at(0).data, equals("F"));
-    expect(flamesList.at(1).data, equals("L"));
-    expect(flamesList.at(2).data, equals("A"));
-    expect(flamesList.at(21).data, equals("M"));
-    expect(flamesList.at(10).data, equals("E"));
-    expect(flamesList.at(35).data, equals("S"));
+    expect(flamesList.at(0).data, equals('F'));
+    expect(flamesList.at(1).data, equals('L'));
+    expect(flamesList.at(2).data, equals('A'));
+    expect(flamesList.at(21).data, equals('M'));
+    expect(flamesList.at(10).data, equals('E'));
+    expect(flamesList.at(35).data, equals('S'));
 
     try {
       flamesList.at(-10);

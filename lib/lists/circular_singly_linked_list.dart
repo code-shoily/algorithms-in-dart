@@ -1,4 +1,4 @@
-import "package:algorithms_in_dart/lists/singly_linked_list.dart" show Node;
+import 'package:algorithms_in_dart/lists/singly_linked_list.dart' show Node;
 
 /// This circular linked list is based off of [SinglyLinkedList]
 class CircularSinglyLinkedList<T> {
@@ -33,17 +33,19 @@ class CircularSinglyLinkedList<T> {
   }
 
   /// Checks if [this] is empty
-  bool get isEmpty => this.size == 0;
+  bool get isEmpty => size == 0;
 
   /// Returns the element [n].
   ///
   /// Since this is a circular linked list, if [n] is greater than the size,
   /// it will still iterate, circling back to the beginning every time.
   Node<T> at(int n) {
-    if (n < 0) throw "Index cannot be negative";
+    if (n < 0) throw 'Index cannot be negative';
 
     var currentNode = head;
-    for (var i = 0; i < n; i++, currentNode = currentNode.next);
+    for (var i = 0; i < n; i++, currentNode = currentNode.next) {
+      ;
+    }
 
     return currentNode;
   }
@@ -92,7 +94,7 @@ class CircularSinglyLinkedList<T> {
 
   /// Remove from the end of the list
   Node<T> pop() {
-    if (isEmpty) throw "Cannot remove from an empty list";
+    if (isEmpty) throw 'Cannot remove from an empty list';
 
     var currentNode = head;
     var beforeLastNode = currentNode;
@@ -110,7 +112,7 @@ class CircularSinglyLinkedList<T> {
 
   /// Remove from the beginning of the list
   Node<T> shift() {
-    if (isEmpty) throw "Cannot remove from an empty list";
+    if (isEmpty) throw 'Cannot remove from an empty list';
 
     var removeMe = head;
     var currentNode = head;

@@ -1,4 +1,4 @@
-import "common.dart";
+import 'common.dart';
 
 /// Implement Merge Sort.
 List<T> mergeSort<T extends Comparable>(List<T> list,
@@ -22,8 +22,12 @@ List<T> mergeSort<T extends Comparable>(List<T> list,
       idx++;
     }
 
-    for (var i = rIdx; i < rightList.length; i++) list[idx++] = rightList[i];
-    for (var i = lIdx; i < leftList.length; i++) list[idx++] = leftList[i];
+    for (var i = rIdx; i < rightList.length; i++) {
+      list[idx++] = rightList[i];
+    }
+    for (var i = lIdx; i < leftList.length; i++) {
+      list[idx++] = leftList[i];
+    }
   }
 
   void _mergeSort(List<T> list, int left, int right, Comparator<T> compareFn) {

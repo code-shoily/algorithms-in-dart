@@ -4,7 +4,7 @@ import 'dart:collection';
 /// Value is optional, it is used when complex data structure may be attached to
 /// the vertex. By default, the `key` and `value` are the same.
 class Vertex<T> {
-  String _key;
+  final String _key;
 
   /// Uniquely identifiable key to this [Vertex]
   String get key => _key;
@@ -56,16 +56,16 @@ class Vertex<T> {
   bool containsKey(String key) => connections.containsKey(key);
 }
 
-/// A connection represents the outgoing link information. It is a connection with a destination [Vertex] 
-/// and a set of `weight`. If no weight is mentioned the it is assumed to be `1`. And empty connection is 
+/// A connection represents the outgoing link information. It is a connection with a destination [Vertex]
+/// and a set of `weight`. If no weight is mentioned the it is assumed to be `1`. And empty connection is
 /// a connection with no weights attached to it.
 class Connection {
-  Vertex _vertex;
+  final Vertex _vertex;
 
   /// Destination [Vertex]
   Vertex get vertex => _vertex;
 
-  Set<num> _weights;
+  final Set<num> _weights;
 
   /// A set of weights.
   Set<num> get weights => _weights;

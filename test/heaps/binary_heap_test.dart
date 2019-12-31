@@ -1,29 +1,29 @@
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
-import "package:algorithms_in_dart/heaps/base.dart";
-import "package:algorithms_in_dart/heaps/binary_heap.dart";
+import 'package:algorithms_in_dart/heaps/base.dart';
+import 'package:algorithms_in_dart/heaps/binary_heap.dart';
 
 void main() {
-  group("Index Mixin Tests", () {
+  group('Index Mixin Tests', () {
     var indexer;
     setUp(() {
       indexer = BinaryHeap((_1, _2) => true);
     });
-    test("Test Left", () {
+    test('Test Left', () {
       expect(indexer.leftOf(0), equals(1));
       expect(indexer.leftOf(1), equals(3));
       expect(indexer.leftOf(2), equals(5));
       expect(indexer.leftOf(3), equals(7));
     });
 
-    test("Test Right", () {
+    test('Test Right', () {
       expect(indexer.rightOf(0), equals(2));
       expect(indexer.rightOf(1), equals(4));
       expect(indexer.rightOf(2), equals(6));
       expect(indexer.rightOf(3), equals(8));
     });
 
-    test("Test Parent", () {
+    test('Test Parent', () {
       expect(indexer.parentOf(0), equals(0));
       expect(indexer.parentOf(1), equals(0));
       expect(indexer.parentOf(2), equals(0));
@@ -46,7 +46,7 @@ void main() {
     });
   });
 
-  group("BINARY_TREE", () {
+  group('BINARY_TREE', () {
     BinaryHeap minHeap;
     BinaryHeap maxHeap;
 
@@ -54,12 +54,12 @@ void main() {
       minHeap = BinaryHeap((parent, child) => parent <= child);
       maxHeap = BinaryHeap((parent, child) => parent >= child);
     });
-    test("Test length", () {
+    test('Test length', () {
       expect(minHeap.length, equals(0));
       expect(maxHeap.length, equals(0));
     });
 
-    test("Insertions", () {
+    test('Insertions', () {
       minHeap.insert(10);
       expect(minHeap.items, equals([10]));
       minHeap.insert(20);
@@ -72,12 +72,12 @@ void main() {
       expect(minHeap.items, equals([5, 7, 10, 20, 9]));
     });
 
-    test("Insert Many", () {
+    test('Insert Many', () {
       maxHeap.insertMany([35, 10, 100, 80]);
       expect(maxHeap.items, equals([100, 80, 35, 10]));
     });
 
-    test("Peek", () {
+    test('Peek', () {
       maxHeap.insertMany([35, 10, 100, 80]);
       expect(maxHeap.peek(), equals(100));
       expect(maxHeap.items, equals([100, 80, 35, 10]));
@@ -92,7 +92,7 @@ void main() {
       expect(errors.length, equals(1));
     });
 
-    test("Pop", () {
+    test('Pop', () {
       maxHeap.insertMany([35, 10, 100, 80, 65, 71, 40]);
       expect(maxHeap.items, equals([100, 80, 71, 10, 65, 35, 40]));
       expect(maxHeap.pop(), equals(100));
@@ -115,16 +115,16 @@ void main() {
     });
   });
 
-  group("MAX_HEAP", () {
+  group('MAX_HEAP', () {
     BinaryHeap maxHeap;
 
     setUp(() {
       maxHeap = MaxHeap();
     });
-    test("Test length", () {
+    test('Test length', () {
       expect(maxHeap.length, equals(0));
     });
-    test("Insertions", () {
+    test('Insertions', () {
       maxHeap.insert(10);
       expect(maxHeap.items, equals([10]));
       maxHeap.insert(20);
@@ -137,12 +137,12 @@ void main() {
       expect(maxHeap.items, equals([20, 10, 5, 9, 7]));
     });
 
-    test("Insert Many", () {
+    test('Insert Many', () {
       maxHeap.insertMany([35, 10, 100, 80]);
       expect(maxHeap.items, equals([100, 80, 35, 10]));
     });
 
-    test("Peek", () {
+    test('Peek', () {
       var errors = <Error>[];
       try {
         maxHeap.peek();
@@ -156,7 +156,7 @@ void main() {
       expect(maxHeap.items, equals([100, 80, 35, 10]));
     });
 
-    test("Pop", () {
+    test('Pop', () {
       var errors = <Error>[];
       try {
         maxHeap.pop();
@@ -172,17 +172,17 @@ void main() {
     });
   });
 
-  group("MIN_HEAP", () {
+  group('MIN_HEAP', () {
     MinHeap minHeap;
 
     setUp(() {
       minHeap = MinHeap();
     });
-    test("Test length", () {
+    test('Test length', () {
       expect(minHeap.length, equals(0));
     });
 
-    test("Insertions", () {
+    test('Insertions', () {
       minHeap.insert(10);
       expect(minHeap.items, equals([10]));
       minHeap.insert(20);
@@ -195,12 +195,12 @@ void main() {
       expect(minHeap.items, equals([5, 7, 10, 20, 9]));
     });
 
-    test("Insert Many", () {
+    test('Insert Many', () {
       minHeap.insertMany([35, 10, 100, 80]);
       expect(minHeap.items, equals([10, 35, 100, 80]));
     });
 
-    test("Peek", () {
+    test('Peek', () {
       var errors = <Error>[];
       try {
         minHeap.peek();
@@ -214,7 +214,7 @@ void main() {
       expect(minHeap.items, equals([10, 35, 100, 80]));
     });
 
-    test("Pop", () {
+    test('Pop', () {
       var errors = <Error>[];
       try {
         minHeap.pop();

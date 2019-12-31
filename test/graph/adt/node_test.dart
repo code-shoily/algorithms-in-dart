@@ -7,15 +7,15 @@ void main() {
   Connection connection, connectionUnweighed;
 
   setUp(() {
-    vertex = Vertex("root", 0);
-    vertexKeyOnly = Vertex("root");
+    vertex = Vertex('root', 0);
+    vertexKeyOnly = Vertex('root');
     connection = Connection(vertex, 10);
-    connectionUnweighed = Connection(Vertex("root"));
+    connectionUnweighed = Connection(Vertex('root'));
   });
 
-  test("Vertex without value receives key as value", () {
-    expect(vertexKeyOnly.key, equals("root"));
-    expect(vertexKeyOnly.value, equals("root"));
+  test('Vertex without value receives key as value', () {
+    expect(vertexKeyOnly.key, equals('root'));
+    expect(vertexKeyOnly.value, equals('root'));
   });
 
   test('Add new connection to vertex', () {

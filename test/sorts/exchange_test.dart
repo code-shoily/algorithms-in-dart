@@ -1,6 +1,6 @@
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
-import "package:algorithms_in_dart/sorts/exchange.dart";
+import 'package:algorithms_in_dart/sorts/exchange.dart';
 
 void main() {
   List<int> randomList;
@@ -19,7 +19,7 @@ void main() {
     sortedRandomListDescending = [20, 4, 2, 2, 1, 0, -1];
   });
 
-  test("Bubble Sort", () {
+  test('Bubble Sort', () {
     expect(bubbleSort(randomList), equals(sortedRandomListAscending));
     expect(
         bubbleSort(randomList, ascendingFn), equals(sortedRandomListAscending));
@@ -31,7 +31,7 @@ void main() {
     expect(bubbleSort(emptyList, descendingFn), equals(emptyList));
   });
 
-  test("Odd-Event Sort", () {
+  test('Odd-Event Sort', () {
     expect(oddEvenSort(randomList), equals(sortedRandomListAscending));
     expect(oddEvenSort(randomList, ascendingFn),
         equals(sortedRandomListAscending));
@@ -43,7 +43,7 @@ void main() {
     expect(oddEvenSort(emptyList, descendingFn), equals(emptyList));
   });
 
-  test("Gnome Sort", () {
+  test('Gnome Sort', () {
     expect(gnomeSort(randomList), equals(sortedRandomListAscending));
     expect(
         gnomeSort(randomList, ascendingFn), equals(sortedRandomListAscending));
@@ -55,7 +55,7 @@ void main() {
     expect(gnomeSort(emptyList, descendingFn), equals(emptyList));
   });
 
-  test("Quick Sort", () {
+  test('Quick Sort', () {
     expect(quickSort(randomList), equals(sortedRandomListAscending));
     expect(
         quickSort(randomList, ascendingFn), equals(sortedRandomListAscending));

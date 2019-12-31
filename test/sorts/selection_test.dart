@@ -1,6 +1,6 @@
-import "package:test/test.dart";
+import 'package:test/test.dart';
 
-import "package:algorithms_in_dart/sorts/selection.dart";
+import 'package:algorithms_in_dart/sorts/selection.dart';
 
 void main() {
   List<int> randomList;
@@ -19,7 +19,7 @@ void main() {
     sortedRandomListDescending = [20, 4, 2, 2, 1, 0, -1];
   });
 
-  test("Heap Sort", () {
+  test('Heap Sort', () {
     expect(heapSort(randomList), equals(sortedRandomListAscending));
     expect(
         heapSort(randomList, ascendingFn), equals(sortedRandomListAscending));
@@ -31,7 +31,7 @@ void main() {
     expect(heapSort(emptyList, descendingFn), equals(emptyList));
   });
 
-  test("Selection Sort", () {
+  test('Selection Sort', () {
     expect(selectionSort(randomList), equals(sortedRandomListAscending));
     expect(selectionSort(randomList, ascendingFn),
         equals(sortedRandomListAscending));

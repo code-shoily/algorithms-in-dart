@@ -1,6 +1,7 @@
 /// Custom [Error] that's thrown whenever the index is invalid.
 class InvalidIndexError extends Error {
-  toString() => "Invalid Index for this operation";
+  @override
+  String toString() => 'Invalid Index for this operation';
 }
 
 /// Mixin to help with indexing functions of heaps
@@ -18,7 +19,7 @@ mixin BinaryHeapIndex {
 
 /// Comparison logic of two objects, based on which nature of heaps will
 /// be determined.
-typedef bool Comparer<T>(T parent, T child);
+typedef Comparer<T> = bool Function(T parent, T child);
 
 /// Base class for Heap
 abstract class HeapBase<T> {

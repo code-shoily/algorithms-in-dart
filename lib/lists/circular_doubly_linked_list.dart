@@ -1,4 +1,4 @@
-import "package:algorithms_in_dart/lists/doubly_linked_list.dart" show Node;
+import 'package:algorithms_in_dart/lists/doubly_linked_list.dart' show Node;
 
 /// This circular linked list is based off of [DoublyLinkedList]
 class CircularDoublyLinkedList<T> {
@@ -30,22 +30,24 @@ class CircularDoublyLinkedList<T> {
 
   CircularDoublyLinkedList.fromList(List<T> list) : size = 0 {
     for (var item in list) {
-      this.append(item);
+      append(item);
     }
   }
 
   /// Checks if [this] is empty
-  bool get isEmpty => this.size == 0;
+  bool get isEmpty => size == 0;
 
   /// Returns the element [n].
   ///
   /// Since this is a circular linked list, if [n] is greater than the size,
   /// it will still iterate, circling back to the beginning every time.
   Node<T> at(int n) {
-    if (n < 0) throw "Index cannot be negative";
+    if (n < 0) throw 'Index cannot be negative';
 
     var currentNode = head;
-    for (var i = 0; i < n; i++, currentNode = currentNode.next);
+    for (var i = 0; i < n; i++, currentNode = currentNode.next) {
+      ;
+    }
 
     return currentNode;
   }
@@ -84,7 +86,7 @@ class CircularDoublyLinkedList<T> {
 
   /// Remove from the end of the list
   Node<T> pop() {
-    if (isEmpty) throw "Cannot remove from an empty list";
+    if (isEmpty) throw 'Cannot remove from an empty list';
     var removeMe = tail;
 
     tail = tail.previous;
@@ -97,7 +99,7 @@ class CircularDoublyLinkedList<T> {
 
   /// Remove from the beginning of the list
   Node<T> shift() {
-    if (isEmpty) throw "Cannot remove from an empty list";
+    if (isEmpty) throw 'Cannot remove from an empty list';
 
     var removeMe = head;
 
@@ -110,7 +112,7 @@ class CircularDoublyLinkedList<T> {
   }
 
   /// Create a single node on an empty list
-  _makeSingleNode(Node<T> newNode) {
+  void _makeSingleNode(Node<T> newNode) {
     head = newNode;
     tail = newNode;
 
