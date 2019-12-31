@@ -67,3 +67,7 @@ All base classes are in `lib/heaps/base.dart`
 ## Math
 
 `lib/math/common.dart` - `GCD`, `LCM`, `Factorial`
+
+## Graph
+
+`lib/graph/adt/` - **WIP** Graph `Node`, `Connection` and `Graph` data structures.
