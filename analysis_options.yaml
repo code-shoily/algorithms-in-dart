@@ -4,4 +4,4 @@ analyzer:
 
 # Lint rules and documentation, see http://dart-lang.github.io/linter/lints
 
-include: package:pedantic/analysis_options.1.9.0.yaml
+include: package:effective_dart/analysis_options.1.2.0.yaml
