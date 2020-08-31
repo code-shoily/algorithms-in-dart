@@ -111,4 +111,41 @@ void main() {
     expect(singleNodeTree.inOrder(), <int>[0]);
     expect(tree.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 11, 17, 21]));
   });
+
+  test('Delete node', () {
+    emptyTree.delete(1);
+    expect(emptyTree.inOrder(), <int>[]);
+    singleNodeTree.delete(0);
+    expect(emptyTree.inOrder(), <int>[]);
+
+    /*----------------------
+               11
+             /    \
+           -2     21
+          /  \    /
+        -3    1  17
+             / \
+            0   9
+    ----------------------*/
+
+    var temp = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    // delete node with no child
+    temp.delete(-3);
+    expect(temp.inOrder(), equals(<int>[-2, 0, 1, 9, 11, 17, 21]));
+
+    temp = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    // delete node with one child
+    temp.delete(21);
+    expect(temp.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 11, 17]));
+
+    temp = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    // delete node with two children
+    temp.delete(-2);
+    expect(temp.inOrder(), equals(<int>[-3, 0, 1, 9, 11, 17, 21]));
+
+    temp = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    // delete root node
+    temp.delete(11);
+    expect(temp.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 17, 21]));
+  });
 }
