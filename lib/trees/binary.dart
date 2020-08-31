@@ -48,38 +48,6 @@ class BinaryTree<T extends Comparable> {
     }
   }
 
-  /// Deletes `value` from the tree and updates `root`
-  void delete(T value) {
-    if (!isEmpty) {
-      var ptr = root, parent;
-      while (ptr != null) {
-        if (ptr.value == value) {
-          break;
-        }
-        parent = ptr;
-        if (ptr.value.compareTo(value) > 0) {
-          ptr = ptr.left;
-        } else {
-          ptr = ptr.right;
-        }
-      }
-
-      if (ptr.left != null && ptr.right != null) {
-        // node with 2 children
-        root = _deleteNodeWithTwoChildren(root, parent, ptr);
-      } else if (ptr.left != null) {
-        // node with only left child
-        root = _deleteNodeWithSingleChild(root, parent, ptr);
-      } else if (ptr.right != null) {
-        // node with only right child
-        root = _deleteNodeWithSingleChild(root, parent, ptr);
-      } else {
-        // node with no child
-        root = _deleteChildlessNode(root, parent, ptr);
-      }
-    }
-  }
-
   void _compareAndAdd(Node<T> root, Node<T> newNode) {
     // Don't allow duplicate values in Binary Search Tree
     if (root.value == newNode.value) {
@@ -101,60 +69,40 @@ class BinaryTree<T extends Comparable> {
     }
   }
 
-  Node<T> _deleteNodeWithTwoChildren(
-    Node<T> root,
-    Node<T> parent,
-    Node<T> ptr,
-  ) {
-    var parsucc = ptr, succ = ptr.right;
-    while (succ.left != null) {
-      parsucc = succ;
-      succ = succ.left;
+  /// Deletes `value` from the tree and updates `root`
+  void delete(T value) {
+    if (!isEmpty) {
+      root = _delete(root, value);
     }
-    ptr.value = succ.value;
-    if (succ.left == null && succ.right == null) {
-      root = _deleteChildlessNode(root, parsucc, succ);
-    } else {
-      root = _deleteNodeWithSingleChild(root, parsucc, succ);
-    }
-
-    return root;
   }
 
-  Node<T> _deleteNodeWithSingleChild(
-    Node<T> root,
-    Node<T> parent,
-    Node<T> ptr,
-  ) {
-    var child;
-    if (ptr.left != null) {
-      child = ptr.left;
-    } else {
-      child = ptr.right;
-    }
-    if (parent == null) {
-      root = child;
-    } else if (ptr == parent.left) {
-      parent.left = child;
-    } else {
-      parent.right = child;
-    }
-    return root;
-  }
+  Node<T> _delete(Node<T> node, T value) {
+    if (node == null) return node;
 
-  Node<T> _deleteChildlessNode(
-    Node<T> root,
-    Node<T> parent,
-    Node<T> ptr,
-  ) {
-    if (parent == null) {
-      root = null;
-    } else if (ptr == parent.left) {
-      parent.left = null;
+    if (value.compareTo(node.value) < 0) {
+      node.left = _delete(node.left, value);
+    } else if (value.compareTo(node.value) > 0) {
+      node.right = _delete(node.right, value);
     } else {
-      parent.right = null;
+      if (node.left != null && node.right != null) {
+        // successor to the node is the next inOrder node
+        var successor = node.right;
+        while (successor.left != null) {
+          successor = successor.left;
+        }
+        node.value = successor.value;
+        node.right = _delete(node.right, successor.value);
+      } else {
+        if (node.left != null) {
+          node = node.left;
+        } else if (node.right != null) {
+          node = node.right;
+        } else {
+          node = null;
+        }
+      }
     }
-    return root;
+    return node;
   }
 
   /// Checks if `value` is contained in the tree
