@@ -1,26 +1,28 @@
+/// Data structure containing `value` and connection to children
 class Node<T extends Comparable> {
   /// Value of the node
   T value;
 
-  /// Left node
+  /// Left child node
   Node<T> left;
 
-  /// Right node
+  /// Right child node
   Node<T> right;
 
+  /// Creates a node with `value`
   Node(this.value);
 }
 
+/// Hierarchical data structure of individual `Node`.
 class BinaryTree<T extends Comparable> {
-  Node<T> _root;
-
   /// Root of the tree
-  Node<T> get root => _root;
+  Node<T> root;
 
-  /// Creates and empty binary tree
+  /// Creates an empty binary tree
   BinaryTree();
 
-  /// Creates a binary tree with all values of `list` added
+  /// Creates a binary tree with all values of `list` added.
+  /// First value becomes `root`.
   BinaryTree.fromList(List<T> list) {
     for (var value in list) {
       add(value);
@@ -28,26 +30,31 @@ class BinaryTree<T extends Comparable> {
   }
 
   /// Creates a new tree with a single value of `value`
-  BinaryTree.withSingleValue(T value) : _root = Node(value);
+  BinaryTree.withSingleValue(T value) : root = Node(value);
 
   /// Tests if this tree is empty
-  bool get isEmpty => _root == null;
+  bool get isEmpty => root == null;
 
   /// Empty the tree
-  void nullify() => _root = null;
+  void nullify() => root = null;
 
   /// Adds `value` to the tree
   void add(T value) {
     var node = Node(value);
     if (isEmpty) {
-      _root = node;
+      root = node;
     } else {
-      _compareAndAdd(_root, node);
+      _compareAndAdd(root, node);
     }
   }
 
   void _compareAndAdd(Node<T> root, Node<T> newNode) {
-    if (root.value.compareTo(newNode.value) >= 0) {
+    // Don't allow duplicate values in Binary Search Tree
+    if (root.value == newNode.value) {
+      return;
+    }
+
+    if (root.value.compareTo(newNode.value) > 0) {
       if (root.left == null) {
         root.left = newNode;
       } else {
@@ -62,8 +69,44 @@ class BinaryTree<T extends Comparable> {
     }
   }
 
+  /// Deletes `value` from the tree and updates `root`
+  void delete(T value) {
+    if (!isEmpty) {
+      root = _delete(root, value);
+    }
+  }
+
+  Node<T> _delete(Node<T> node, T value) {
+    if (node == null) return node;
+
+    if (value.compareTo(node.value) < 0) {
+      node.left = _delete(node.left, value);
+    } else if (value.compareTo(node.value) > 0) {
+      node.right = _delete(node.right, value);
+    } else {
+      if (node.left != null && node.right != null) {
+        // successor to the node is the next inOrder node
+        var successor = node.right;
+        while (successor.left != null) {
+          successor = successor.left;
+        }
+        node.value = successor.value;
+        node.right = _delete(node.right, successor.value);
+      } else {
+        if (node.left != null) {
+          node = node.left;
+        } else if (node.right != null) {
+          node = node.right;
+        } else {
+          node = null;
+        }
+      }
+    }
+    return node;
+  }
+
   /// Checks if `value` is contained in the tree
-  bool contains(T value) => isEmpty ? false : _compareAndCheck(_root, value);
+  bool contains(T value) => isEmpty ? false : _compareAndCheck(root, value);
 
   bool _compareAndCheck(Node<T> root, T value) {
     if (root.value == value) return true;
@@ -75,7 +118,7 @@ class BinaryTree<T extends Comparable> {
   /// PreOrder Traversal
   List<T> preOrder() {
     var result = <T>[];
-    _preOrder(_root, result);
+    _preOrder(root, result);
     return result;
   }
 
@@ -89,7 +132,7 @@ class BinaryTree<T extends Comparable> {
   /// PostOrder Traversal
   List<T> postOrder() {
     var result = <T>[];
-    _postOrder(_root, result);
+    _postOrder(root, result);
     return result;
   }
 
@@ -103,7 +146,7 @@ class BinaryTree<T extends Comparable> {
   /// In Order Traversal
   List<T> inOrder() {
     var result = <T>[];
-    _inOrder(_root, result);
+    _inOrder(root, result);
     return result;
   }
 
