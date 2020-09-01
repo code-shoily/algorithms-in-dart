@@ -1,4 +1,4 @@
-import 'package:algorithms_in_dart/lists/doubly_linked_list.dart' show Node;
+import './doubly_linked_list.dart' show Node;
 
 /// This circular linked list is based off of [DoublyLinkedList]
 class CircularDoublyLinkedList<T> {
