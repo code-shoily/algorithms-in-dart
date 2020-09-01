@@ -156,4 +156,19 @@ class BinaryTree<T extends Comparable> {
     list.add(node.value);
     _inOrder(node.right, list);
   }
+
+  /// Balances the height of the binary tree
+  void balance() {
+    var list = inOrder();
+    nullify();
+    _balance(list);
+  }
+
+  void _balance(List<T> list) {
+    if (list.length == 0) return;
+    var middle = list.length ~/ 2;
+    add(list[middle]);
+    _balance(list.sublist(0, middle));
+    _balance(list.sublist(middle + 1));
+  }
 }
