@@ -111,4 +111,32 @@ void main() {
     expect(singleNodeTree.inOrder(), <int>[0]);
     expect(tree.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 11, 17, 21]));
   });
+
+  test('Balance Tree', () {
+    /*----------------------
+      binaryTree before balance()
+             -1
+            /  \
+          -2    0
+                 \
+                  2
+                   \
+                    5
+                   /
+                  4
+                 /
+                3
+    ----------------------*/
+    var binaryTree = BinaryTree.fromList([-1, -2, 0, 2, 5, 4, 3]);
+    binaryTree.balance();
+    /*----------------------
+      binaryTree after balance()
+              2
+            /   \
+          -1     4
+          / \   / \
+        -2   0 3   5
+    ----------------------*/
+    expect(binaryTree.preOrder(), equals(<int>[2, -1, -2, 0, 4, 3, 5]));
+  });
 }
