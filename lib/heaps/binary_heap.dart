@@ -1,4 +1,4 @@
-import 'package:algorithms_in_dart/heaps/base.dart';
+import './base.dart';
 
 /// A binary heap is a complete binary tree which holds heap property.
 ///

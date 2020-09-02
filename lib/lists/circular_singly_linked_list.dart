@@ -1,4 +1,4 @@
-import 'package:algorithms_in_dart/lists/singly_linked_list.dart' show Node;
+import './singly_linked_list.dart' show Node;
 
 /// This circular linked list is based off of [SinglyLinkedList]
 class CircularSinglyLinkedList<T> {

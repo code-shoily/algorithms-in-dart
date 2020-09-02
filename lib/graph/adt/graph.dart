@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:algorithms_in_dart/graph/adt/settings.dart';
+import './settings.dart';
 import 'node.dart';
 
 class Graph<T> {

@@ -1,4 +1,4 @@
-import 'package:algorithms_in_dart/heaps/binary_heap.dart' show BinaryHeap;
+import '../heaps/binary_heap.dart' show BinaryHeap;
 import 'common.dart';
 
 /// HeapSort
