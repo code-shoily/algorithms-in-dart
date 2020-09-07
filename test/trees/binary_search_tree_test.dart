@@ -1,13 +1,13 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/trees/binary.dart';
+import 'package:algorithms_in_dart/trees/binary_search_tree.dart';
 
 void main() {
-  BinaryTree emptyTree, singleNodeTree, tree;
+  BinarySearchTree emptyTree, singleNodeTree, tree;
   setUp(() {
-    emptyTree = BinaryTree();
-    singleNodeTree = BinaryTree.withSingleValue(0);
-    tree = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    emptyTree = BinarySearchTree();
+    singleNodeTree = BinarySearchTree.withSingleValue(0);
+    tree = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
   });
 
   test('Test empty tree', () {
@@ -52,7 +52,7 @@ void main() {
   });
 
   test('Add', () {
-    var ascendingTree = BinaryTree();
+    var ascendingTree = BinarySearchTree();
     ascendingTree.add(10);
     ascendingTree.add(20);
     ascendingTree.add(30);
@@ -64,7 +64,7 @@ void main() {
     expect(ascendingTree.root.right.right.left, isNull);
     expect(ascendingTree.root.right.right.right, isNull);
 
-    var descendingTree = BinaryTree();
+    var descendingTree = BinarySearchTree();
     descendingTree.add(-10);
     descendingTree.add(-20);
     descendingTree.add(-30);
@@ -78,7 +78,7 @@ void main() {
   });
 
   test('Nullify', () {
-    var tree = BinaryTree.fromList([1, 2, 3]);
+    var tree = BinarySearchTree.fromList([1, 2, 3]);
     tree.nullify();
     expect(tree.isEmpty, isTrue);
   });
@@ -114,7 +114,7 @@ void main() {
 
   test('Balance Tree', () {
     /*----------------------
-      binaryTree before balance()
+      tree before balance()
              -1
             /  \
           -2    0
@@ -127,17 +127,17 @@ void main() {
                  /
                 3
     ----------------------*/
-    var binaryTree = BinaryTree.fromList([-1, -2, 0, 2, 5, 4, 3]);
-    binaryTree.balance();
+    var tree = BinarySearchTree.fromList([-1, -2, 0, 2, 5, 4, 3]);
+    tree.balance();
     /*----------------------
-      binaryTree after balance()
+      tree after balance()
               2
             /   \
           -1     4
           / \   / \
         -2   0 3   5
     ----------------------*/
-    expect(binaryTree.preOrder(), equals(<int>[2, -1, -2, 0, 4, 3, 5]));
+    expect(tree.preOrder(), equals(<int>[2, -1, -2, 0, 4, 3, 5]));
   });
 
   test('Delete node', () {
@@ -156,22 +156,22 @@ void main() {
             0   9
     ----------------------*/
 
-    var temp = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    var temp = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
     // delete node with no child
     temp.delete(-3);
     expect(temp.inOrder(), equals(<int>[-2, 0, 1, 9, 11, 17, 21]));
 
-    temp = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    temp = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
     // delete node with one child
     temp.delete(21);
     expect(temp.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 11, 17]));
 
-    temp = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    temp = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
     // delete node with two children
     temp.delete(-2);
     expect(temp.inOrder(), equals(<int>[-3, 0, 1, 9, 11, 17, 21]));
 
-    temp = BinaryTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    temp = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
     // delete root node
     temp.delete(11);
     expect(temp.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 17, 21]));
