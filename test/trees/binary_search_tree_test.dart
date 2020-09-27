@@ -1,6 +1,87 @@
 import 'package:test/test.dart';
-
 import 'package:algorithms_in_dart/trees/binary_search_tree.dart';
+
+/// Adds left subtree to [root].
+void _addLeft<T extends Comparable>(
+    Node root, List<T> preOrder, List<T> inOrder) {
+  root.left = Node(preOrder[0]);
+
+  if (preOrder.length > 1) {
+    createBinarySearchTree(root.left, preOrder, inOrder);
+  }
+}
+
+/// Adds right subtree to [root].
+void _addRight<T extends Comparable>(
+    Node root, List<T> preOrder, List<T> inOrder) {
+  root.right = Node(preOrder[0]);
+
+  if (preOrder.length > 1) {
+    createBinarySearchTree(root.right, preOrder, inOrder);
+  }
+}
+
+/// Creates a Binary Search tree from the given [preOrder] and [inOrder]
+///  traversals.
+///
+/// [root] must not be null.
+void createBinarySearchTree<T extends Comparable>(
+    Node root, List<T> preOrder, List<T> inOrder) {
+  expect(root, isNotNull);
+  expect(true, preOrder.length == inOrder.length);
+
+  // [root] is the only node in subtree.
+  if (preOrder.length <= 1) {
+    return;
+  }
+
+  // [root] has only one child.
+  else if (preOrder.length == 2) {
+    if (preOrder[0] == inOrder[0]) {
+      root.right = Node(preOrder[1]);
+    } else {
+      root.left = Node(preOrder[1]);
+    }
+  }
+
+  // Multiple nodes present.
+  else {
+    // BST must have unique values.
+    final uniqueValues = {...preOrder}.length == preOrder.length &&
+        {...inOrder}.length == inOrder.length;
+    expect(true, uniqueValues);
+
+    // Index of [root] in [inOrder] list.
+    var iIndex = inOrder.indexOf(preOrder[0]);
+
+    // Set of values in the left subtree of [root].
+    var set = {...inOrder.sublist(0, iIndex)};
+
+    // Index of last value in the left subtree of [root] in [preOrder] list.
+    var pIndex = preOrder.indexOf(set.last);
+    for (var i = pIndex + 1; set.contains(preOrder[i]); i++) {
+      pIndex = i;
+    }
+
+    _addLeft(root, preOrder.sublist(1, pIndex + 1), inOrder.sublist(0, iIndex));
+
+    _addRight(root, preOrder.sublist(pIndex + 1), inOrder.sublist(iIndex + 1));
+  }
+}
+
+/// Checks if [tree] is a valid Binary Search Tree or not.
+///
+/// If inOrder traversal of [tree] has values in order, it is valid.
+bool isValidBinarySearchTree<T extends Comparable>(BinarySearchTree tree) {
+  var inOrder = tree.inOrder();
+
+  if (inOrder.isNotEmpty) {
+    for (var i = 0; i < inOrder.length - 1; i++) {
+      if (inOrder[i].compareTo(inOrder[i + 1]) > 0) return false;
+    }
+  }
+  return true;
+}
 
 void main() {
   BinarySearchTree emptyTree, singleNodeTree, tree;
@@ -8,6 +89,10 @@ void main() {
     emptyTree = BinarySearchTree();
     singleNodeTree = BinarySearchTree.withSingleValue(0);
     tree = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+  });
+
+  test('BST property', () {
+    expect(true, isValidBinarySearchTree(tree));
   });
 
   test('Test empty tree', () {
@@ -127,8 +212,8 @@ void main() {
                  /
                 3
     ----------------------*/
-    var tree = BinarySearchTree.fromList([-1, -2, 0, 2, 5, 4, 3]);
-    tree.balance();
+    var test = BinarySearchTree.fromList([-1, -2, 0, 2, 5, 4, 3]);
+    test.balance();
     /*----------------------
       tree after balance()
               2
@@ -137,7 +222,8 @@ void main() {
           / \   / \
         -2   0 3   5
     ----------------------*/
-    expect(tree.preOrder(), equals(<int>[2, -1, -2, 0, 4, 3, 5]));
+    expect(test.preOrder(), equals(<int>[2, -1, -2, 0, 4, 3, 5]));
+    expect(true, isValidBinarySearchTree(test));
   });
 
   test('Delete node', () {
@@ -156,24 +242,24 @@ void main() {
             0   9
     ----------------------*/
 
-    var temp = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    var test = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
     // delete node with no child
-    temp.delete(-3);
-    expect(temp.inOrder(), equals(<int>[-2, 0, 1, 9, 11, 17, 21]));
+    test.delete(-3);
+    expect(true, isValidBinarySearchTree(test));
 
-    temp = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    test = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
     // delete node with one child
-    temp.delete(21);
-    expect(temp.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 11, 17]));
+    test.delete(21);
+    expect(true, isValidBinarySearchTree(test));
 
-    temp = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    test = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
     // delete node with two children
-    temp.delete(-2);
-    expect(temp.inOrder(), equals(<int>[-3, 0, 1, 9, 11, 17, 21]));
+    test.delete(-2);
+    expect(true, isValidBinarySearchTree(test));
 
-    temp = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
+    test = BinarySearchTree.fromList([11, -2, 1, 0, 21, 17, 9, -3]);
     // delete root node
-    temp.delete(11);
-    expect(temp.inOrder(), equals(<int>[-3, -2, 0, 1, 9, 17, 21]));
+    test.delete(11);
+    expect(true, isValidBinarySearchTree(test));
   });
 }
