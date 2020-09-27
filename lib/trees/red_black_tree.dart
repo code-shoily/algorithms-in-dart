@@ -2,18 +2,59 @@ import './binary_search_tree.dart';
 import './binary_tree.dart';
 
 /// Sentinel node to represent leaf nodes in [RedBlackTree].
-final RedBlackNode _nil = RedBlackNode.sentinalNode();
+final RedBlackNode nil = RedBlackNode.sentinalNode();
 
-enum _Color { red, black }
+/// Color states a [RedBlackNode] can be in.
+enum Color {
+  /// Red colored node.
+  red,
+
+  /// Black colored node.
+  black
+}
+
+/// Data structure similar to [_Node], differs in having connection to it's
+///  [parent] and an extra [color] attribute.
+class RedBlackNode<T extends Comparable> {
+  /// Value of the node.
+  T value;
+
+  /// [color] of the node.
+  Color color;
+
+  /// [parent] of the node.
+  RedBlackNode parent;
+
+  /// [left] child node.
+  RedBlackNode left;
+
+  /// [right] child node.
+  RedBlackNode right;
+
+  /// Default constructor for a new node.
+  RedBlackNode(this.value, this.parent) {
+    color = Color.red;
+    left = right = nil;
+  }
+
+  /// Creates root with [value].
+  RedBlackNode.root(this.value) {
+    color = Color.black;
+    left = right = nil;
+  }
+
+  /// Creates a sentinal node.
+  RedBlackNode.sentinalNode() : color = Color.black;
+}
 
 /// A self-balancing [BinarySearchTree].
 ///
 /// [RedBlackTree] has following properties:
 /// * Each node is either red or black.
 /// * The [root] is black.
-/// * All leaves ([_nil]) are black.
+/// * All leaves ([nil]) are black.
 /// * If a node is red, then both its children are black.
-/// * Every path from a given node to any of its descendant [_nil] nodes goes
+/// * Every path from a given node to any of its descendant [nil] nodes goes
 ///    through the same number of black nodes.
 class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   /// Root of the tree.
@@ -51,16 +92,11 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   @override
   bool contains(T value) => isEmpty ? false : _compareAndCheck(root, value);
 
-  bool _compareAndCheck(RedBlackNode node, T value) {
-    if (node.value == value) return true;
-    return (node.value.compareTo(value) >= 0
-        ? (node.left != null ? _compareAndCheck(node.left, value) : false)
-        : (node.right != null ? _compareAndCheck(node.right, value) : false));
-  }
-
   @override
   void delete(T value) {
-    // TODO: implement delete
+    if (!isEmpty) {
+      _delete(root, value);
+    }
   }
 
   @override
@@ -70,27 +106,6 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
       _inOrder(root, result);
     }
     return result;
-  }
-
-  void _inOrder(RedBlackNode node, List<T> list) {
-    if (node == _nil) return;
-    _inOrder(node.left, list);
-    list.add(node.value);
-    _inOrder(node.right, list);
-  }
-
-  void _postOrder(RedBlackNode node, List<T> list) {
-    if (node == _nil) return;
-    _postOrder(node.left, list);
-    _postOrder(node.right, list);
-    list.add(node.value);
-  }
-
-  void _preOrder(RedBlackNode node, List<T> list) {
-    if (node == _nil) return;
-    list.add(node.value);
-    _preOrder(node.left, list);
-    _preOrder(node.right, list);
   }
 
   @override
@@ -118,13 +133,13 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
 
   RedBlackNode _add(RedBlackNode node, T value) {
     if (value.compareTo(node.value) < 0) {
-      if (node.left != _nil) {
+      if (node.left != nil) {
         return _add(node.left, value);
       } else {
         return (node.left = RedBlackNode(value, node));
       }
     } else if (value.compareTo(node.value) > 0) {
-      if (node.right != _nil) {
+      if (node.right != nil) {
         return _add(node.right, value);
       } else {
         return (node.right = RedBlackNode(value, node));
@@ -142,20 +157,20 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
 
     // [node] is [root].
     if (parent == null) {
-      node.color = _Color.black;
+      node.color = Color.black;
       return;
     }
 
     // [parent] is black, tree is valid.
-    else if (parent.color == _Color.black) {
+    else if (parent.color == Color.black) {
       return;
     }
 
     // Double red problem encountered with red [uncle].
-    else if (uncle != _nil && uncle.color == _Color.red) {
+    else if (uncle.color == Color.red) {
       // Recolor [parent], [uncle] and [grandparent] of node.
-      uncle.color = parent.color = _Color.black;
-      grandparent.color = _Color.red;
+      uncle.color = parent.color = Color.black;
+      grandparent.color = Color.red;
 
       // Check if [grandparent] is not voilating any property.
       _addReorder(grandparent);
@@ -163,7 +178,7 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
 
     // Double red problem encountered with black or nil [uncle].
     else {
-      // Parent is left child.
+      // [parent] is left child.
       if (parent == grandparent.left) {
         // [node] is right child, rotate left about [parent].
         if (node == parent.right) {
@@ -178,7 +193,7 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
         _rotateRight(grandparent);
       }
 
-      // Parent is right child.
+      // [parent] is right child.
       else if (parent == grandparent.right) {
         // [node] is left child, rotate right about [parent].
         if (node == parent.left) {
@@ -193,16 +208,176 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
         _rotateLeft(grandparent);
       }
 
-      grandparent.color = _Color.red;
-      parent.color = _Color.black;
+      grandparent.color = Color.red;
+      parent.color = Color.black;
     }
+  }
+
+  bool _compareAndCheck(RedBlackNode node, T value) {
+    if (node.value == value) return true;
+    return (node.value.compareTo(value) >= 0
+        ? (node.left != nil ? _compareAndCheck(node.left, value) : false)
+        : (node.right != nil ? _compareAndCheck(node.right, value) : false));
+  }
+
+  void _delete(RedBlackNode node, T value) {
+    // Base Case, [value] not found.
+    if (node == nil) return;
+
+    if (node.value.compareTo(value) > 0) {
+      _delete(node.left, value);
+    } else if (node.value.compareTo(value) < 0) {
+      _delete(node.right, value);
+    } else {
+      // [node] with [value] found.
+
+      // [node] has two children.
+      if (node.left != nil && node.right != nil) {
+        // Successor to [node] is the next inOrder node.
+        var successor = node.right;
+        while (successor.left != nil) {
+          successor = successor.left;
+        }
+        node.value = successor.value;
+        _delete(node.right, successor.value);
+      } else {
+        // Delete [node] and reorder.
+        node = _deleteReorder(node);
+      }
+    }
+  }
+
+  RedBlackNode _deleteReorder(RedBlackNode node) {
+    // Childless red node.
+    if (node.color == Color.red) {
+      return nil;
+    } else {
+      // Childless black node.
+      if (node.left == nil && node.right == nil) {
+        var sibling = _sibling(node);
+        var parent = _parent(node);
+        var nearNephew = _nearNephew(node);
+        var farNephew = _farNephew(node);
+
+        // [sibling] is red.
+        if (sibling?.color == Color.red) {
+          if (parent.left == node) {
+            _rotateLeft(parent);
+          } else {
+            _rotateRight(parent);
+          }
+          parent.color = Color.red;
+          sibling.color = Color.black;
+        }
+
+        // [sibling] and both the nephews are black..
+        if (sibling?.color == Color.black &&
+            nearNephew.color == Color.black &&
+            farNephew.color == Color.black) {
+          // ..with red parent.
+          if (parent.color == Color.red) {
+            sibling.color = Color.red;
+            parent.color = Color.black;
+          }
+
+          // ..with black parent.
+          else {
+            sibling.color = Color.red;
+            _deleteReorder(parent);
+          }
+          return nil;
+        }
+
+        // [sibling] is black and at least one nephew is red.
+        if (sibling?.color == Color.black &&
+            (nearNephew.color == Color.red || farNephew.color == Color.red)) {
+          // Far nephew is black.
+          if (farNephew.color == Color.black) {
+            if (node == parent.left) {
+              _rotateRight(sibling);
+            } else {
+              _rotateLeft(sibling);
+            }
+            nearNephew.color = Color.black;
+            sibling.color = Color.red;
+          }
+
+          // Far newphew is red.
+          else {
+            if (node == parent.left) {
+              _rotateLeft(parent);
+            } else {
+              _rotateRight(parent);
+            }
+            sibling.color = parent.color;
+            parent.color = farNephew.color = Color.black;
+          }
+          return nil;
+        }
+
+        // [node] is root
+        return root = null;
+      }
+
+      // Black node with one child.
+      else {
+        RedBlackNode child;
+        var parent = _parent(node);
+        if (node.left != nil) {
+          child = node.left;
+        } else {
+          child = node.right;
+        }
+        if (node == parent.left) {
+          parent.left = child;
+        } else {
+          parent.right = child;
+        }
+        child.parent = parent;
+        child.color = Color.black;
+        return child;
+      }
+    }
+  }
+
+  /// Right child of [node]' sibling.
+  RedBlackNode _farNephew(RedBlackNode node) {
+    var sibling = _sibling(node);
+    return sibling?.right;
   }
 
   /// Parent of [node]'s parent.
   RedBlackNode _grandParent(RedBlackNode node) => _parent(_parent(node));
 
+  void _inOrder(RedBlackNode node, List<T> list) {
+    if (node == nil) return;
+    _inOrder(node.left, list);
+    list.add(node.value);
+    _inOrder(node.right, list);
+  }
+
+  /// Left child of [node]' sibling.
+  RedBlackNode _nearNephew(RedBlackNode node) {
+    var sibling = _sibling(node);
+    return sibling?.left;
+  }
+
   /// Parent of [node].
   RedBlackNode _parent(RedBlackNode node) => node?.parent;
+
+  void _postOrder(RedBlackNode node, List<T> list) {
+    if (node == nil) return;
+    _postOrder(node.left, list);
+    _postOrder(node.right, list);
+    list.add(node.value);
+  }
+
+  void _preOrder(RedBlackNode node, List<T> list) {
+    if (node == nil) return;
+    list.add(node.value);
+    _preOrder(node.left, list);
+    _preOrder(node.right, list);
+  }
 
   /// Rotates [node] N to left and makes C it's parent.
   ///
@@ -221,7 +396,7 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
     node.parent = child;
 
     // Update other parent/child connections.
-    if (node.right != _nil) {
+    if (node.right != nil) {
       node.right.parent = node;
     }
 
@@ -254,7 +429,7 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
     node.parent = child;
 
     // Update other parent/child connections.
-    if (node.left != _nil) {
+    if (node.left != nil) {
       node.left.parent = node;
     }
 
@@ -281,38 +456,4 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
     var parent = _parent(node);
     return (_sibling(parent));
   }
-}
-
-/// Data structure similar to [_Node], differs in having connection to it's
-///  [parent] and an extra [color] attribute.
-class RedBlackNode<T extends Comparable> {
-  /// Value of the node.
-  T value;
-
-  /// [color] of the node.
-  _Color color;
-
-  /// [parent] of the node.
-  RedBlackNode<T> parent;
-
-  /// [left] child node.
-  RedBlackNode<T> left;
-
-  /// [right] child node.
-  RedBlackNode<T> right;
-
-  /// Default constructor for a new node.
-  RedBlackNode(this.value, this.parent) {
-    color = _Color.red;
-    left = right = _nil;
-  }
-
-  /// Creates root with [value].
-  RedBlackNode.root(this.value) {
-    color = _Color.black;
-    left = right = _nil;
-  }
-
-  /// Creates a sentinal node.
-  RedBlackNode.sentinalNode() : color = _Color.black;
 }
