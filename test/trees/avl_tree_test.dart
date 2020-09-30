@@ -1,52 +1,8 @@
+import 'package:algorithms_in_dart/trees/avl_tree.dart';
+import 'package:algorithms_in_dart/trees/binary_search_tree.dart';
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/trees/binary_search_tree.dart';
-import 'package:algorithms_in_dart/trees/avl_tree.dart';
 import 'binary_search_tree_test.dart';
-
-int _leftBalance(AvlNode node) {
-  if (node == null) return 0;
-
-  // [left] and [right] are heights of respective sub-trees.
-  var left = _leftBalance(node.left);
-  var right = _rightBlance(node.right);
-
-  var balance = left + right;
-  expect(true, -1 <= balance && balance <= 1);
-
-  // Add [node] to either [left] or [right], whichever is bigger.
-  return 1 + (left >= right.abs() ? left : right.abs());
-}
-
-int _rightBlance(AvlNode node) {
-  if (node == null) return 0;
-
-  // [left] and [right] are heights of respective sub-trees.
-  var left = _leftBalance(node.left);
-  var right = _rightBlance(node.right);
-
-  var balance = left + right;
-  expect(true, -1 <= balance && balance <= 1);
-
-  // Add [node] to either [left] or [right], whichever is bigger.
-  return (right.abs() >= left ? right : -left) - 1;
-}
-
-/// Checks if [tree] is a valid Avl tree or not.
-///
-/// Valid Avl tree must be a valid Binary Search tree
-///  and balance (difference between height of left and right subtree) of all
-///  it's nodes must belong to the set `{-1, 0, 1}`.
-bool isValidAvlTree<T extends Comparable>(AvlTree tree) {
-  var test = BinarySearchTree.withSingleValue(tree.root.value);
-  createBinarySearchTree(test.root, tree.preOrder(), tree.inOrder());
-  expect(true, isValidBinarySearchTree(test));
-
-  var balance = _leftBalance(tree.root?.left) + _rightBlance(tree.root?.right);
-  balance ??= 0;
-
-  return -1 <= balance && balance <= 1 ? true : false;
-}
 
 void main() {
   AvlTree emptyTree, singleNodeTree, multipleNodetree;
@@ -180,25 +136,27 @@ void main() {
     }
   });
 
-  test('Pre-order traversal', () {
-    expect(emptyTree.preOrder(), <int>[]);
-    expect(singleNodeTree.preOrder(), <int>[0]);
-    expect(multipleNodetree.preOrder(),
-        equals(<String>['n', 'i', 'h', 'a', 'l', 'k', 'm', 'p', 'o', 'q']));
-  });
+  group('Traversal', () {
+    test('Pre-order', () {
+      expect(emptyTree.preOrder(), <int>[]);
+      expect(singleNodeTree.preOrder(), <int>[0]);
+      expect(multipleNodetree.preOrder(),
+          equals(<String>['n', 'i', 'h', 'a', 'l', 'k', 'm', 'p', 'o', 'q']));
+    });
 
-  test('Post-order traversal', () {
-    expect(emptyTree.postOrder(), <int>[]);
-    expect(singleNodeTree.postOrder(), <int>[0]);
-    expect(multipleNodetree.postOrder(),
-        equals(<String>['a', 'h', 'k', 'm', 'l', 'i', 'o', 'q', 'p', 'n']));
-  });
+    test('Post-order', () {
+      expect(emptyTree.postOrder(), <int>[]);
+      expect(singleNodeTree.postOrder(), <int>[0]);
+      expect(multipleNodetree.postOrder(),
+          equals(<String>['a', 'h', 'k', 'm', 'l', 'i', 'o', 'q', 'p', 'n']));
+    });
 
-  test('In-order traversal', () {
-    expect(emptyTree.inOrder(), <int>[]);
-    expect(singleNodeTree.inOrder(), <int>[0]);
-    expect(multipleNodetree.inOrder(),
-        equals(<String>['a', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q']));
+    test('In-order', () {
+      expect(emptyTree.inOrder(), <int>[]);
+      expect(singleNodeTree.inOrder(), <int>[0]);
+      expect(multipleNodetree.inOrder(),
+          equals(<String>['a', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q']));
+    });
   });
 
   test('Delete node', () {
@@ -230,4 +188,50 @@ void main() {
     // LR: Left rotation about 'l', Right rotation about 'o'
     expect(true, isValidAvlTree(multipleNodetree));
   });
+}
+
+/// Checks if [tree] is a valid Avl tree or not.
+///
+/// Valid Avl tree must be a valid Binary Search tree
+///  and balance (difference between height of left and right subtree) of all
+///  it's nodes must belong to the set `{-1, 0, 1}`.
+bool isValidAvlTree(AvlTree tree) {
+  if (tree == null || tree.isEmpty) return true;
+
+  var test = BinarySearchTree.withSingleValue(tree.root.value);
+  createBinarySearchTree(test.root, tree.preOrder(), tree.inOrder());
+  expect(true, isValidBinarySearchTree(test));
+
+  var balance = _leftBalance(tree.root.left) + _rightBlance(tree.root.right);
+  return -1 <= balance && balance <= 1 ? true : false;
+}
+
+/// Returns height of left sub-tree, a positive integer.
+int _leftBalance(AvlNode node) {
+  if (node == null) return 0;
+
+  // [left] and [right] are heights of respective sub-trees.
+  var left = _leftBalance(node.left);
+  var right = _rightBlance(node.right);
+
+  var balance = left + right;
+  expect(true, -1 <= balance && balance <= 1);
+
+  // Add [node] to either [left] or [right], whichever is bigger.
+  return 1 + (left >= right.abs() ? left : right.abs());
+}
+
+/// Returns height of right sub-tree, a negative integer.
+int _rightBlance(AvlNode node) {
+  if (node == null) return 0;
+
+  // [left] and [right] are heights of respective sub-trees.
+  var left = _leftBalance(node.left);
+  var right = _rightBlance(node.right);
+
+  var balance = left + right;
+  expect(true, -1 <= balance && balance <= 1);
+
+  // Add [node] to either [left] or [right], whichever is bigger.
+  return (right.abs() >= left ? right : -left) - 1;
 }
