@@ -1,13 +1,37 @@
 import './binary_search_tree.dart';
 import './binary_tree.dart';
 
+/// Data structure similar to [Node], differs in having a [balanceFactor].
+class AvlNode<T extends Comparable> {
+  /// Difference between height of left and right subtree.
+  ///
+  /// [balanceFactor] ∈ `{-1, 0, 1}`.
+  /// Any [AvlNode] having [balanceFactor] outside this set is imbalanced.
+  int balanceFactor;
+
+  /// Value of the node.
+  T value;
+
+  /// [left] child node.
+  AvlNode<T> left;
+
+  /// [right] child node.
+  AvlNode<T> right;
+
+  /// Creates an empty avlNode.
+  AvlNode() : balanceFactor = 0;
+
+  /// Creates an avlNode with [value].
+  AvlNode.withValue(this.value) : balanceFactor = 0;
+}
+
 /// A self-balancing [BinarySearchTree].
 ///
 /// In AVL tree, difference in the height of left and right subtrees
 ///  of any node can be at most 1.
 class AvlTree<T extends Comparable> implements BinaryTree<T> {
   /// Root of the tree
-  _AvlNode root;
+  AvlNode root;
 
   /// If after addition, height of parent node increases.
   bool _isTaller = false;
@@ -26,7 +50,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   /// Creates a new AVL tree with a single [value].
-  AvlTree.withSingleValue(T value) : root = _AvlNode.withValue(value);
+  AvlTree.withSingleValue(T value) : root = AvlNode.withValue(value);
 
   /// Tests if this tree is empty.
   bool get isEmpty => root == null;
@@ -34,7 +58,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   @override
   void add(T value) {
     if (isEmpty) {
-      root = _AvlNode();
+      root = AvlNode();
       root = _add(root, value, true);
     } else {
       root = _add(root, value, false);
@@ -76,7 +100,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   /// Balances the left heavy, imbalanced [node].
-  _AvlNode _aBalanceLeft(_AvlNode node) {
+  AvlNode _aBalanceLeft(AvlNode node) {
     var lChild = node.left;
 
     // Addition done in left subtree of [lChild].
@@ -117,7 +141,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   /// Balances the right heavy, imbalanced [node].
-  _AvlNode _aBalanceRight(_AvlNode node) {
+  AvlNode _aBalanceRight(AvlNode node) {
     var rChild = node.right;
 
     // Addition done in right subtree of [rChild].
@@ -157,7 +181,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
     return node;
   }
 
-  _AvlNode _add(_AvlNode node, T value, bool isNull) {
+  AvlNode _add(AvlNode node, T value, bool isNull) {
     if (isNull) {
       // Base case, node's value is set.
       node.value = value;
@@ -169,7 +193,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
         /*var newNode = _AvlNode(null);
         node.left = newNode;
         node.left = _add(newNode, value, true);*/
-        node.left = _AvlNode();
+        node.left = AvlNode();
         node.left = _add(node.left, value, true);
       } else {
         // Otherwise traverse to left subtree.
@@ -183,7 +207,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
       if (node.right == null) {
         // If right subtree is null,
         //  create a new node and pass [isNull] as true.
-        node.right = _AvlNode();
+        node.right = AvlNode();
         node.right = _add(node.right, value, true);
       } else {
         // Otherwise traverse to right subtree.
@@ -201,7 +225,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   /// Updates [balanceFactor] when addition is done in left subtree of [node].
-  _AvlNode _aUpdateLeftBalanceFactor(_AvlNode node) {
+  AvlNode _aUpdateLeftBalanceFactor(AvlNode node) {
     switch (node.balanceFactor) {
 
       // node was balanced.
@@ -227,7 +251,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   /// Updates [balanceFactor] when addition is done in right subtree of [node].
-  _AvlNode _aUpdateRightBalanceFactor(_AvlNode node) {
+  AvlNode _aUpdateRightBalanceFactor(AvlNode node) {
     switch (node.balanceFactor) {
 
       // node was balanced.
@@ -252,7 +276,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
     return node;
   }
 
-  bool _compareAndCheck(_AvlNode node, T value) {
+  bool _compareAndCheck(AvlNode node, T value) {
     if (node.value == value) return true;
     return (node.value.compareTo(value) >= 0
         ? (node.left != null ? _compareAndCheck(node.left, value) : false)
@@ -261,7 +285,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
 
   /// Balances left heavy imbalanced [node] after deletion in it's
   ///  right subtree.
-  _AvlNode _dBalanceLeft(_AvlNode node) {
+  AvlNode _dBalanceLeft(AvlNode node) {
     // Left subtree of [node]
     var lChild = node.left;
 
@@ -314,7 +338,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
 
   /// Balances right heavy, imbalanced [node] after deletion in it's
   ///  left subtree.
-  _AvlNode _dBalanceRight(_AvlNode node) {
+  AvlNode _dBalanceRight(AvlNode node) {
     // Right subtree of [node]
     var rChild = node.right;
 
@@ -365,7 +389,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
     return node;
   }
 
-  _AvlNode _delete(_AvlNode node, T value) {
+  AvlNode _delete(AvlNode node, T value) {
     // Base Case, Key not found
     if (node == null) {
       _isShorter = false;
@@ -420,7 +444,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   /// Updates [balanceFactor] when deletion is done from left subtree of [node].
-  _AvlNode _dUpdateLeftBalanceFactor(_AvlNode node) {
+  AvlNode _dUpdateLeftBalanceFactor(AvlNode node) {
     switch (node.balanceFactor) {
 
       // node was balanced.
@@ -446,7 +470,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
 
   /// Updates [balanceFactor] when deletion is done from right subtree of
   ///  [node].
-  _AvlNode _dUpdateRightBalanceFactor(_AvlNode node) {
+  AvlNode _dUpdateRightBalanceFactor(AvlNode node) {
     switch (node.balanceFactor) {
 
       // node was balanced.
@@ -470,21 +494,21 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
     return node;
   }
 
-  void _inOrder(_AvlNode node, List<T> list) {
+  void _inOrder(AvlNode node, List<T> list) {
     if (node == null) return;
     _inOrder(node.left, list);
     list.add(node.value);
     _inOrder(node.right, list);
   }
 
-  void _postOrder(_AvlNode node, List<T> list) {
+  void _postOrder(AvlNode node, List<T> list) {
     if (node == null) return;
     _postOrder(node.left, list);
     _postOrder(node.right, list);
     list.add(node.value);
   }
 
-  void _preOrder(_AvlNode node, List<T> list) {
+  void _preOrder(AvlNode node, List<T> list) {
     if (node == null) return;
     list.add(node.value);
     _preOrder(node.left, list);
@@ -499,7 +523,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   ///            / \          / \
   ///           ⬤               ⬤
   /// Left subtree of C becomes right subtree of U.
-  _AvlNode _rotateLeft(_AvlNode rightUnbalancedNode) {
+  AvlNode _rotateLeft(AvlNode rightUnbalancedNode) {
     var rightChild = rightUnbalancedNode.right;
     rightUnbalancedNode.right = rightChild.left;
     rightChild.left = rightUnbalancedNode;
@@ -514,34 +538,10 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   ///         / \                / \
   ///            ⬤             ⬤
   /// Right subtree of C becomes left subtree of U.
-  _AvlNode _rotateRight(_AvlNode leftUnbalancedNode) {
+  AvlNode _rotateRight(AvlNode leftUnbalancedNode) {
     var leftChild = leftUnbalancedNode.left;
     leftUnbalancedNode.left = leftChild.right;
     leftChild.right = leftUnbalancedNode;
     return leftChild;
   }
-}
-
-/// Data structure similar to [_Node], differs in having a [balanceFactor].
-class _AvlNode<T extends Comparable> {
-  /// Difference between height of left and right subtree.
-  ///
-  /// [balanceFactor] ∈ `{-1, 0, 1}`.
-  /// Any [_AvlNode] having [balanceFactor] outside this set is imbalanced.
-  int balanceFactor;
-
-  /// Value of the node.
-  T value;
-
-  /// [left] child node.
-  _AvlNode<T> left;
-
-  /// [right] child node.
-  _AvlNode<T> right;
-
-  /// Creates an empty avlNode.
-  _AvlNode() : balanceFactor = 0;
-
-  /// Creates an avlNode with [value].
-  _AvlNode.withValue(this.value) : balanceFactor = 0;
 }

@@ -13,7 +13,7 @@ enum Color {
   black
 }
 
-/// Data structure similar to [_Node], differs in having connection to it's
+/// Data structure similar to [Node], differs in having connection to it's
 ///  [parent] and an extra [color] attribute.
 class RedBlackNode<T extends Comparable> {
   /// Value of the node.
@@ -84,6 +84,7 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
 
     _addReorder(root);
 
+    // Update root.
     while (_parent(root) != null) {
       root = _parent(root);
     }
@@ -96,6 +97,11 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   void delete(T value) {
     if (!isEmpty) {
       _delete(root, value);
+    }
+
+    // Update root.
+    while (_parent(root) != null) {
+      root = _parent(root);
     }
   }
 
@@ -176,7 +182,7 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
       _addReorder(grandparent);
     }
 
-    // Double red problem encountered with black or nil [uncle].
+    // Double red problem encountered with black [uncle].
     else {
       // [parent] is left child.
       if (parent == grandparent.left) {
@@ -242,7 +248,14 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
         _delete(node.right, successor.value);
       } else {
         // Delete [node] and reorder.
-        node = _deleteReorder(node);
+        var parent = _parent(node);
+
+        // [node] is root.
+        parent ?? nullify();
+
+        node == parent?.left
+            ? parent?.left = _deleteReorder(node)
+            : parent?.right = _deleteReorder(node);
       }
     }
   }
@@ -259,8 +272,10 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
         var nearNephew = _nearNephew(node);
         var farNephew = _farNephew(node);
 
-        // [sibling] is red.
+        // [node]'s [sibling] is red.
         if (sibling?.color == Color.red) {
+          // Rotate with [parent] as pivot and convert to case with
+          //  black [sibling].
           if (parent.left == node) {
             _rotateLeft(parent);
           } else {
@@ -268,9 +283,15 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
           }
           parent.color = Color.red;
           sibling.color = Color.black;
+
+          // Update relations.
+          sibling = _sibling(node);
+          parent = _parent(node);
+          nearNephew = _nearNephew(node);
+          farNephew = _farNephew(node);
         }
 
-        // [sibling] and both the nephews are black..
+        // [node]'s [sibling] and both the nephews are black..
         if (sibling?.color == Color.black &&
             nearNephew.color == Color.black &&
             farNephew.color == Color.black) {
@@ -288,50 +309,56 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
           return nil;
         }
 
-        // [sibling] is black and at least one nephew is red.
+        // [node]'s [sibling] is black and at least one nephew is red.
         if (sibling?.color == Color.black &&
             (nearNephew.color == Color.red || farNephew.color == Color.red)) {
-          // Far nephew is black.
-          if (farNephew.color == Color.black) {
-            if (node == parent.left) {
-              _rotateRight(sibling);
-            } else {
-              _rotateLeft(sibling);
-            }
-            nearNephew.color = Color.black;
-            sibling.color = Color.red;
+          switch (farNephew.color) {
+
+            // Far nephew is black, perform rotation on [sibling]
+            //  and convert it to other case.
+            case Color.black:
+              if (node == parent.left) {
+                _rotateRight(sibling);
+              } else {
+                _rotateLeft(sibling);
+              }
+              nearNephew.color = Color.black;
+              sibling.color = Color.red;
+
+              // Update relations.
+              sibling = _sibling(node);
+              nearNephew = _nearNephew(node);
+              farNephew = _farNephew(node);
+              continue toRedCase;
+
+            toRedCase:
+            // Far newphew is red.
+            case Color.red:
+              if (node == parent.left) {
+                _rotateLeft(parent);
+              } else {
+                _rotateRight(parent);
+              }
+              sibling.color = parent.color;
+              parent.color = farNephew.color = Color.black;
+              break;
           }
 
-          // Far newphew is red.
-          else {
-            if (node == parent.left) {
-              _rotateLeft(parent);
-            } else {
-              _rotateRight(parent);
-            }
-            sibling.color = parent.color;
-            parent.color = farNephew.color = Color.black;
-          }
           return nil;
         }
 
-        // [node] is root
-        return root = null;
+        // [node] is root.
+        return null;
       }
 
       // Black node with one child.
       else {
-        RedBlackNode child;
-        var parent = _parent(node);
+        var parent = _parent(node), child;
+
         if (node.left != nil) {
           child = node.left;
         } else {
           child = node.right;
-        }
-        if (node == parent.left) {
-          parent.left = child;
-        } else {
-          parent.right = child;
         }
         child.parent = parent;
         child.color = Color.black;
@@ -340,10 +367,11 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
     }
   }
 
-  /// Right child of [node]' sibling.
   RedBlackNode _farNephew(RedBlackNode node) {
+    var parent = _parent(node);
     var sibling = _sibling(node);
-    return sibling?.right;
+
+    return node == parent?.left ? sibling?.right : sibling?.left;
   }
 
   /// Parent of [node]'s parent.
@@ -356,10 +384,11 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
     _inOrder(node.right, list);
   }
 
-  /// Left child of [node]' sibling.
   RedBlackNode _nearNephew(RedBlackNode node) {
+    var parent = _parent(node);
     var sibling = _sibling(node);
-    return sibling?.left;
+
+    return node == parent?.left ? sibling?.left : sibling?.right;
   }
 
   /// Parent of [node].
