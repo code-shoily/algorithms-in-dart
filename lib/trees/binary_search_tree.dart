@@ -1,14 +1,14 @@
 import './binary_tree.dart';
 
-/// Hierarchical data structure of individual [_Node]s.
+/// Hierarchical data structure of individual [Node]s.
 ///
-/// Every [_Node] of Binary Seach Tree(BST) has following properties:
+/// Every [Node] of Binary Seach Tree(BST) has following properties:
 /// * It's left subtree has nodes which have lesser value.
 /// * It's right subtree has nodes which have greater value.
-/// * Left and right subtrees are also be BST.
+/// * Left and right subtrees are also BST.
 class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
   /// Root of the tree
-  _Node<T> root;
+  Node<T> root;
 
   /// Creates an empty BST.
   BinarySearchTree();
@@ -21,14 +21,14 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   /// Creates a new BST with a single [value].
-  BinarySearchTree.withSingleValue(T value) : root = _Node(value);
+  BinarySearchTree.withSingleValue(T value) : root = Node(value);
 
   /// Tests if this tree is empty.
   bool get isEmpty => root == null;
 
   @override
   void add(T value) {
-    var node = _Node(value);
+    var node = Node(value);
     if (isEmpty) {
       root = node;
     } else {
@@ -87,7 +87,7 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
     _balance(list.sublist(middle + 1));
   }
 
-  void _compareAndAdd(_Node<T> node, _Node<T> newNode) {
+  void _compareAndAdd(Node<T> node, Node<T> newNode) {
     // Don't allow duplicate values in Binary Search Tree.
     if (node.value == newNode.value) {
       return;
@@ -110,14 +110,14 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
     }
   }
 
-  bool _compareAndCheck(_Node<T> node, T value) {
+  bool _compareAndCheck(Node<T> node, T value) {
     if (node.value == value) return true;
     return (node.value.compareTo(value) >= 0
         ? (node.left != null ? _compareAndCheck(node.left, value) : false)
         : (node.right != null ? _compareAndCheck(node.right, value) : false));
   }
 
-  _Node<T> _delete(_Node<T> node, T value) {
+  Node<T> _delete(Node<T> node, T value) {
     // Base Case, Key not found
     if (node == null) return node;
 
@@ -153,21 +153,21 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
     return node;
   }
 
-  void _inOrder(_Node<T> node, List<T> list) {
+  void _inOrder(Node<T> node, List<T> list) {
     if (node == null) return;
     _inOrder(node.left, list);
     list.add(node.value);
     _inOrder(node.right, list);
   }
 
-  void _postOrder(_Node<T> node, List<T> list) {
+  void _postOrder(Node<T> node, List<T> list) {
     if (node == null) return;
     _postOrder(node.left, list);
     _postOrder(node.right, list);
     list.add(node.value);
   }
 
-  void _preOrder(_Node<T> node, List<T> list) {
+  void _preOrder(Node<T> node, List<T> list) {
     if (node == null) return;
     list.add(node.value);
     _preOrder(node.left, list);
@@ -176,16 +176,16 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
 }
 
 /// Data structure containing a [value] and connection to children.
-class _Node<T extends Comparable> {
+class Node<T extends Comparable> {
   /// Value of the node.
   T value;
 
   /// [left] child node.
-  _Node<T> left;
+  Node<T> left;
 
   /// [right] child node.
-  _Node<T> right;
+  Node<T> right;
 
   /// Creates a node with [value].
-  _Node(this.value);
+  Node(this.value);
 }
