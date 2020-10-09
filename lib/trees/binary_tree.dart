@@ -1,23 +1,23 @@
-/// Defines the methods common to all the variations of a Binary Tree.
-abstract class BinaryTree<T extends Comparable> {
-  /// Adds [value] to the tree.
-  void add(T value);
+import 'binary_tree_adt.dart';
 
-  /// Checks if [value] is contained in the tree.
-  bool contains(T value);
+/// A binary node has at most two children, which are referred to as the
+///  [left] child and the [right] child.
+class BinaryNode<V extends Comparable> extends BinaryNodeADT<BinaryNode, V> {
+  V value;
 
-  /// Deletes [value] from the tree and updates it's [root].
-  void delete(T value);
+  /// Creates a node with [value].
+  BinaryNode(this.value);
+}
 
-  /// In Order Traversal.
-  List<T> inOrder();
+/// A binary tree is defined recursively as a collection of
+///  [BinaryNode]s (starting at a [root] node).
+class BinaryTree<V extends Comparable> {
+  /// Root of tree.
+  BinaryNode root;
 
-  /// Empty the tree.
-  void nullify();
+  /// Creates an empty Binary tree.
+  BinaryTree();
 
-  /// PostOrder Traversal.
-  List<T> postOrder();
-
-  /// PreOrder Traversal.
-  List<T> preOrder();
+  /// Creates a new Binary tree with a single [value].
+  BinaryTree.withSingleValue(V value) : root = BinaryNode(value);
 }

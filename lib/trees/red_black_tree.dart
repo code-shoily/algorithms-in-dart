@@ -1,5 +1,6 @@
-import './binary_search_tree.dart';
-import './binary_tree.dart';
+import './binary_tree_adt.dart';
+import 'binary_search_tree.dart';
+import 'binary_tree.dart';
 
 /// Sentinel node to represent leaf nodes in [RedBlackTree].
 final RedBlackNode nil = RedBlackNode.sentinalNode();
@@ -13,23 +14,18 @@ enum Color {
   black
 }
 
-/// Data structure similar to [Node], differs in having connection to it's
+/// Data structure similar to [BinaryNode], differs in having connection to it's
 ///  [parent] and an extra [color] attribute.
-class RedBlackNode<T extends Comparable> {
+class RedBlackNode<V extends Comparable>
+    extends BinaryNodeADT<RedBlackNode, V> {
   /// Value of the node.
-  T value;
+  V value;
 
   /// [color] of the node.
   Color color;
 
   /// [parent] of the node.
   RedBlackNode parent;
-
-  /// [left] child node.
-  RedBlackNode left;
-
-  /// [right] child node.
-  RedBlackNode right;
 
   /// Default constructor for a new node.
   RedBlackNode(this.value, this.parent) {
@@ -56,7 +52,8 @@ class RedBlackNode<T extends Comparable> {
 /// * If a node is red, then both its children are black.
 /// * Every path from a given node to any of its descendant [nil] nodes goes
 ///    through the same number of black nodes.
-class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
+class RedBlackTree<V extends Comparable>
+    implements BinaryTreeADT<RedBlackNode, V> {
   /// Root of the tree.
   RedBlackNode root;
 
@@ -64,22 +61,22 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   RedBlackTree();
 
   /// Creates a Red Back tree with all the values of [list].
-  RedBlackTree.fromList(List<T> list) {
+  RedBlackTree.fromList(List<V> list) {
     for (var value in list) {
       add(value);
     }
   }
 
   /// Creates a new Red Back tree with a single [value].
-  RedBlackTree.withSingleValue(T value) {
+  RedBlackTree.withSingleValue(V value) {
     root = RedBlackNode.root(value);
   }
 
-  /// Tests if this tree is empty.
+  @override
   bool get isEmpty => root == null;
 
   @override
-  void add(T value) {
+  void add(V value) {
     root = isEmpty ? RedBlackNode.root(value) : _add(root, value);
 
     _addReorder(root);
@@ -91,10 +88,10 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   @override
-  bool contains(T value) => isEmpty ? false : _compareAndCheck(root, value);
+  bool contains(V value) => isEmpty ? false : _compareAndCheck(root, value);
 
   @override
-  void delete(T value) {
+  void delete(V value) {
     if (!isEmpty) {
       _delete(root, value);
     }
@@ -106,8 +103,8 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   @override
-  List<T> inOrder() {
-    var result = <T>[];
+  List<V> inOrder() {
+    var result = <V>[];
     if (!isEmpty) {
       _inOrder(root, result);
     }
@@ -120,8 +117,8 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   @override
-  List<T> postOrder() {
-    var result = <T>[];
+  List<V> postOrder() {
+    var result = <V>[];
     if (!isEmpty) {
       _postOrder(root, result);
     }
@@ -129,15 +126,15 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   @override
-  List<T> preOrder() {
-    var result = <T>[];
+  List<V> preOrder() {
+    var result = <V>[];
     if (!isEmpty) {
       _preOrder(root, result);
     }
     return result;
   }
 
-  RedBlackNode _add(RedBlackNode node, T value) {
+  RedBlackNode _add(RedBlackNode node, V value) {
     if (value.compareTo(node.value) < 0) {
       if (node.left != nil) {
         return _add(node.left, value);
@@ -219,14 +216,14 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
     }
   }
 
-  bool _compareAndCheck(RedBlackNode node, T value) {
+  bool _compareAndCheck(RedBlackNode node, V value) {
     if (node.value == value) return true;
     return (node.value.compareTo(value) >= 0
         ? (node.left != nil ? _compareAndCheck(node.left, value) : false)
         : (node.right != nil ? _compareAndCheck(node.right, value) : false));
   }
 
-  void _delete(RedBlackNode node, T value) {
+  void _delete(RedBlackNode node, V value) {
     // Base Case, [value] not found.
     if (node == nil) return;
 
@@ -377,7 +374,7 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   /// Parent of [node]'s parent.
   RedBlackNode _grandParent(RedBlackNode node) => _parent(_parent(node));
 
-  void _inOrder(RedBlackNode node, List<T> list) {
+  void _inOrder(RedBlackNode node, List<V> list) {
     if (node == nil) return;
     _inOrder(node.left, list);
     list.add(node.value);
@@ -394,14 +391,14 @@ class RedBlackTree<T extends Comparable> implements BinaryTree<T> {
   /// Parent of [node].
   RedBlackNode _parent(RedBlackNode node) => node?.parent;
 
-  void _postOrder(RedBlackNode node, List<T> list) {
+  void _postOrder(RedBlackNode node, List<V> list) {
     if (node == nil) return;
     _postOrder(node.left, list);
     _postOrder(node.right, list);
     list.add(node.value);
   }
 
-  void _preOrder(RedBlackNode node, List<T> list) {
+  void _preOrder(RedBlackNode node, List<V> list) {
     if (node == nil) return;
     list.add(node.value);
     _preOrder(node.left, list);
