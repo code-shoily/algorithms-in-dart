@@ -24,7 +24,7 @@ class AvlNode<V extends Comparable> extends BinaryNodeADT<AvlNode, V> {
 ///
 /// In AVL tree, difference in the height of left and right subtrees
 ///  of any node can be at most 1.
-class AvlTree<V extends Comparable> implements BinaryTreeADT<AvlNode, V> {
+class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode, V> {
   /// Root of the tree
   AvlNode root;
 
@@ -48,9 +48,6 @@ class AvlTree<V extends Comparable> implements BinaryTreeADT<AvlNode, V> {
   AvlTree.withSingleValue(V value) : root = AvlNode.withValue(value);
 
   @override
-  bool get isEmpty => root == null;
-
-  @override
   void add(V value) {
     if (isEmpty) {
       root = AvlNode();
@@ -61,37 +58,10 @@ class AvlTree<V extends Comparable> implements BinaryTreeADT<AvlNode, V> {
   }
 
   @override
-  bool contains(V value) => isEmpty ? false : _compareAndCheck(root, value);
-
-  @override
   void delete(V value) {
     if (!isEmpty) {
       root = _delete(root, value);
     }
-  }
-
-  @override
-  List<V> inOrder() {
-    var result = <V>[];
-    _inOrder(root, result);
-    return result;
-  }
-
-  @override
-  void nullify() => root = null;
-
-  @override
-  List<V> postOrder() {
-    var result = <V>[];
-    _postOrder(root, result);
-    return result;
-  }
-
-  @override
-  List<V> preOrder() {
-    var result = <V>[];
-    _preOrder(root, result);
-    return result;
   }
 
   /// Balances the left heavy, imbalanced [node].
@@ -269,13 +239,6 @@ class AvlTree<V extends Comparable> implements BinaryTreeADT<AvlNode, V> {
         _isTaller = false;
     }
     return node;
-  }
-
-  bool _compareAndCheck(AvlNode node, V value) {
-    if (node.value == value) return true;
-    return (node.value.compareTo(value) >= 0
-        ? (node.left != null ? _compareAndCheck(node.left, value) : false)
-        : (node.right != null ? _compareAndCheck(node.right, value) : false));
   }
 
   /// Balances left heavy imbalanced [node] after deletion in it's
@@ -487,27 +450,6 @@ class AvlTree<V extends Comparable> implements BinaryTreeADT<AvlNode, V> {
         node = _dBalanceLeft(node);
     }
     return node;
-  }
-
-  void _inOrder(AvlNode node, List<V> list) {
-    if (node == null) return;
-    _inOrder(node.left, list);
-    list.add(node.value);
-    _inOrder(node.right, list);
-  }
-
-  void _postOrder(AvlNode node, List<V> list) {
-    if (node == null) return;
-    _postOrder(node.left, list);
-    _postOrder(node.right, list);
-    list.add(node.value);
-  }
-
-  void _preOrder(AvlNode node, List<V> list) {
-    if (node == null) return;
-    list.add(node.value);
-    _preOrder(node.left, list);
-    _preOrder(node.right, list);
   }
 
   /// Rotates [rightUnbalancedNode] U to left and makes C it's parent.

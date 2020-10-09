@@ -22,4 +22,61 @@ abstract class BinaryNodeADT<N, V extends Comparable> implements NodeADT<N, V> {
 /// A binary tree data structure can be defined recursively as a collection of
 ///  binary nodes (starting at a [root] node).
 abstract class BinaryTreeADT<N extends BinaryNodeADT, V extends Comparable>
-    extends TreeADT<N, V> {}
+    implements TreeADT<N, V> {
+  @override
+  bool get isEmpty => root == null;
+
+  @override
+  bool contains(V value) => isEmpty ? false : _compareAndCheck(root, value);
+  bool _compareAndCheck(N node, V value) {
+    if (node.value == value) return true;
+    return (node.value.compareTo(value) >= 0
+        ? (node.left != null ? _compareAndCheck(node.left, value) : false)
+        : (node.right != null ? _compareAndCheck(node.right, value) : false));
+  }
+
+  @override
+  void nullify() => root = null;
+
+  @override
+  List<V> inOrder() {
+    var result = <V>[];
+    _inOrder(root, result);
+    return result;
+  }
+
+  @override
+  List<V> postOrder() {
+    var result = <V>[];
+    _postOrder(root, result);
+    return result;
+  }
+
+  @override
+  List<V> preOrder() {
+    var result = <V>[];
+    _preOrder(root, result);
+    return result;
+  }
+
+  void _inOrder(N node, List<V> list) {
+    if (node == null) return;
+    _inOrder(node.left, list);
+    list.add(node.value);
+    _inOrder(node.right, list);
+  }
+
+  void _postOrder(N node, List<V> list) {
+    if (node == null) return;
+    _postOrder(node.left, list);
+    _postOrder(node.right, list);
+    list.add(node.value);
+  }
+
+  void _preOrder(N node, List<V> list) {
+    if (node == null) return;
+    list.add(node.value);
+    _preOrder(node.left, list);
+    _preOrder(node.right, list);
+  }
+}

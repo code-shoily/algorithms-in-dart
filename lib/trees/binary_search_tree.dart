@@ -8,7 +8,7 @@ import 'binary_tree.dart';
 /// * It's right subtree has nodes which have greater value.
 /// * Left and right subtrees are also BST.
 class BinarySearchTree<V extends Comparable>
-    implements BinaryTreeADT<BinaryNode, V> {
+    extends BinaryTreeADT<BinaryNode, V> {
   /// Root of the tree
   BinaryNode root;
 
@@ -24,9 +24,6 @@ class BinarySearchTree<V extends Comparable>
 
   /// Creates a new BST with a single [value].
   BinarySearchTree.withSingleValue(V value) : root = BinaryNode(value);
-
-  @override
-  bool get isEmpty => root == null;
 
   @override
   void add(V value) {
@@ -48,37 +45,10 @@ class BinarySearchTree<V extends Comparable>
   }
 
   @override
-  bool contains(V value) => isEmpty ? false : _compareAndCheck(root, value);
-
-  @override
   void delete(V value) {
     if (!isEmpty) {
       root = _delete(root, value);
     }
-  }
-
-  @override
-  List<V> inOrder() {
-    var result = <V>[];
-    _inOrder(root, result);
-    return result;
-  }
-
-  @override
-  void nullify() => root = null;
-
-  @override
-  List<V> postOrder() {
-    var result = <V>[];
-    _postOrder(root, result);
-    return result;
-  }
-
-  @override
-  List<V> preOrder() {
-    var result = <V>[];
-    _preOrder(root, result);
-    return result;
   }
 
   void _balance(List<V> list) {
@@ -110,13 +80,6 @@ class BinarySearchTree<V extends Comparable>
         _compareAndAdd(node.right, newNode);
       }
     }
-  }
-
-  bool _compareAndCheck(BinaryNode node, V value) {
-    if (node.value == value) return true;
-    return (node.value.compareTo(value) >= 0
-        ? (node.left != null ? _compareAndCheck(node.left, value) : false)
-        : (node.right != null ? _compareAndCheck(node.right, value) : false));
   }
 
   BinaryNode<V> _delete(BinaryNode node, V value) {
@@ -153,26 +116,5 @@ class BinarySearchTree<V extends Comparable>
       }
     }
     return node;
-  }
-
-  void _inOrder(BinaryNode node, List<V> list) {
-    if (node == null) return;
-    _inOrder(node.left, list);
-    list.add(node.value);
-    _inOrder(node.right, list);
-  }
-
-  void _postOrder(BinaryNode node, List<V> list) {
-    if (node == null) return;
-    _postOrder(node.left, list);
-    _postOrder(node.right, list);
-    list.add(node.value);
-  }
-
-  void _preOrder(BinaryNode node, List<V> list) {
-    if (node == null) return;
-    list.add(node.value);
-    _preOrder(node.left, list);
-    _preOrder(node.right, list);
   }
 }

@@ -53,7 +53,7 @@ class RedBlackNode<V extends Comparable>
 /// * Every path from a given node to any of its descendant [nil] nodes goes
 ///    through the same number of black nodes.
 class RedBlackTree<V extends Comparable>
-    implements BinaryTreeADT<RedBlackNode, V> {
+    extends BinaryTreeADT<RedBlackNode, V> {
   /// Root of the tree.
   RedBlackNode root;
 
@@ -71,9 +71,6 @@ class RedBlackTree<V extends Comparable>
   RedBlackTree.withSingleValue(V value) {
     root = RedBlackNode.root(value);
   }
-
-  @override
-  bool get isEmpty => root == null;
 
   @override
   void add(V value) {
@@ -109,11 +106,6 @@ class RedBlackTree<V extends Comparable>
       _inOrder(root, result);
     }
     return result;
-  }
-
-  @override
-  void nullify() {
-    root = null;
   }
 
   @override
