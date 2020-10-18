@@ -1,5 +1,6 @@
-import 'package:algorithms_in_dart/trees/binary_search_tree.dart';
 import 'package:test/test.dart';
+import 'package:algorithms_in_dart/trees/binary_tree.dart';
+import 'package:algorithms_in_dart/trees/binary_search_tree.dart';
 
 void main() {
   BinarySearchTree emptyTree, singleNodeTree, multiNodeTree;
@@ -197,8 +198,8 @@ void main() {
 ///  traversals.
 ///
 /// [root] must not be `null`.
-void createBinarySearchTree<C extends Comparable>(
-    Node root, List<C> preOrder, List<C> inOrder) {
+void createBinarySearchTree<V extends Comparable>(
+    BinaryNode root, List<V> preOrder, List<V> inOrder) {
   expect(root, isNotNull);
   expect(true, preOrder.length == inOrder.length);
 
@@ -210,9 +211,9 @@ void createBinarySearchTree<C extends Comparable>(
   // [root] has only one child.
   else if (preOrder.length == 2) {
     if (preOrder[0] == inOrder[0]) {
-      root.right = Node(preOrder[1]);
+      root.right = BinaryNode(preOrder[1]);
     } else {
-      root.left = Node(preOrder[1]);
+      root.left = BinaryNode(preOrder[1]);
     }
   }
 
@@ -255,17 +256,17 @@ bool isValidBinarySearchTree(BinarySearchTree tree) {
 }
 
 /// Adds left subtree to [root].
-void _addLeft<C extends Comparable>(
-    Node root, List<C> preOrder, List<C> inOrder) {
-  root.left = Node(preOrder[0]);
+void _addLeft<V extends Comparable>(
+    BinaryNode root, List<V> preOrder, List<V> inOrder) {
+  root.left = BinaryNode(preOrder[0]);
 
   createBinarySearchTree(root.left, preOrder, inOrder);
 }
 
 /// Adds right subtree to [root].
-void _addRight<C extends Comparable>(
-    Node root, List<C> preOrder, List<C> inOrder) {
-  root.right = Node(preOrder[0]);
+void _addRight<V extends Comparable>(
+    BinaryNode root, List<V> preOrder, List<V> inOrder) {
+  root.right = BinaryNode(preOrder[0]);
 
   createBinarySearchTree(root.right, preOrder, inOrder);
 }

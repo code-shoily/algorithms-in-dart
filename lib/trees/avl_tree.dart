@@ -1,35 +1,30 @@
-import './binary_search_tree.dart';
-import './binary_tree.dart';
+import './binary_tree_adt.dart';
+import 'binary_search_tree.dart';
+import 'binary_tree.dart';
 
-/// Data structure similar to [Node], differs in having a [balanceFactor].
-class AvlNode<T extends Comparable> {
+/// Data structure similar to [BinaryNode], differs in having a [balanceFactor].
+class AvlNode<V extends Comparable> extends BinaryNodeADT<AvlNode, V> {
   /// Difference between height of left and right subtree.
   ///
   /// [balanceFactor] ∈ `{-1, 0, 1}`.
   /// Any [AvlNode] having [balanceFactor] outside this set is imbalanced.
-  int balanceFactor;
+  int balanceFactor = 0;
 
   /// Value of the node.
-  T value;
-
-  /// [left] child node.
-  AvlNode<T> left;
-
-  /// [right] child node.
-  AvlNode<T> right;
+  V value;
 
   /// Creates an empty avlNode.
-  AvlNode() : balanceFactor = 0;
+  AvlNode();
 
   /// Creates an avlNode with [value].
-  AvlNode.withValue(this.value) : balanceFactor = 0;
+  AvlNode.withValue(this.value);
 }
 
 /// A self-balancing [BinarySearchTree].
 ///
 /// In AVL tree, difference in the height of left and right subtrees
 ///  of any node can be at most 1.
-class AvlTree<T extends Comparable> implements BinaryTree<T> {
+class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode, V> {
   /// Root of the tree
   AvlNode root;
 
@@ -43,20 +38,17 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   AvlTree();
 
   /// Creates an AVL tree with all the values of [list].
-  AvlTree.fromList(List<T> list) {
+  AvlTree.fromList(List<V> list) {
     for (var value in list) {
       add(value);
     }
   }
 
   /// Creates a new AVL tree with a single [value].
-  AvlTree.withSingleValue(T value) : root = AvlNode.withValue(value);
-
-  /// Tests if this tree is empty.
-  bool get isEmpty => root == null;
+  AvlTree.withSingleValue(V value) : root = AvlNode.withValue(value);
 
   @override
-  void add(T value) {
+  void add(V value) {
     if (isEmpty) {
       root = AvlNode();
       root = _add(root, value, true);
@@ -66,37 +58,10 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   @override
-  bool contains(T value) => isEmpty ? false : _compareAndCheck(root, value);
-
-  @override
-  void delete(T value) {
+  void delete(V value) {
     if (!isEmpty) {
       root = _delete(root, value);
     }
-  }
-
-  @override
-  List<T> inOrder() {
-    var result = <T>[];
-    _inOrder(root, result);
-    return result;
-  }
-
-  @override
-  void nullify() => root = null;
-
-  @override
-  List<T> postOrder() {
-    var result = <T>[];
-    _postOrder(root, result);
-    return result;
-  }
-
-  @override
-  List<T> preOrder() {
-    var result = <T>[];
-    _preOrder(root, result);
-    return result;
   }
 
   /// Balances the left heavy, imbalanced [node].
@@ -181,7 +146,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
     return node;
   }
 
-  AvlNode _add(AvlNode node, T value, bool isNull) {
+  AvlNode _add(AvlNode node, V value, bool isNull) {
     if (isNull) {
       // Base case, node's value is set.
       node.value = value;
@@ -274,13 +239,6 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
         _isTaller = false;
     }
     return node;
-  }
-
-  bool _compareAndCheck(AvlNode node, T value) {
-    if (node.value == value) return true;
-    return (node.value.compareTo(value) >= 0
-        ? (node.left != null ? _compareAndCheck(node.left, value) : false)
-        : (node.right != null ? _compareAndCheck(node.right, value) : false));
   }
 
   /// Balances left heavy imbalanced [node] after deletion in it's
@@ -389,7 +347,7 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
     return node;
   }
 
-  AvlNode _delete(AvlNode node, T value) {
+  AvlNode _delete(AvlNode node, V value) {
     // Base Case, Key not found
     if (node == null) {
       _isShorter = false;
@@ -492,27 +450,6 @@ class AvlTree<T extends Comparable> implements BinaryTree<T> {
         node = _dBalanceLeft(node);
     }
     return node;
-  }
-
-  void _inOrder(AvlNode node, List<T> list) {
-    if (node == null) return;
-    _inOrder(node.left, list);
-    list.add(node.value);
-    _inOrder(node.right, list);
-  }
-
-  void _postOrder(AvlNode node, List<T> list) {
-    if (node == null) return;
-    _postOrder(node.left, list);
-    _postOrder(node.right, list);
-    list.add(node.value);
-  }
-
-  void _preOrder(AvlNode node, List<T> list) {
-    if (node == null) return;
-    list.add(node.value);
-    _preOrder(node.left, list);
-    _preOrder(node.right, list);
   }
 
   /// Rotates [rightUnbalancedNode] U to left and makes C it's parent.

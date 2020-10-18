@@ -1,34 +1,33 @@
-import './binary_tree.dart';
+import './binary_tree_adt.dart';
+import 'binary_tree.dart';
 
-/// Hierarchical data structure of individual [Node]s.
+/// Hierarchical data structure of individual [BinaryNode]s.
 ///
-/// Every [Node] of Binary Seach Tree(BST) has following properties:
+/// Every [BinaryNode] of Binary Seach Tree(BST) has following properties:
 /// * It's left subtree has nodes which have lesser value.
 /// * It's right subtree has nodes which have greater value.
 /// * Left and right subtrees are also BST.
-class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
+class BinarySearchTree<V extends Comparable>
+    extends BinaryTreeADT<BinaryNode, V> {
   /// Root of the tree
-  Node<T> root;
+  BinaryNode root;
 
   /// Creates an empty BST.
   BinarySearchTree();
 
   /// Creates a BST with all the values of [list].
-  BinarySearchTree.fromList(List<T> list) {
+  BinarySearchTree.fromList(List<V> list) {
     for (var value in list) {
       add(value);
     }
   }
 
   /// Creates a new BST with a single [value].
-  BinarySearchTree.withSingleValue(T value) : root = Node(value);
-
-  /// Tests if this tree is empty.
-  bool get isEmpty => root == null;
+  BinarySearchTree.withSingleValue(V value) : root = BinaryNode(value);
 
   @override
-  void add(T value) {
-    var node = Node(value);
+  void add(V value) {
+    var node = BinaryNode(value);
     if (isEmpty) {
       root = node;
     } else {
@@ -46,40 +45,13 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
   }
 
   @override
-  bool contains(T value) => isEmpty ? false : _compareAndCheck(root, value);
-
-  @override
-  void delete(T value) {
+  void delete(V value) {
     if (!isEmpty) {
       root = _delete(root, value);
     }
   }
 
-  @override
-  List<T> inOrder() {
-    var result = <T>[];
-    _inOrder(root, result);
-    return result;
-  }
-
-  @override
-  void nullify() => root = null;
-
-  @override
-  List<T> postOrder() {
-    var result = <T>[];
-    _postOrder(root, result);
-    return result;
-  }
-
-  @override
-  List<T> preOrder() {
-    var result = <T>[];
-    _preOrder(root, result);
-    return result;
-  }
-
-  void _balance(List<T> list) {
+  void _balance(List<V> list) {
     if (list.length == 0) return;
     var middle = list.length ~/ 2;
     add(list[middle]);
@@ -87,7 +59,7 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
     _balance(list.sublist(middle + 1));
   }
 
-  void _compareAndAdd(Node<T> node, Node<T> newNode) {
+  void _compareAndAdd(BinaryNode node, BinaryNode newNode) {
     // Don't allow duplicate values in Binary Search Tree.
     if (node.value == newNode.value) {
       return;
@@ -110,14 +82,7 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
     }
   }
 
-  bool _compareAndCheck(Node<T> node, T value) {
-    if (node.value == value) return true;
-    return (node.value.compareTo(value) >= 0
-        ? (node.left != null ? _compareAndCheck(node.left, value) : false)
-        : (node.right != null ? _compareAndCheck(node.right, value) : false));
-  }
-
-  Node<T> _delete(Node<T> node, T value) {
+  BinaryNode<V> _delete(BinaryNode node, V value) {
     // Base Case, Key not found
     if (node == null) return node;
 
@@ -152,40 +117,4 @@ class BinarySearchTree<T extends Comparable> implements BinaryTree<T> {
     }
     return node;
   }
-
-  void _inOrder(Node<T> node, List<T> list) {
-    if (node == null) return;
-    _inOrder(node.left, list);
-    list.add(node.value);
-    _inOrder(node.right, list);
-  }
-
-  void _postOrder(Node<T> node, List<T> list) {
-    if (node == null) return;
-    _postOrder(node.left, list);
-    _postOrder(node.right, list);
-    list.add(node.value);
-  }
-
-  void _preOrder(Node<T> node, List<T> list) {
-    if (node == null) return;
-    list.add(node.value);
-    _preOrder(node.left, list);
-    _preOrder(node.right, list);
-  }
-}
-
-/// Data structure containing a [value] and connection to children.
-class Node<T extends Comparable> {
-  /// Value of the node.
-  T value;
-
-  /// [left] child node.
-  Node<T> left;
-
-  /// [right] child node.
-  Node<T> right;
-
-  /// Creates a node with [value].
-  Node(this.value);
 }
