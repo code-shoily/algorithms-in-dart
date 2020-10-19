@@ -60,9 +60,17 @@ All base classes are in `lib/heaps/base.dart`
 
 ## Trees
 
-### Binary Tree
+### Binary Search Tree
 
-`lib/trees/binary.dart`
+`lib/trees/binary_search_tree.dart`
+
+### AVL Tree
+
+`lib/trees/avl_tree.dart`
+
+### Red Black Tree
+
+`lib/trees/red_black_tree.dart `
 
 ## Math
 
