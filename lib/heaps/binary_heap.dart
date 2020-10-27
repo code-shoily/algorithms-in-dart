@@ -3,10 +3,12 @@ import './base.dart';
 /// A binary heap is a complete binary tree which holds heap property.
 ///
 /// There is a relationship between parents and children in that parents should
-/// always be either larger or smaller (based on a function provided) than children.
-/// [BinaryHeap] is a generic binary heap and takes in a function which determines
-/// the parent/child relationship/positioning. Based on particular functions, we can
-/// derive [MinHeap] or [MaxHeap] from it.
+/// always be either larger or smaller (based on a function provided) than
+/// children.
+/// [BinaryHeap] is a generic binary heap and takes in a function which
+/// determines the parent/child relationship/positioning.
+///
+/// Based on particular functions, we can derive [MinHeap] or [MaxHeap] from it.
 class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
   /// The comparison function
   Comparer<T> compare;
@@ -14,9 +16,8 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
   /// The implicit array of objects
   List<T> items;
 
-  BinaryHeap(Comparer<T> compare)
-      : compare = compare,
-        items = <T>[];
+  /// Constructor
+  BinaryHeap(this.compare) : items = <T>[];
 
   /// Checks if this heap is empty
   @override
@@ -86,7 +87,8 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
 
   /// Shows the root of the heap.
   ///
-  /// For `min-heap` it's the smallest element and for `max-heap` it's the largest
+  /// For `min-heap` it's the smallest element and for `max-heap` it's the
+  /// largest
   @override
   T peek() {
     return items.first;
@@ -94,7 +96,8 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
 
   /// Removes and returns the root of the heap.
   ///
-  /// For `min-heap` it's the smallest element and for `max-heap` it's the largest.
+  /// For `min-heap` it's the smallest element and for `max-heap` it's the
+  /// largest.
   /// The heap properties remain intact after removal.
   @override
   T pop() {
@@ -112,6 +115,7 @@ class BinaryHeap<T> extends HeapBase<T> with BinaryHeapIndex {
 /// [MinHeap] is a specific implementation of [BinaryHeap] where
 /// parents should always be smaller than children.
 class MinHeap extends BinaryHeap {
+  /// Constructor
   MinHeap() : super((parent, child) => parent <= child);
 }
 
@@ -120,5 +124,6 @@ class MinHeap extends BinaryHeap {
 /// [MaxHeap] is a specific implementation of [BinaryHeap] where
 /// parents should always be larger than children.
 class MaxHeap extends BinaryHeap {
+  /// Constructor
   MaxHeap() : super((parent, child) => parent >= child);
 }

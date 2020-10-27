@@ -6,11 +6,12 @@ typedef Comparator<T extends Comparable> = bool Function(T left, T right);
 /// sorting needs to return ascending order of lists.
 ///
 /// For example, if we see an ascending ordered list- `[1, 2, 3, 5]`
-/// we can see from left to right, all two consequetive elements in
+/// we can see from left to right, all two consecutive elements in
 /// this function would return true, in other words, settings this as
 /// `reduce` function would yield true for a list sorted in ascending
 /// order.
-bool ascendingFn<T extends Comparable>(a, b) => a.compareTo(b) <= 0;
+bool ascendingFn<T extends Comparable>(Comparable a, Comparable b) =>
+    a.compareTo(b) <= 0;
 
 /// Swaps two elements in a [List]
 void swap<T extends Comparable>(List<T> list, int i, int j) {

@@ -1,4 +1,4 @@
-import 'package:algorithms_in_dart/helpers/range.dart';
+import '../helpers/range.dart';
 
 /// Compute Greatest Common Divisor of two numbers.
 int gcd(int x, int y) {
@@ -7,9 +7,9 @@ int gcd(int x, int y) {
 
 /// Compute Greatest Common Divisor of a list of numbers.
 /// List must contain two or more more numbers.
-int gcd_list(List<int> numbers) {
+int gcdList(List<int> numbers) {
   if (numbers.length < 2) throw ArgumentError('Single element array');
-  return numbers.reduce((a, b) => gcd(a, b));
+  return numbers.reduce(gcd);
 }
 
 /// Least Common Multiple of two non-zero numbers.
@@ -20,9 +20,9 @@ int lcm(int x, int y) {
 
 /// Least Common Multiple of a list of numbers.
 /// List must contain two or more non-zero numbers.
-int lcm_list(List<int> numbers) {
+int lcmList(List<int> numbers) {
   if (numbers.length < 2) throw ArgumentError('Single element array');
-  return numbers.reduce((a, b) => lcm(a, b));
+  return numbers.reduce(lcm);
 }
 
 /// Factorial of n.

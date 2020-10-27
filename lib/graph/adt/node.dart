@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-/// A vertex of a [Graph]. A vertex contains a `key` that uniquely identifies it.
+/// A vertex of a [Graph]. A vertex contains a `key` uniquely identifying it.
 /// Value is optional, it is used when complex data structure may be attached to
 /// the vertex. By default, the `key` and `value` are the same.
 class Vertex<T> {
@@ -15,25 +15,27 @@ class Vertex<T> {
   /// Outgoing connections from this [Vertex]
   HashMap<String, Connection> connections;
 
+  /// Constructor
   Vertex(this._key, [T value]) {
     connections = HashMap();
     this.value = value ?? key;
   }
 
-  /// Adds a connectiob with [Vertex] `dst` and with `weight`
-  bool addConnection(Vertex dst, [weight = 1]) {
+  /// Adds a connection with [Vertex] `dst` and with `weight`
+  bool addConnection(Vertex dst, [int weight = 1]) {
     try {
       connections.update(dst.key, (v) {
         v.addWeight(weight);
         return v;
       }, ifAbsent: () => Connection(dst, weight));
       return true;
-    } catch (e) {
+    } on Exception {
       return false;
     }
   }
 
-  /// Removes a connection with `other` with `weight`. `false` for inexistent connection.
+  /// Removes a connection with `other` with `weight`. `false` for inexistent
+  /// connection.
   bool removeConnection(Vertex other, [num weight = 1]) {
     if (!connections.containsKey(other.key)) return false;
     var connection = connections.update(other.key, (v) {
@@ -46,7 +48,8 @@ class Vertex<T> {
     return true;
   }
 
-  /// Removes all connections with the associated vertex. `true` is removal is successful.
+  /// Removes all connections with the associated vertex. `true` is removal is
+  /// successful.
   bool removeAll(Vertex other) => connections.remove(other.key) != null;
 
   /// Checks if [Vertex] `other` is connected to this vertex
@@ -56,9 +59,10 @@ class Vertex<T> {
   bool containsKey(String key) => connections.containsKey(key);
 }
 
-/// A connection represents the outgoing link information. It is a connection with a destination [Vertex]
-/// and a set of `weight`. If no weight is mentioned the it is assumed to be `1`. And empty connection is
-/// a connection with no weights attached to it.
+/// A connection represents the outgoing link information. It is a connection
+/// with a destination [Vertex] and a set of `weight`. If no weight is mentioned
+/// then it is assumed to be `1`. And empty connection is a connection with no
+/// weights attached to it.
 class Connection {
   final Vertex _vertex;
 
@@ -70,12 +74,15 @@ class Connection {
   /// A set of weights.
   Set<num> get weights => _weights;
 
+  /// Constructor
   Connection(this._vertex, [weight = 1]) : _weights = <num>{weight};
 
-  /// Adds a `weight` for the connected [Vertex]. If it already exists then `false` is returned.
+  /// Adds a `weight` for the connected [Vertex]. If it already exists then
+  /// `false` is returned.
   bool addWeight(num weight) => weights.add(weight);
 
-  /// Removes `weight` from the connected [Vertex]. If the `weight` doesn't exist then returns `false`
+  /// Removes `weight` from the connected [Vertex]. If the `weight` doesn't
+  /// exist then returns `false`
   bool removeWeight(num weight) => weights.remove(weight);
 
   /// Checks if the connection has no weights attached.

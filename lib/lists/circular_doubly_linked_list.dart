@@ -1,3 +1,5 @@
+import '../heaps/base.dart';
+
 import './doubly_linked_list.dart' show Node;
 
 /// This circular linked list is based off of [DoublyLinkedList]
@@ -11,6 +13,7 @@ class CircularDoublyLinkedList<T> {
   /// Size of the list
   int size;
 
+  /// Construct a doubly circular linked list
   CircularDoublyLinkedList() : size = 0;
 
   /// Converts [this] into a [List]
@@ -28,6 +31,7 @@ class CircularDoublyLinkedList<T> {
     return list;
   }
 
+  /// Creates CircularDoublyLinkedList from [list]
   CircularDoublyLinkedList.fromList(List<T> list) : size = 0 {
     for (var item in list) {
       append(item);
@@ -42,7 +46,7 @@ class CircularDoublyLinkedList<T> {
   /// Since this is a circular linked list, if [n] is greater than the size,
   /// it will still iterate, circling back to the beginning every time.
   Node<T> at(int n) {
-    if (n < 0) throw 'Index cannot be negative';
+    if (n < 0) throw InvalidIndexError();
 
     var currentNode = head;
     for (var i = 0; i < n; i++, currentNode = currentNode.next) {
@@ -86,7 +90,7 @@ class CircularDoublyLinkedList<T> {
 
   /// Remove from the end of the list
   Node<T> pop() {
-    if (isEmpty) throw 'Cannot remove from an empty list';
+    if (isEmpty) throw InvalidIndexError();
     var removeMe = tail;
 
     tail = tail.previous;
@@ -99,7 +103,7 @@ class CircularDoublyLinkedList<T> {
 
   /// Remove from the beginning of the list
   Node<T> shift() {
-    if (isEmpty) throw 'Cannot remove from an empty list';
+    if (isEmpty) throw InvalidIndexError();
 
     var removeMe = head;
 

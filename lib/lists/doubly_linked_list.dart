@@ -1,3 +1,5 @@
+import '../heaps/base.dart';
+
 /// The DoublyLinkedList Node.
 ///
 /// It has both previous and next references.
@@ -15,6 +17,7 @@ class Node<T> {
   Node({this.data});
 }
 
+/// DoubleLinkedList ADT
 class DoublyLinkedList<T> {
   /// First node of the list
   Node<T> head;
@@ -25,8 +28,10 @@ class DoublyLinkedList<T> {
   /// Size of the list
   int size;
 
+  /// Constructor
   DoublyLinkedList() : size = 0;
 
+  /// Creates DoublyLinkedList from [list]
   DoublyLinkedList.fromList(List<T> list) : size = 0 {
     for (var item in list) {
       append(item);
@@ -53,7 +58,7 @@ class DoublyLinkedList<T> {
   ///
   /// The list remains unmodified. `null` when index is out of bounds
   Node<T> at(int n) {
-    if (n >= size || size < 0) return null;
+    if (n >= size || n < 0) return null;
 
     var current = head;
     for (var index = 0; index != n; index++) {
@@ -100,7 +105,7 @@ class DoublyLinkedList<T> {
     var nextNode = at(n);
 
     if (nextNode == null) {
-      throw 'Invalid index';
+      throw InvalidIndexError();
     } else {
       if (nextNode == head) {
         prepend(newNode.data);
@@ -117,7 +122,7 @@ class DoublyLinkedList<T> {
 
   /// Remove the last element
   Node<T> pop() {
-    if (isEmpty) throw 'Cannot remove from empty list';
+    if (isEmpty) throw InvalidIndexError();
 
     var removeMe = tail;
     if (size == 1) {
@@ -134,7 +139,7 @@ class DoublyLinkedList<T> {
 
   /// Remove the first element
   Node<T> shift() {
-    if (isEmpty) throw 'Cannot remove from empty list';
+    if (isEmpty) throw InvalidIndexError();
 
     var removeMe = head;
     if (size == 1) {
@@ -154,7 +159,7 @@ class DoublyLinkedList<T> {
     var removeMe = at(n);
 
     if (removeMe == null) {
-      throw 'Invalid index';
+      throw InvalidIndexError();
     } else {
       if (removeMe == head) {
         return shift();

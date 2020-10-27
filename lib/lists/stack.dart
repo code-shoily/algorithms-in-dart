@@ -1,7 +1,14 @@
+import '../heaps/base.dart';
+
+/// Node representing for a stack node
 class StackNode<T> {
+  /// The node value
   T data;
+
+  /// The node below `this`
   StackNode below;
 
+  /// Constructor
   StackNode({this.data});
 }
 
@@ -13,6 +20,7 @@ class Stack<T> {
   /// Size of the stack
   int size;
 
+  /// Construct a new Stack
   Stack()
       : _top = null,
         size = 0;
@@ -22,7 +30,7 @@ class Stack<T> {
 
   /// Pops the top-most element of the stack.
   T pop() {
-    if (isEmpty) throw Exception('Cannot pop from an empty stack');
+    if (isEmpty) throw InvalidIndexError();
     var output = _top;
     _top = _top.below;
     size--;

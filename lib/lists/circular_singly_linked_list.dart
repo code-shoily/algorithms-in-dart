@@ -1,3 +1,5 @@
+import '../heaps/base.dart';
+
 import './singly_linked_list.dart' show Node;
 
 /// This circular linked list is based off of [SinglyLinkedList]
@@ -8,6 +10,7 @@ class CircularSinglyLinkedList<T> {
   /// Size of [this]
   int size;
 
+  /// Construct a CircularLinkedList
   CircularSinglyLinkedList() : size = 0;
 
   /// Create and prepopulate [this] from a [List]
@@ -40,7 +43,7 @@ class CircularSinglyLinkedList<T> {
   /// Since this is a circular linked list, if [n] is greater than the size,
   /// it will still iterate, circling back to the beginning every time.
   Node<T> at(int n) {
-    if (n < 0) throw 'Index cannot be negative';
+    if (n < 0) throw InvalidIndexError();
 
     var currentNode = head;
     for (var i = 0; i < n; i++, currentNode = currentNode.next) {
@@ -94,7 +97,7 @@ class CircularSinglyLinkedList<T> {
 
   /// Remove from the end of the list
   Node<T> pop() {
-    if (isEmpty) throw 'Cannot remove from an empty list';
+    if (isEmpty) throw InvalidIndexError();
 
     var currentNode = head;
     var beforeLastNode = currentNode;
@@ -112,7 +115,7 @@ class CircularSinglyLinkedList<T> {
 
   /// Remove from the beginning of the list
   Node<T> shift() {
-    if (isEmpty) throw 'Cannot remove from an empty list';
+    if (isEmpty) throw InvalidIndexError();
 
     var removeMe = head;
     var currentNode = head;

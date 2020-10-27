@@ -7,7 +7,7 @@ void main() {
   group('Index Mixin Tests', () {
     var indexer;
     setUp(() {
-      indexer = BinaryHeap((_1, _2) => true);
+      indexer = BinaryHeap((_a, _b) => true);
     });
     test('Test Left', () {
       expect(indexer.leftOf(0), equals(1));
@@ -33,16 +33,7 @@ void main() {
       expect(indexer.parentOf(6), equals(2));
       expect(indexer.parentOf(7), equals(3));
       expect(indexer.parentOf(8), equals(3));
-
-      var errors = <Error>[];
-
-      try {
-        indexer.parentOf(-1);
-      } on InvalidIndexError catch (e) {
-        errors.add(e);
-      }
-
-      expect(errors.length, equals(1));
+      expect(() => indexer.parentOf(-1), throwsA(isA<InvalidIndexError>()));
     });
   });
 
@@ -81,15 +72,7 @@ void main() {
       maxHeap.insertMany([35, 10, 100, 80]);
       expect(maxHeap.peek(), equals(100));
       expect(maxHeap.items, equals([100, 80, 35, 10]));
-
-      var errors = <Error>[];
-      try {
-        minHeap.peek();
-      } on StateError catch (e) {
-        errors.add(e);
-      }
-
-      expect(errors.length, equals(1));
+      expect(() => minHeap.peek(), throwsA(isA<StateError>()));
     });
 
     test('Pop', () {
@@ -104,14 +87,7 @@ void main() {
       expect(minHeap.items, equals([-9, 32, 0, 71, 45, 65, 10]));
 
       var emptyHeap = BinaryHeap((a, b) => a <= b);
-      var errors = <Error>[];
-      try {
-        emptyHeap.pop();
-      } on StateError catch (e) {
-        errors.add(e);
-      }
-
-      expect(errors.length, equals(1));
+      expect(() => emptyHeap.pop(), throwsA(isA<StateError>()));
     });
   });
 
@@ -143,28 +119,14 @@ void main() {
     });
 
     test('Peek', () {
-      var errors = <Error>[];
-      try {
-        maxHeap.peek();
-      } on StateError catch (e) {
-        errors.add(e);
-      }
-
-      expect(errors.length, equals(1));
+      expect(() => maxHeap.peek(), throwsA(isA<StateError>()));
       maxHeap.insertMany([35, 10, 100, 80]);
       expect(maxHeap.peek(), equals(100));
       expect(maxHeap.items, equals([100, 80, 35, 10]));
     });
 
     test('Pop', () {
-      var errors = <Error>[];
-      try {
-        maxHeap.pop();
-      } on StateError catch (e) {
-        errors.add(e);
-      }
-
-      expect(errors.length, equals(1));
+      expect(() => maxHeap.pop(), throwsA(isA<StateError>()));
       maxHeap.insertMany([35, 10, 100, 80, 65, 71, 40]);
       expect(maxHeap.items, equals([100, 80, 71, 10, 65, 35, 40]));
       expect(maxHeap.pop(), equals(100));
@@ -201,29 +163,14 @@ void main() {
     });
 
     test('Peek', () {
-      var errors = <Error>[];
-      try {
-        minHeap.peek();
-      } on StateError catch (e) {
-        errors.add(e);
-      }
-
-      expect(errors.length, equals(1));
+      expect(() => minHeap.peek(), throwsA(isA<StateError>()));
       minHeap.insertMany([35, 10, 100, 80]);
       expect(minHeap.peek(), equals(10));
       expect(minHeap.items, equals([10, 35, 100, 80]));
     });
 
     test('Pop', () {
-      var errors = <Error>[];
-      try {
-        minHeap.pop();
-      } on StateError catch (e) {
-        errors.add(e);
-      }
-
-      expect(errors.length, equals(1));
-
+      expect(() => minHeap.pop(), throwsA(isA<StateError>()));
       minHeap.insertMany([32, 45, 65, 71, 0, -9, 10, -19]);
       expect(minHeap.items, equals([-19, -9, 0, 32, 45, 65, 10, 71]));
       expect(minHeap.pop(), equals(-19));

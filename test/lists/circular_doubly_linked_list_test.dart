@@ -1,3 +1,4 @@
+import 'package:algorithms_in_dart/heaps/base.dart';
 import 'package:algorithms_in_dart/lists/circular_doubly_linked_list.dart';
 import 'package:test/test.dart';
 
@@ -59,12 +60,7 @@ void main() {
     var theAnswer = singleItemList.pop();
     expect(theAnswer.data, equals(42));
     expect(singleItemList.isEmpty, equals(true));
-
-    try {
-      emptyList.pop();
-    } catch (e) {
-      expect(e, isNotNull);
-    }
+    expect(() => emptyList.pop(), throwsA(isA<InvalidIndexError>()));
   });
 
   test('Shift', () {
@@ -79,12 +75,7 @@ void main() {
     expect(bVS.data, equals('Batman v Superman'));
     expect(dceuMovieListLol.toList, equals(['Wonder Woman']));
     expect(dceuMovieListLol.size, equals(1));
-
-    try {
-      emptyList.shift();
-    } catch (e) {
-      expect(e, isNotNull);
-    }
+    expect(() => emptyList.shift(), throwsA(isA<InvalidIndexError>()));
   });
 
   test('AT', () {
@@ -97,11 +88,6 @@ void main() {
     expect(flamesList.at(21).data, equals('M'));
     expect(flamesList.at(10).data, equals('E'));
     expect(flamesList.at(35).data, equals('S'));
-
-    try {
-      flamesList.at(-10);
-    } catch (e) {
-      expect(e, isNotNull);
-    }
+    expect(() => flamesList.at(-10), throwsA(isA<InvalidIndexError>()));
   });
 }

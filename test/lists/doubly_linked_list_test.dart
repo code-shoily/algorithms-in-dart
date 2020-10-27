@@ -1,3 +1,4 @@
+import 'package:algorithms_in_dart/heaps/base.dart';
 import 'package:algorithms_in_dart/lists/doubly_linked_list.dart';
 import 'package:test/test.dart';
 
@@ -93,12 +94,7 @@ void main() {
     var list = DoublyLinkedList.fromList([0]);
     var zero = list.pop().data;
     expect(zero, equals(0));
-
-    try {
-      emptyList.pop();
-    } catch (e) {
-      expect(e, isNotNull);
-    }
+    expect(() => emptyList.pop(), throwsA(isA<InvalidIndexError>()));
   });
 
   test('Test for Shifts', () {
@@ -110,12 +106,7 @@ void main() {
     var list = DoublyLinkedList.fromList([0]);
     var zero = list.shift().data;
     expect(zero, equals(0));
-
-    try {
-      emptyList.shift();
-    } catch (e) {
-      expect(e, isNotNull);
-    }
+    expect(() => emptyList.shift(), throwsA(isA<InvalidIndexError>()));
   });
 
   test('Test for Remove', () {
@@ -138,24 +129,11 @@ void main() {
     expect(c.data, equals('C'));
     expect(programmingLanguages.toList, equals([]));
     expect(programmingLanguages.size, equals(0));
-
-    try {
-      programmingLanguages.remove(-2);
-    } catch (e) {
-      expect(e, isNotNull);
-    }
-
-    try {
-      programmingLanguages.remove(10);
-    } catch (e) {
-      expect(e, isNotNull);
-    }
-
-    try {
-      emptyList.remove(2);
-    } catch (e) {
-      expect(e, isNotNull);
-    }
+    expect(() => programmingLanguages.remove(-2),
+        throwsA(isA<InvalidIndexError>()));
+    expect(() => programmingLanguages.remove(10),
+        throwsA(isA<InvalidIndexError>()));
+    expect(() => emptyList.remove(-2), throwsA(isA<InvalidIndexError>()));
   });
 
   test('Test for Insert', () {
@@ -173,17 +151,9 @@ void main() {
     expect(programmingLanguages.toList,
         equals(['Pascal', 'C', 'COBOL', 'C++', 'Java', 'Clojure', 'Dart']));
     expect(programmingLanguages.size, equals(7));
-
-    try {
-      programmingLanguages.insert('JavaScript', 7);
-    } catch (e) {
-      expect(e, isNotNull);
-    }
-
-    try {
-      programmingLanguages.insert('PHP', -1);
-    } catch (e) {
-      expect(e, isNotNull);
-    }
+    expect(() => programmingLanguages.insert('JavaScript', 7),
+        throwsA(isA<InvalidIndexError>()));
+    expect(() => programmingLanguages.insert('PHP', -1),
+        throwsA(isA<InvalidIndexError>()));
   });
 }

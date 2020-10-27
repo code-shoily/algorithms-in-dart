@@ -1,3 +1,5 @@
+import '../heaps/base.dart';
+
 /// A Node containing reference to the next node.
 class Node<T> {
   /// Information for [this]
@@ -18,11 +20,12 @@ class Node<T> {
 
 /// A singly linked list. Contains a Node marked as head.
 ///
-/// Whenever we are inserting or removing based on indices, a 0-indexed value is assumed.
-/// Therefore, to be valid, an index (position) must be a valid non-negative integer that
-/// is less than the length of the list. This version does not support negative indices.
+/// Whenever we are inserting or removing based on indices, a 0-indexed value is
+/// assumed. Therefore, to be valid, an index (position) must be a valid
+/// non-negative integer that is less than the length of the list. This version
+/// does not support negative indices.
 ///
-/// Read more about this at [Wikipedia Entry](https://en.wikipedia.org/wiki/Linked_list)
+/// Read more about this at [Wiki](https://en.wikipedia.org/wiki/Linked_list)
 class SinglyLinkedList<T> {
   /// The head of the list
   Node<T> _head;
@@ -138,7 +141,7 @@ class SinglyLinkedList<T> {
   /// Removes the last element. Raises exception for empty lists.
   T pop() {
     if (isEmpty) {
-      throw Exception('Cannot remove from an empty list');
+      throw InvalidIndexError();
     }
 
     Node<T> previousNode;

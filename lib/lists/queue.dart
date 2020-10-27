@@ -9,12 +9,13 @@ class QueueNode<T> {
   /// Reference to the node after [this]
   QueueNode behind;
 
+  /// Construct a Queue node
   QueueNode({this.data})
       : ahead = null,
         behind = null;
 }
 
-// A simple linked list based FIFO.
+/// A simple linked list based FIFO.
 class Queue<T> {
   /// The first inserted member of the queue
   QueueNode<T> _head;

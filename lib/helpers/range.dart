@@ -1,3 +1,4 @@
+/// Extension for getting a range `[from, to)`
 extension NumRange on int {
   /// Returns a range of `[this, end)`. Counts up and down both.
   ///

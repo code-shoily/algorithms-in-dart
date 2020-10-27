@@ -1,7 +1,7 @@
 import 'common.dart';
 
 /// Implements pigeonhole sort algorithm.
-List<int> pigeonholeSort(List<int> list, {desc = false}) {
+List<int> pigeonholeSort(List<int> list, {bool desc = false}) {
   if (list.isEmpty) return list;
 
   var boundaries = findMinMax(list);
@@ -28,7 +28,7 @@ List<int> pigeonholeSort(List<int> list, {desc = false}) {
 }
 
 /// Implement counting sort
-List<int> countingSort(List<int> list, {desc = false}) {
+List<int> countingSort(List<int> list, {bool desc = false}) {
   if (list.isEmpty) return <int>[];
   var boundaries = findMinMax(list);
   if (boundaries['min'] < 0) {

@@ -1,5 +1,6 @@
 # vscode tools
 .vscode/
+.idea/
 
 # Files and directories created by pub
 .dart_tool/

@@ -1,3 +1,4 @@
+import 'package:algorithms_in_dart/heaps/base.dart';
 import 'package:algorithms_in_dart/lists/stack.dart';
 import 'package:test/test.dart';
 
@@ -19,16 +20,13 @@ void main() {
     expect(mcuHeroes.size, equals(5));
     expect(mcuHeroes.peek(), equals('Ant-man'));
     mcuHeroes.push('Ben Affleck');
-    //expect(mcuHeroes.peek(), equals('Martha'));
+    expect(mcuHeroes.peek(), equals('Ben Affleck'));
+    expect(mcuHeroes.peek(), equals('Ben Affleck'));
     expect(mcuHeroes.size, equals(6));
     expect(mcuHeroes.pop(), equals('Ben Affleck'));
   });
   test('Pop from empty list', () {
-    try {
-      emptyStack.pop();
-    } catch (e) {
-      expect(e, isNotNull);
-    }
+    expect(() => emptyStack.pop(), throwsA(isA<InvalidIndexError>()));
   });
   test('Pop decreases size and returns the top', () {
     expect(mcuHeroes.pop(), equals('Hulk'));

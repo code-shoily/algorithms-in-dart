@@ -1,3 +1,4 @@
+import 'package:algorithms_in_dart/heaps/base.dart';
 import 'package:algorithms_in_dart/lists/singly_linked_list.dart';
 import 'package:test/test.dart';
 
@@ -115,7 +116,7 @@ void main() {
   });
 
   test('List pops', () {
-    // expect(emptyList.pop(), throwsException);
+    expect(() => emptyList.pop(), throwsA(isA<InvalidIndexError>()));
 
     expect(listWithOneElement.pop(), equals('The One'));
     expect(listWithOneElement.toList, equals([]));
