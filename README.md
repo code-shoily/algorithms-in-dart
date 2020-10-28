@@ -80,4 +80,4 @@ All base classes are in `lib/heaps/base.dart`
 
 ## Graph
 
-`lib/graph/adt/` - **WIP** Graph `Node`, `Connection` and `Graph` data structures.
+`lib/graph/adt/` - Graph `Vertex`, `Connection`, `Setting` and `Graph` data structures.
