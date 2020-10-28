@@ -1,7 +1,7 @@
 import 'dart:collection';
 
-import './settings.dart';
-import './vertex.dart';
+import 'settings.dart';
+import 'vertex.dart';
 
 /// A Graph Type
 class Graph<T> {

@@ -1,8 +1,8 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/graph/adt/graph.dart';
-import 'package:algorithms_in_dart/graph/adt/vertex.dart';
-import 'package:algorithms_in_dart/graph/adt/settings.dart';
+import 'package:algorithms_in_dart/graph/graph.dart';
+import 'package:algorithms_in_dart/graph/vertex.dart';
+import 'package:algorithms_in_dart/graph/settings.dart';
 
 void main() {
   Graph simpleGraph;
