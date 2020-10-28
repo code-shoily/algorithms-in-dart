@@ -46,7 +46,7 @@ void main() {
 
   test('Loops are not allowed', () {
     var graph = Graph(settings: Settings(allowLoops: false));
-    var vertex = Vertex("LOOP");
+    var vertex = Vertex('LOOP');
     expect(() => graph.addEdge(vertex, vertex), throwsA(isA<Error>()));
   });
 
@@ -111,7 +111,7 @@ void main() {
     expect(simpleGraph.isSingleton, isFalse);
 
     var graph = Graph();
-    graph.addVertex(Vertex("0"));
+    graph.addVertex(Vertex('0'));
     expect(graph.isSingleton, isTrue);
   });
 
