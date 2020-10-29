@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/graph/adt/vertex.dart';
+import 'package:algorithms_in_dart/graph/vertex.dart';
 
 void main() {
   Vertex root;
@@ -10,7 +10,7 @@ void main() {
 
   setUp(() {
     root = Vertex('A');
-    rootWithValue = Vertex('a', "Wake up");
+    rootWithValue = Vertex('a', 'Wake up');
 
     connectedVertex = Vertex('0');
     toBeAdded = Vertex('1');
@@ -18,7 +18,7 @@ void main() {
     connectedVertex.addConnection(Vertex('2'));
   });
 
-  test("Initialization of a node", () {
+  test('Initialization of a node', () {
     expect(root.key, equals('A'));
     expect(root.value, equals('A'));
     expect(rootWithValue.key, equals('a'));
@@ -99,7 +99,18 @@ void main() {
 
   test('Get out degree for vertex', () {
     expect(root.outDegree, equals(0));
-    connectedVertex.addConnectionByKey("C");
+    connectedVertex.addConnectionByKey('C');
     expect(connectedVertex.outDegree, equals(3));
+  });
+
+  test('String representation of a vertex', () {
+    expect(connectedVertex.toString(), equals('0'));
+    expect(root.toString(), equals('A'));
+  });
+
+  test('String representation of a connection', () {
+    expect(connectedVertex.connections['1'].toString(), equals('>- 1:1 ->'));
+    connectedVertex.addConnection(Vertex('L'), 10);
+    expect(connectedVertex.connections['L'].toString(), equals('>- L:10 ->'));
   });
 }

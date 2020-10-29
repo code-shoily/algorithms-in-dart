@@ -1,8 +1,8 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/graph/adt/graph.dart';
-import 'package:algorithms_in_dart/graph/adt/vertex.dart';
-import 'package:algorithms_in_dart/graph/adt/settings.dart';
+import 'package:algorithms_in_dart/graph/graph.dart';
+import 'package:algorithms_in_dart/graph/vertex.dart';
+import 'package:algorithms_in_dart/graph/settings.dart';
 
 void main() {
   Graph simpleGraph;
@@ -13,7 +13,7 @@ void main() {
 
     /*    b -4- c            
          /      | 
-        a <-2-< d 
+        a --2-- d
          \      
           f -7- e 
     */
@@ -46,7 +46,7 @@ void main() {
 
   test('Loops are not allowed', () {
     var graph = Graph(settings: Settings(allowLoops: false));
-    var vertex = Vertex("LOOP");
+    var vertex = Vertex('LOOP');
     expect(() => graph.addEdge(vertex, vertex), throwsA(isA<Error>()));
   });
 
@@ -111,7 +111,7 @@ void main() {
     expect(simpleGraph.isSingleton, isFalse);
 
     var graph = Graph();
-    graph.addVertex(Vertex("0"));
+    graph.addVertex(Vertex('0'));
     expect(graph.isSingleton, isTrue);
   });
 
