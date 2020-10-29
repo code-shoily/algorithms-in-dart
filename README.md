@@ -80,12 +80,16 @@ All base classes are in `lib/heaps/base.dart`
 
 ## Graph
 
+### ADT
+
 `lib/graph/{settings.dart, graph.dart}` - `Graph` ADT and `Settings`.
 
 `lib/graph/vertex.dart` - `Vertex` and `Connection` for `Graph`-s
 
 `lib/graph/traversal.dart` - `Traversal` ADT to represent graph traversal
 results.
+
+### Traversals
 
 `lib/graph/dfs.dart` - Algorithm for DFS traversal on graphs.
 
