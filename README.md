@@ -88,3 +88,5 @@ All base classes are in `lib/heaps/base.dart`
 results.
 
 `lib/graph/dfs.dart` - Algorithm for DFS traversal on graphs.
+
+`lib/graph/bfs.dart` - Algorithm for BFS traversal on graphs.
