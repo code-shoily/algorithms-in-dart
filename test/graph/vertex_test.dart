@@ -102,4 +102,15 @@ void main() {
     connectedVertex.addConnectionByKey('C');
     expect(connectedVertex.outDegree, equals(3));
   });
+
+  test('String representation of a vertex', () {
+    expect(connectedVertex.toString(), equals('0'));
+    expect(root.toString(), equals('A'));
+  });
+
+  test('String representation of a connection', () {
+    expect(connectedVertex.connections['1'].toString(), equals('>- 1:1 ->'));
+    connectedVertex.addConnection(Vertex('L'), 10);
+    expect(connectedVertex.connections['L'].toString(), equals('>- L:10 ->'));
+  });
 }

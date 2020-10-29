@@ -70,6 +70,9 @@ class Vertex<T> {
 
   /// Calculate the outDegree of the vertex
   int get outDegree => connections.length;
+
+  @override
+  String toString() => key;
 }
 
 /// A connection represents the outgoing link information. It is a connection
@@ -84,4 +87,7 @@ class Connection {
 
   /// Constructor
   Connection(this.vertex, [this.weight = 1]);
+
+  @override
+  String toString() => '>- $vertex:$weight ->';
 }
