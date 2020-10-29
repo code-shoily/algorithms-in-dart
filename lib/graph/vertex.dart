@@ -31,7 +31,7 @@ class Vertex<T> {
     return true;
   }
 
-  /// Removes a connection with `other` with `weight`. `false` for inexistent
+  /// Removes a connection with `other` with `weight`. `false` for non-existent
   /// connection.
   bool removeConnection(Vertex other, [num weight = 1]) {
     return connections.remove(other.key) != null;

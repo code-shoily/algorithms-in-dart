@@ -25,7 +25,7 @@ class Graph<T> {
       vertices.values.map((v) => v.outDegree).fold(0, (a, b) => a + b);
 
   /// Adds an edge
-  void addEdge(Vertex src, Vertex dst, [int weight = 1]) {
+  void addEdge(Vertex src, Vertex dst, [num weight = 1]) {
     if (src.key == dst.key && !settings.allowLoops) throw Error();
 
     src = _getOrAddVertex(src);
