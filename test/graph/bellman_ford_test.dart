@@ -44,4 +44,15 @@ void main() {
     };
     expect(getEdges(graph).toSet(), equals(expectedEdges));
   });
+
+  test('Apply bellman ford algorithms', () {
+    var expectedShortestDistances = <Vertex, num>{
+      a: 0,
+      b: -1,
+      c: 2,
+      d: -2,
+      e: 1,
+    };
+    expect(bellmanFord(graph, a), equals(expectedShortestDistances));
+  });
 }
