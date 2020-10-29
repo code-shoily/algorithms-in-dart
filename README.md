@@ -94,3 +94,5 @@ results.
 `lib/graph/dfs.dart` - Algorithm for DFS traversal on graphs.
 
 `lib/graph/bfs.dart` - Algorithm for BFS traversal on graphs.
+
+`lib/graph/topological_sort.dart` - Topological sort on acyclic digraphs.
