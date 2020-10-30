@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/helpers/range.dart';
+import 'package:algorithms/helpers/range.dart';
 
 void main() {
   test('Test ranges', () {

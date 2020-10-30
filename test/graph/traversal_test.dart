@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/graph/traversal.dart';
-import 'package:algorithms_in_dart/graph/vertex.dart';
+import 'package:algorithms/graph/traversal.dart';
+import 'package:algorithms/graph/vertex.dart';
 
 void main() {
   Traversal hydratedTraversal;

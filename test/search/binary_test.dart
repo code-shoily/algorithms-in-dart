@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/search/interval.dart';
+import 'package:algorithms/search/interval.dart';
 
 void main() {
   const sampleList = <int>[-7, 2, 3, 45, 65, 78, 90, 200, 4540];

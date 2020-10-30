@@ -1,4 +1,4 @@
-import 'package:algorithms_in_dart/algorithms_in_dart.dart';
+import 'package:algorithms/algorithms.dart';
 
 void main(List<String> arguments) {
   message();

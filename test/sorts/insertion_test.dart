@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/sorts/insertion.dart';
+import 'package:algorithms/sorts/insertion.dart';
 
 void main() {
   List<int> randomList;
