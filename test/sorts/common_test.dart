@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/sorts/common.dart';
+import 'package:algorithms/sorts/common.dart';
 
 void main() {
   List<num> anyList, singleValuedList, emptyList;

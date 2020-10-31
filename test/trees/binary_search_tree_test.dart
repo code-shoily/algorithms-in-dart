@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
-import 'package:algorithms_in_dart/trees/binary_tree.dart';
-import 'package:algorithms_in_dart/trees/binary_search_tree.dart';
+import 'package:algorithms/trees/binary_tree.dart';
+import 'package:algorithms/trees/binary_search_tree.dart';
 
 void main() {
   BinarySearchTree emptyTree, singleNodeTree, multiNodeTree;

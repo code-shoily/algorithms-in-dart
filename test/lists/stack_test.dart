@@ -1,5 +1,5 @@
-import 'package:algorithms_in_dart/heaps/base.dart';
-import 'package:algorithms_in_dart/lists/stack.dart';
+import 'package:algorithms/heaps/base.dart';
+import 'package:algorithms/lists/stack.dart';
 import 'package:test/test.dart';
 
 void main() {

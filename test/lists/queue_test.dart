@@ -1,4 +1,4 @@
-import 'package:algorithms_in_dart/lists/queue.dart';
+import 'package:algorithms/lists/queue.dart';
 import 'package:test/test.dart';
 
 void main() {

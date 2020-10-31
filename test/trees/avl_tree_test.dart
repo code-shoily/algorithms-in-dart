@@ -1,5 +1,5 @@
-import 'package:algorithms_in_dart/trees/avl_tree.dart';
-import 'package:algorithms_in_dart/trees/binary_search_tree.dart';
+import 'package:algorithms/trees/avl_tree.dart';
+import 'package:algorithms/trees/binary_search_tree.dart';
 import 'package:test/test.dart';
 
 import 'binary_search_tree_test.dart';

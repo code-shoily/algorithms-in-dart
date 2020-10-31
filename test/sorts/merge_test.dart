@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/sorts/merge.dart';
+import 'package:algorithms/sorts/merge.dart';
 
 void main() {
   List<int> randomList;

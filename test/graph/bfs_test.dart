@@ -1,9 +1,9 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms_in_dart/graph/bfs.dart';
-import 'package:algorithms_in_dart/graph/graph.dart';
-import 'package:algorithms_in_dart/graph/settings.dart';
-import 'package:algorithms_in_dart/graph/vertex.dart';
+import 'package:algorithms/graph/bfs.dart';
+import 'package:algorithms/graph/graph.dart';
+import 'package:algorithms/graph/settings.dart';
+import 'package:algorithms/graph/vertex.dart';
 
 void main() {
   Graph graph;

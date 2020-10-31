@@ -1,5 +1,5 @@
-import 'package:algorithms_in_dart/heaps/base.dart';
-import 'package:algorithms_in_dart/lists/circular_singly_linked_list.dart';
+import 'package:algorithms/heaps/base.dart';
+import 'package:algorithms/lists/circular_singly_linked_list.dart';
 import 'package:test/test.dart';
 
 void main() {
