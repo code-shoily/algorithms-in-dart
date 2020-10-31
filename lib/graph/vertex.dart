@@ -35,7 +35,7 @@ class Vertex<T> {
       return false;
     }
     _outgoingConnections[dst] = weight;
-    dst._incomingConnections[this] = -1 * weight;
+    dst._incomingConnections[this] = weight;
     return true;
   }
 
