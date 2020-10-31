@@ -2,8 +2,9 @@ import 'vertex.dart';
 
 /// A Graph Type
 class Graph<T> {
-  /// Vertices of this graph
   Set<Vertex<T>> _vertices;
+
+  /// Vertices of this graph
   List<Vertex<T>> get vertices => List<Vertex<T>>.unmodifiable(_vertices);
 
   /// Settings for this graph

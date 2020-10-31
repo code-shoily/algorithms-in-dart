@@ -131,7 +131,7 @@ void main() {
   });
 
   test('Get out degree for vertex', () {
-    Vertex c = Vertex('c');
+    var c = Vertex('c');
     c.unlock();
     expect(root.outDegree, equals(0));
     connectedVertex.addConnection(c);
