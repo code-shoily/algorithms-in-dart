@@ -12,10 +12,10 @@ class Vertex<T> {
   /// Optional value
   T value;
 
-  final LinkedHashMap<Vertex, num> _incomingConnections;
+  final LinkedHashSet<Vertex> _incomingVertices;
 
   /// Incoming connections from this [Vertex]
-  LinkedHashMap<Vertex, num> get incomingConnections => _incomingConnections;
+  LinkedHashSet<Vertex> get incomingVertices => _incomingVertices;
 
   final LinkedHashMap<Vertex, num> _outgoingConnections;
 
@@ -24,7 +24,7 @@ class Vertex<T> {
 
   /// Constructor
   Vertex(this._key, [T value])
-      : _incomingConnections = <Vertex, num>{} as LinkedHashMap,
+      : _incomingVertices = <Vertex>{} as LinkedHashSet,
         _outgoingConnections = <Vertex, num>{} as LinkedHashMap {
     this.value = value ?? key;
   }
@@ -35,7 +35,7 @@ class Vertex<T> {
       return false;
     }
     _outgoingConnections[dst] = weight;
-    dst._incomingConnections[this] = weight;
+    dst._incomingVertices.add(this);
     return true;
   }
 
@@ -43,8 +43,9 @@ class Vertex<T> {
   /// connection.
   bool removeConnection(Vertex other, [num weight = 1]) {
     var outgoingRemoved = _outgoingConnections.remove(other) != null;
-    var incomingRemoved = other._incomingConnections.remove(this) != null;
-    return outgoingRemoved || incomingRemoved;
+    var incomingRemoved = other._incomingVertices.remove(this);
+
+    return outgoingRemoved && incomingRemoved;
   }
 
   /// Checks if [Vertex] `other` is connected to this vertex
@@ -53,11 +54,7 @@ class Vertex<T> {
 
   /// Checks if [Vertex] `other` is connected to this vertex
   bool containsConnectionFrom(Vertex other) =>
-      incomingConnections.containsKey(other);
-
-  /// Get a list of adjacent incoming vertices
-  Set<Vertex> get incomingVertices =>
-      incomingConnections.keys.map((connection) => connection).toSet();
+      incomingVertices.contains(other);
 
   /// Get a list of adjacent outgoing vertices
   Set<Vertex> get outgoingVertices =>
@@ -67,7 +64,7 @@ class Vertex<T> {
   bool get isIsolated => outgoingConnections.isEmpty;
 
   /// Calculate the inDegree of the vertex
-  int get inDegree => incomingConnections.length;
+  int get inDegree => incomingVertices.length;
 
   /// Calculate the outDegree of the vertex
   int get outDegree => outgoingConnections.length;

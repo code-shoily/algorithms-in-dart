@@ -32,8 +32,8 @@ void main() {
     expect(root.addConnection(c), isTrue);
     expect(root.outgoingConnections.containsKey(b), isTrue);
     expect(root.outgoingConnections.containsKey(c), isTrue);
-    expect(b.incomingConnections.containsKey(root), isTrue);
-    expect(c.incomingConnections.containsKey(root), isTrue);
+    expect(b.incomingVertices.contains(root), isTrue);
+    expect(c.incomingVertices.contains(root), isTrue);
   });
 
   test('Unsuccessfully add a vertex', () {
@@ -43,9 +43,9 @@ void main() {
   });
 
   test('Successfully remove a vertex', () {
-    expect(toBeAdded.incomingConnections.isEmpty, isFalse);
+    expect(toBeAdded.incomingVertices.isEmpty, isFalse);
     expect(connectedVertex.removeConnection(toBeAdded), isTrue);
-    expect(toBeAdded.incomingConnections.isEmpty, isTrue);
+    expect(toBeAdded.incomingVertices.isEmpty, isTrue);
   });
 
   test('Unsuccessfully remove a vertex', () {
