@@ -82,7 +82,7 @@ All base classes are in `lib/heaps/base.dart`
 
 ### ADT
 
-`lib/graph/{settings.dart, graph.dart}` - `Graph` ADT and `Settings`.
+`lib/graph/graph.dart` - `Graph` ADT
 
 `lib/graph/vertex.dart` - `Vertex` and `Connection` for `Graph`-s
 
