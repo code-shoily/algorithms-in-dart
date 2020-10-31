@@ -5,6 +5,7 @@ import 'dart:collection';
 /// the vertex. By default, the `key` and `value` are the same.
 class Vertex<T> {
   final String _key;
+  bool _isLocked;
 
   /// Uniquely identifiable key to this [Vertex]
   String get key => _key;
@@ -26,13 +27,19 @@ class Vertex<T> {
 
   /// Constructor
   Vertex(this._key, [T value])
-      : _incomingVertices = <Vertex>{} as LinkedHashSet,
+      : _isLocked = true,
+        _incomingVertices = <Vertex>{} as LinkedHashSet,
         _outgoingConnections = <Vertex, num>{} as LinkedHashMap {
     this.value = value ?? key;
   }
 
+  void lock() => _isLocked = true;
+  void unlock() => _isLocked = false;
+
   /// Adds a connection with [Vertex] `dst` and with `weight`
   bool addConnection(Vertex dst, [num weight = 1]) {
+    if (_isLocked || dst._isLocked)
+      throw UnsupportedError('Cannot add to a locked vertex');
     if (_outgoingConnections.containsKey(dst)) {
       return false;
     }
@@ -44,6 +51,8 @@ class Vertex<T> {
   /// Removes a connection with `other` with `weight`. `false` for non-existent
   /// connection.
   bool removeConnection(Vertex other, [num weight = 1]) {
+    if (_isLocked || other._isLocked)
+      throw UnsupportedError('Cannot remove from a locked vertex');
     var outgoingRemoved = _outgoingConnections.remove(other) != null;
     var incomingRemoved = other._incomingVertices.remove(this);
 

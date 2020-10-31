@@ -3,29 +3,32 @@ import 'vertex.dart';
 /// A Graph Type
 class Graph<T> {
   /// Vertices of this graph
-  Set<Vertex<T>> vertices;
+  Set<Vertex<T>> _vertices;
+  List<Vertex<T>> get vertices => List<Vertex<T>>.unmodifiable(_vertices);
 
   /// Settings for this graph
   /// Is this a Digraph?
-  bool isDigraph;
+  final bool isDigraph;
 
   /// Does this graph allow loops?
-  bool allowLoops;
+  final bool allowLoops;
 
   /// Create a new graph
   Graph({this.isDigraph = true, this.allowLoops = false}) {
-    vertices = <Vertex<T>>{};
+    _vertices = <Vertex<T>>{};
   }
 
   /// Total number of vertices for this graph
-  int get numberOfVertices => vertices.length;
+  int get numberOfVertices => _vertices.length;
 
   /// Total number of edges
   int get numberOfEdges =>
-      vertices.map((v) => v.outDegree).fold(0, (a, b) => a + b);
+      _vertices.map((v) => v.outDegree).fold(0, (a, b) => a + b);
 
   /// Adds an edge
   void addEdge(Vertex src, Vertex dst, [num weight = 1]) {
+    src.unlock();
+    dst.unlock();
     if (src.key == dst.key && !allowLoops) throw Error();
 
     src = _getOrAddVertex(src);
@@ -33,10 +36,12 @@ class Graph<T> {
     src.addConnection(dst, weight);
 
     if (!isDigraph) dst.addConnection(src, weight);
+    src.lock();
+    dst.lock();
   }
 
   /// Checks if vertex is included
-  bool containsVertex(Vertex vertex) => vertices.contains(vertex);
+  bool containsVertex(Vertex vertex) => _vertices.contains(vertex);
 
   /// Checks if this is a null graph
   bool get isNull => numberOfVertices == 0;
@@ -48,14 +53,14 @@ class Graph<T> {
   bool get isEmpty => numberOfEdges == 0;
 
   /// Adds a new vertex
-  bool addVertex(Vertex vertex) => vertices.add(vertex);
+  bool addVertex(Vertex vertex) => _vertices.add(vertex);
 
   Vertex<T> _getOrAddVertex(Vertex vertex) =>
-      vertices.add(vertex) ? vertex : vertex;
+      _vertices.add(vertex) ? vertex : vertex;
 
   /// Gets an edge list for [this].
   List<List> get edges => [
-        for (var vertex in vertices) ...[
+        for (var vertex in _vertices) ...[
           for (var connection in vertex.outgoingConnections.entries)
             [vertex, connection.key, connection.value]
         ]
