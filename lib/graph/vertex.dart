@@ -15,12 +15,14 @@ class Vertex<T> {
   final LinkedHashSet<Vertex> _incomingVertices;
 
   /// Incoming connections from this [Vertex]
-  LinkedHashSet<Vertex> get incomingVertices => _incomingVertices;
+  List<Vertex> get incomingVertices =>
+      List<Vertex>.unmodifiable(_incomingVertices);
 
   final LinkedHashMap<Vertex, num> _outgoingConnections;
 
   /// Outgoing connections from this [Vertex]
-  LinkedHashMap<Vertex, num> get outgoingConnections => _outgoingConnections;
+  UnmodifiableMapView<Vertex, num> get outgoingConnections =>
+      Map<Vertex, num>.unmodifiable(_outgoingConnections);
 
   /// Constructor
   Vertex(this._key, [T value])
@@ -31,7 +33,7 @@ class Vertex<T> {
 
   /// Adds a connection with [Vertex] `dst` and with `weight`
   bool addConnection(Vertex dst, [num weight = 1]) {
-    if (outgoingConnections.containsKey(dst)) {
+    if (_outgoingConnections.containsKey(dst)) {
       return false;
     }
     _outgoingConnections[dst] = weight;
@@ -50,23 +52,24 @@ class Vertex<T> {
 
   /// Checks if [Vertex] `other` is connected to this vertex
   bool containsConnectionTo(Vertex other) =>
-      outgoingConnections.containsKey(other);
+      _outgoingConnections.containsKey(other);
 
   /// Checks if [Vertex] `other` is connected to this vertex
-  bool containsConnectionFrom(Vertex other) => incomingVertices.contains(other);
+  bool containsConnectionFrom(Vertex other) =>
+      _incomingVertices.contains(other);
 
   /// Get a list of adjacent outgoing vertices
   Set<Vertex> get outgoingVertices =>
-      outgoingConnections.keys.map((connection) => connection).toSet();
+      _outgoingConnections.keys.map((connection) => connection).toSet();
 
   /// Is this vertex isolated?
-  bool get isIsolated => outgoingConnections.isEmpty;
+  bool get isIsolated => _outgoingConnections.isEmpty;
 
   /// Calculate the inDegree of the vertex
-  int get inDegree => incomingVertices.length;
+  int get inDegree => _incomingVertices.length;
 
   /// Calculate the outDegree of the vertex
-  int get outDegree => outgoingConnections.length;
+  int get outDegree => _outgoingConnections.length;
 
   @override
   String toString() => key;
