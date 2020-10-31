@@ -53,8 +53,7 @@ class Vertex<T> {
       outgoingConnections.containsKey(other);
 
   /// Checks if [Vertex] `other` is connected to this vertex
-  bool containsConnectionFrom(Vertex other) =>
-      incomingVertices.contains(other);
+  bool containsConnectionFrom(Vertex other) => incomingVertices.contains(other);
 
   /// Get a list of adjacent outgoing vertices
   Set<Vertex> get outgoingVertices =>
