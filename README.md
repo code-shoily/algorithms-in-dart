@@ -84,7 +84,7 @@ All base classes are in `lib/heaps/base.dart`
 
 `lib/graph/graph.dart` - `Graph` ADT
 
-`lib/graph/vertex.dart` - `Vertex` and `Connection` for `Graph`-s
+`lib/graph/vertex.dart` - `Vertex`
 
 `lib/graph/traversal.dart` - `Traversal` ADT to represent graph traversal
 results.
