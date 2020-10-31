@@ -5,7 +5,7 @@ import 'package:algorithms/graph/graph.dart';
 import 'package:algorithms/graph/vertex.dart';
 
 void main() {
-  Graph emptyGraph, graph;
+  Graph graph;
   Vertex a, b, c, d, e;
 
   void _initializeVertices() {
@@ -18,7 +18,6 @@ void main() {
 
   setUp(() {
     _initializeVertices();
-    emptyGraph = Graph();
     graph = Graph();
     graph.addEdge(a, b, -1);
     graph.addEdge(a, c, 4);
@@ -28,21 +27,6 @@ void main() {
     graph.addEdge(e, d, -3);
     graph.addEdge(d, b, 1);
     graph.addEdge(d, c, 5);
-  });
-
-  test('Get edges of graph', () {
-    expect(getEdges(emptyGraph), isEmpty);
-    var expectedEdges = {
-      {a, b, -1},
-      {a, c, 4},
-      {b, c, 3},
-      {b, d, 2},
-      {b, e, 2},
-      {e, d, -3},
-      {d, b, 1},
-      {d, c, 5}
-    };
-    expect(getEdges(graph).toSet(), equals(expectedEdges));
   });
 
   test('Apply bellman ford algorithms', () {

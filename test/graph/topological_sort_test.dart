@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 
 import 'package:algorithms/graph/graph.dart';
-import 'package:algorithms/graph/settings.dart';
 import 'package:algorithms/graph/topological_sort.dart';
 import 'package:algorithms/graph/vertex.dart';
 
@@ -27,8 +26,8 @@ void main() {
 
   setUp(() {
     _initializeVertex();
-    emptyGraph = Graph(settings: Settings(isDigraph: true));
-    graph = Graph(settings: Settings(isDigraph: true));
+    emptyGraph = Graph(isDigraph: true);
+    graph = Graph(isDigraph: true);
     /*
       (a) -> (b) -> (c) -> (f) <- (h)
        |      |        (i)
@@ -100,7 +99,7 @@ void main() {
   });
 
   test('Topological sort fails on undirected graph', () {
-    var unDirectedGraph = Graph(settings: Settings(isDigraph: false));
+    var unDirectedGraph = Graph(isDigraph: false);
     unDirectedGraph.addEdge(Vertex('A'), Vertex('B'));
     expect(topologicalSort(unDirectedGraph), isNull);
   });

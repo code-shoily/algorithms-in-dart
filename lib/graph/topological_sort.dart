@@ -20,7 +20,7 @@ List<Vertex> topologicalSort(Graph graph) {
     noInDegrees.remove(vertex);
     sorted.add(vertex);
 
-    for (var connectedVertex in vertex.connectedVertices) {
+    for (var connectedVertex in vertex.outgoingVertices) {
       if (--inDegreeData[connectedVertex] == 0) {
         noInDegrees.add(connectedVertex);
       }
@@ -39,11 +39,11 @@ bool _detectCycle(HashMap<Vertex, int> inDegreeData) =>
 /// Returns in degrees of all vertices of [graph]
 HashMap<Vertex, int> inDegrees(Graph graph) {
   var inDegrees = HashMap<Vertex, int>();
-  var vertices = graph.vertices.values;
+  var vertices = graph.vertices;
 
   for (var vertex in vertices) {
     inDegrees.putIfAbsent(vertex, () => 0);
-    for (var connectedVertex in vertex.connectedVertices) {
+    for (var connectedVertex in vertex.outgoingVertices) {
       inDegrees.update(connectedVertex, (value) => value + 1,
           ifAbsent: () => 1);
     }

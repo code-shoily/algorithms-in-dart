@@ -30,6 +30,10 @@ void main() {
     var c = Vertex('C');
     expect(root.addConnection(b), isTrue);
     expect(root.addConnection(c), isTrue);
+    expect(root.outgoingConnections.containsKey(b), isTrue);
+    expect(root.outgoingConnections.containsKey(c), isTrue);
+    expect(b.incomingConnections.containsKey(root), isTrue);
+    expect(c.incomingConnections.containsKey(root), isTrue);
   });
 
   test('Unsuccessfully add a vertex', () {
@@ -38,18 +42,10 @@ void main() {
     expect(root.addConnection(b), isFalse);
   });
 
-  test('Successfully add a vertex by key', () {
-    expect(root.addConnectionByKey('B'), isTrue);
-    expect(root.addConnectionByKey('C'), isTrue);
-  });
-
-  test('Unsuccessfully add a vertex', () {
-    root.addConnectionByKey('B');
-    expect(root.addConnectionByKey('B'), isFalse);
-  });
-
   test('Successfully remove a vertex', () {
+    expect(toBeAdded.incomingConnections.isEmpty, isFalse);
     expect(connectedVertex.removeConnection(toBeAdded), isTrue);
+    expect(toBeAdded.incomingConnections.isEmpty, isTrue);
   });
 
   test('Unsuccessfully remove a vertex', () {
@@ -57,22 +53,10 @@ void main() {
     expect(connectedVertex.removeConnection(aVertex), isFalse);
   });
 
-  test('Successfully remove a vertex by key', () {
-    expect(connectedVertex.removeConnectionByKey('1'), isTrue);
-  });
-
-  test('Unsuccessfully remove a vertex by key', () {
-    expect(connectedVertex.removeConnectionByKey('-1'), isFalse);
-  });
-
   test('Check for vertex containment', () {
-    expect(connectedVertex.contains(toBeAdded), isTrue);
-    expect(connectedVertex.contains(Vertex('I am not connected')), isFalse);
-  });
-
-  test('Check for vertex containment by key', () {
-    expect(connectedVertex.containsKey('1'), isTrue);
-    expect(connectedVertex.containsKey('10'), isFalse);
+    expect(connectedVertex.containsConnectionTo(toBeAdded), isTrue);
+    expect(connectedVertex.containsConnectionTo(Vertex('I am not connected')),
+        isFalse);
   });
 
   test('Get a list of vertices', () {
@@ -82,14 +66,10 @@ void main() {
     root.addConnection(a);
     root.addConnection(b);
     root.addConnection(c);
-    expect(root.connectedVertices, equals(<Vertex>{a, b, c}));
-  });
-
-  test('Get a list of vertex keys', () {
-    root.addConnectionByKey('a');
-    root.addConnectionByKey('b');
-    root.addConnectionByKey('c');
-    expect(root.connectedVertexKeys, equals(<String>{'a', 'b', 'c'}));
+    expect(root.outgoingVertices, equals(<Vertex>{a, b, c}));
+    expect(a.incomingVertices, equals(<Vertex>{root}));
+    expect(b.incomingVertices, equals(<Vertex>{root}));
+    expect(c.incomingVertices, equals(<Vertex>{root}));
   });
 
   test('Check for isolated vertex', () {
@@ -99,18 +79,18 @@ void main() {
 
   test('Get out degree for vertex', () {
     expect(root.outDegree, equals(0));
-    connectedVertex.addConnectionByKey('C');
+    connectedVertex.addConnection(Vertex('C'));
     expect(connectedVertex.outDegree, equals(3));
+  });
+
+  test('Get in degree for vertex', () {
+    expect(root.inDegree, equals(0));
+    connectedVertex.addConnection(root);
+    expect(root.inDegree, equals(1));
   });
 
   test('String representation of a vertex', () {
     expect(connectedVertex.toString(), equals('0'));
     expect(root.toString(), equals('A'));
-  });
-
-  test('String representation of a connection', () {
-    expect(connectedVertex.connections['1'].toString(), equals('>- 1:1 ->'));
-    connectedVertex.addConnection(Vertex('L'), 10);
-    expect(connectedVertex.connections['L'].toString(), equals('>- L:10 ->'));
   });
 }

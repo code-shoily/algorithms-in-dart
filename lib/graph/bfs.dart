@@ -20,7 +20,7 @@ void _doBFS(Graph graph, Vertex vertex, Traversal traversal) {
   while (!queue.isEmpty) {
     var currentVertex = queue.dequeue();
     traversal.addVisit(currentVertex);
-    for (var connectedVertex in currentVertex.connectedVertices) {
+    for (var connectedVertex in currentVertex.outgoingVertices) {
       if (!traversal.hasVisited(connectedVertex)) {
         traversal.addVisited(connectedVertex);
         queue.enqueue(connectedVertex);

@@ -2,7 +2,6 @@ import 'package:test/test.dart';
 
 import 'package:algorithms/graph/dfs.dart';
 import 'package:algorithms/graph/graph.dart';
-import 'package:algorithms/graph/settings.dart';
 import 'package:algorithms/graph/vertex.dart';
 
 void main() {
@@ -20,7 +19,7 @@ void main() {
 
   setUp(() {
     _initializeVertices();
-    graph = Graph(settings: Settings(isDigraph: true));
+    graph = Graph(isDigraph: true);
     /*    v --- y
          /      |
         u ----- z
@@ -37,12 +36,7 @@ void main() {
 
   test('Test DFS', () {
     var traversal = traverse(graph, u);
-    expect(
-        traversal.visits,
-        anyOf([
-          <Vertex>[u, z, v, y, w, x],
-          <Vertex>[u, z, w, x, v, y]
-        ]));
+    expect(traversal.visits, equals([u, v, y, z, w, x]));
 
     traversal = traverse(graph, w);
     expect(traversal.visits, <Vertex>[w, x]);
