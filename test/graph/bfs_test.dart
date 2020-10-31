@@ -2,7 +2,6 @@ import 'package:test/test.dart';
 
 import 'package:algorithms/graph/bfs.dart';
 import 'package:algorithms/graph/graph.dart';
-import 'package:algorithms/graph/settings.dart';
 import 'package:algorithms/graph/vertex.dart';
 
 void main() {
@@ -20,7 +19,7 @@ void main() {
 
   setUp(() {
     _initializeVertices();
-    graph = Graph(settings: Settings(isDigraph: true));
+    graph = Graph(isDigraph: true);
     /*    v --- y
          /      |
         u ----- z
@@ -37,22 +36,7 @@ void main() {
 
   test('Test BFS', () {
     var traversal = traverse(graph, u);
-    expect(
-        traversal.visits,
-        anyOf([
-          <Vertex>[u, v, w, z, x, y],
-          <Vertex>[u, v, z, w, x, y],
-          <Vertex>[u, w, v, z, x, y],
-          <Vertex>[u, w, z, v, x, y],
-          <Vertex>[u, z, v, w, x, y],
-          <Vertex>[u, z, w, v, x, y],
-          <Vertex>[u, v, w, z, y, y],
-          <Vertex>[u, v, z, w, y, x],
-          <Vertex>[u, w, v, z, y, x],
-          <Vertex>[u, w, z, v, y, x],
-          <Vertex>[u, z, v, w, y, x],
-          <Vertex>[u, z, w, v, y, x],
-        ]));
+    expect(traversal.visits, equals([u, v, w, z, y, x]));
 
     traversal = traverse(graph, w);
     expect(traversal.visits, <Vertex>[w, x]);

@@ -12,82 +12,66 @@ class Vertex<T> {
   /// Optional value
   T value;
 
+  final LinkedHashMap<Vertex, num> _incomingConnections;
+
+  /// Incoming connections from this [Vertex]
+  LinkedHashMap<Vertex, num> get incomingConnections => _incomingConnections;
+
+  final LinkedHashMap<Vertex, num> _outgoingConnections;
+
   /// Outgoing connections from this [Vertex]
-  HashMap<String, Connection> connections;
+  LinkedHashMap<Vertex, num> get outgoingConnections => _outgoingConnections;
 
   /// Constructor
-  Vertex(this._key, [T value]) {
-    connections = HashMap();
+  Vertex(this._key, [T value])
+      : _incomingConnections = <Vertex, num>{} as LinkedHashMap,
+        _outgoingConnections = <Vertex, num>{} as LinkedHashMap {
     this.value = value ?? key;
   }
 
   /// Adds a connection with [Vertex] `dst` and with `weight`
   bool addConnection(Vertex dst, [num weight = 1]) {
-    if (connections.containsKey(dst.key)) {
+    if (outgoingConnections.containsKey(dst)) {
       return false;
     }
-    connections[dst.key] = Connection(dst, weight);
-
+    _outgoingConnections[dst] = weight;
+    dst._incomingConnections[this] = -1 * weight;
     return true;
   }
 
   /// Removes a connection with `other` with `weight`. `false` for non-existent
   /// connection.
   bool removeConnection(Vertex other, [num weight = 1]) {
-    return connections.remove(other.key) != null;
-  }
-
-  /// Adds a connection with [Vertex] `dst` and with `weight`
-  bool addConnectionByKey(String dst, [num weight = 1]) {
-    if (connections.containsKey(dst)) {
-      return false;
-    }
-    connections[dst] = Connection(Vertex(dst), weight);
-
-    return true;
-  }
-
-  /// Removes a connection with `other` with `weight`. `false` if doesn't exist.
-  bool removeConnectionByKey(String otherKey, [num weight = 1]) {
-    return connections.remove(otherKey) != null;
+    var outgoingRemoved = _outgoingConnections.remove(other) != null;
+    var incomingRemoved = other._incomingConnections.remove(this) != null;
+    return outgoingRemoved || incomingRemoved;
   }
 
   /// Checks if [Vertex] `other` is connected to this vertex
-  bool contains(Vertex other) => connections[other.key]?.vertex == other;
+  bool containsConnectionTo(Vertex other) =>
+      outgoingConnections.containsKey(other);
 
-  /// Checks if [Vertex] with key `key` is connected to this.
-  bool containsKey(String key) => connections.containsKey(key);
+  /// Checks if [Vertex] `other` is connected to this vertex
+  bool containsConnectionFrom(Vertex other) =>
+      incomingConnections.containsKey(other);
 
-  /// Get a list of adjacent vertices
-  Set<Vertex> get connectedVertices =>
-      connections.values.map((connection) => connection.vertex).toSet();
+  /// Get a list of adjacent incoming vertices
+  Set<Vertex> get incomingVertices =>
+      incomingConnections.keys.map((connection) => connection).toSet();
 
-  /// Gets keys of adjacent nodes
-  Set<String> get connectedVertexKeys => connections.keys.toSet();
+  /// Get a list of adjacent outgoing vertices
+  Set<Vertex> get outgoingVertices =>
+      outgoingConnections.keys.map((connection) => connection).toSet();
 
   /// Is this vertex isolated?
-  bool get isIsolated => connections.isEmpty;
+  bool get isIsolated => outgoingConnections.isEmpty;
+
+  /// Calculate the inDegree of the vertex
+  int get inDegree => incomingConnections.length;
 
   /// Calculate the outDegree of the vertex
-  int get outDegree => connections.length;
+  int get outDegree => outgoingConnections.length;
 
   @override
   String toString() => key;
-}
-
-/// A connection represents the outgoing link information. It is a connection
-/// with a destination [Vertex] and `weight`. If no weight is mentioned
-/// then it is assumed to be `1`.
-class Connection {
-  /// Destination [vertex]
-  final Vertex vertex;
-
-  /// Weight for this connection
-  final num weight;
-
-  /// Constructor
-  Connection(this.vertex, [this.weight = 1]);
-
-  @override
-  String toString() => '>- $vertex:$weight ->';
 }

@@ -2,13 +2,24 @@ import 'package:test/test.dart';
 
 import 'package:algorithms/graph/graph.dart';
 import 'package:algorithms/graph/vertex.dart';
-import 'package:algorithms/graph/settings.dart';
 
 void main() {
-  Graph simpleGraph;
-  Graph emptyGraph;
+  Graph emptyGraph, simpleGraph;
+  Vertex a, b, c, d, e, f, u, v;
+
+  void _initializeVertices() {
+    a = Vertex('a');
+    b = Vertex('b');
+    c = Vertex('c');
+    d = Vertex('d');
+    e = Vertex('e');
+    f = Vertex('f');
+    u = Vertex('u');
+    v = Vertex('v');
+  }
 
   setUp(() {
+    _initializeVertices();
     emptyGraph = Graph();
 
     /*    b -4- c            
@@ -18,13 +29,6 @@ void main() {
           f -7- e 
     */
     simpleGraph = Graph();
-
-    var a = Vertex('a');
-    var b = Vertex('b');
-    var c = Vertex('c');
-    var d = Vertex('d');
-    var e = Vertex('e');
-    var f = Vertex('f');
 
     simpleGraph.addEdge(a, b);
     simpleGraph.addEdge(a, f);
@@ -45,57 +49,48 @@ void main() {
   });
 
   test('Loops are not allowed', () {
-    var graph = Graph(settings: Settings(allowLoops: false));
-    var vertex = Vertex('LOOP');
-    expect(() => graph.addEdge(vertex, vertex), throwsA(isA<Error>()));
+    var graph = Graph(allowLoops: false);
+    expect(() => graph.addEdge(a, a), throwsA(isA<Error>()));
   });
 
   test('Loops are allowed if settings permits', () {
-    var graph = Graph(settings: Settings(allowLoops: true));
-    var vertex = Vertex('LOOP');
-    graph.addEdge(vertex, vertex);
+    var graph = Graph(allowLoops: true);
+    graph.addEdge(u, u);
     expect(graph.numberOfVertices, equals(1));
   });
 
   test('Digraphs add connections in one way', () {
-    var graph = Graph(settings: Settings(isDigraph: true));
-    var a = Vertex('A');
-    var b = Vertex('B');
-    graph.addEdge(a, b);
+    var graph = Graph(isDigraph: true);
+    graph.addEdge(u, v);
     expect(graph.numberOfEdges, equals(1));
   });
 
   test('Non-digraphs add connections in both ways', () {
-    var graph = Graph(settings: Settings(isDigraph: false));
-    var a = Vertex('A');
-    var b = Vertex('B');
-    graph.addEdge(a, b);
+    var graph = Graph(isDigraph: false);
+    graph.addEdge(u, v);
     expect(graph.numberOfEdges, equals(2));
   });
 
   test('Checks for vertex', () {
     var graph = Graph();
-    var a = Vertex('A');
-    var b = Vertex('B');
-    var c = Vertex('C');
-    graph.addEdge(a, b);
-    expect(graph.containsVertex(a), isTrue);
-    expect(graph.containsVertex(b), isTrue);
-    expect(graph.containsVertex(c), isFalse);
+    graph.addEdge(u, v);
+    expect(graph.containsVertex(u), isTrue);
+    expect(graph.containsVertex(v), isTrue);
+    expect(graph.containsVertex(a), isFalse);
   });
 
   test('Checks for vertex by key', () {
-    expect(simpleGraph.containsVertexKey('a'), isTrue);
-    expect(simpleGraph.containsVertexKey('z'), isFalse);
+    expect(simpleGraph.containsVertex(a), isTrue);
+    expect(simpleGraph.containsVertex(u), isFalse);
   });
 
   test('Adds a new vertex', () {
-    var x = Vertex('x');
-    expect(simpleGraph.addVertex(x), isTrue);
+    expect(simpleGraph.containsVertex(u), isFalse);
+    expect(simpleGraph.addVertex(u), isTrue);
+    expect(simpleGraph.containsVertex(u), isTrue);
   });
 
   test('Does not add vertex with existing key', () {
-    var a = Vertex('a');
     expect(simpleGraph.numberOfVertices, equals(6));
     expect(simpleGraph.addVertex(a), isFalse);
     expect(simpleGraph.numberOfVertices, equals(6));
@@ -111,7 +106,7 @@ void main() {
     expect(simpleGraph.isSingleton, isFalse);
 
     var graph = Graph();
-    graph.addVertex(Vertex('0'));
+    graph.addVertex(u);
     expect(graph.isSingleton, isTrue);
   });
 
@@ -120,12 +115,23 @@ void main() {
     expect(simpleGraph.isEmpty, isFalse);
 
     var graph = Graph();
-    var a = Vertex('a');
-    var b = Vertex('b');
-    graph.addVertex(a);
-    graph.addVertex(b);
+    graph.addVertex(u);
+    graph.addVertex(v);
     expect(graph.isEmpty, isTrue);
-    graph.addEdge(a, b);
+    graph.addEdge(u, v);
     expect(graph.isEmpty, isFalse);
+  });
+
+  test('Get edges of graph', () {
+    expect(emptyGraph.edges, isEmpty);
+    var expectedEdges = {
+      {a, b, 1},
+      {a, f, 1},
+      {b, c, 4},
+      {d, a, 2},
+      {f, e, 7},
+      {c, d, 1}
+    };
+    expect(simpleGraph.edges.toSet(), equals(expectedEdges));
   });
 }
