@@ -11,5 +11,5 @@ environment:
 #  path: ^1.4.1
 
 dev_dependencies:
-  test:
+  test: ^1.15.4
   effective_dart: ^1.2.0
