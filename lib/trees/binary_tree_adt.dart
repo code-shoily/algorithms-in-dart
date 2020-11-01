@@ -38,21 +38,21 @@ abstract class BinaryTreeADT<N extends BinaryNodeADT, V extends Comparable>
   @override
   void nullify() => root = null;
 
-  @override
+  /// In Order Traversal.
   List<V> inOrder() {
     var result = <V>[];
     _inOrder(root, result);
     return result;
   }
 
-  @override
+  /// PostOrder Traversal.
   List<V> postOrder() {
     var result = <V>[];
     _postOrder(root, result);
     return result;
   }
 
-  @override
+  /// PreOrder Traversal.
   List<V> preOrder() {
     var result = <V>[];
     _preOrder(root, result);
