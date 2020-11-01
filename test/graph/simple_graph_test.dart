@@ -92,6 +92,44 @@ void main() {
     expect(simpleGraph.numberOfVertices, equals(6));
   });
 
+  test('Remove a vertex from graph', () {
+    expect(simpleGraph.numberOfVertices, equals(6));
+    expect(simpleGraph.numberOfEdges, equals(6));
+    expect(simpleGraph.removeVertex(a), isTrue);
+    expect(simpleGraph.numberOfEdges, equals(3));
+    expect(simpleGraph.numberOfVertices, equals(5));
+  });
+
+  test('Remove an isolated vertex from graph', () {
+    expect(u.isIsolated, isTrue);
+    expect(simpleGraph.addVertex(u), isTrue);
+    expect(simpleGraph.numberOfVertices, equals(7));
+    expect(simpleGraph.numberOfEdges, equals(6));
+    expect(simpleGraph.removeVertex(u), isTrue);
+    expect(simpleGraph.numberOfVertices, equals(6));
+    expect(simpleGraph.numberOfEdges, equals(6));
+  });
+
+  test('Removing a non-existent vertex has no effect', () {
+    expect(simpleGraph.numberOfVertices, equals(6));
+    expect(simpleGraph.numberOfEdges, equals(6));
+    expect(simpleGraph.removeVertex(u), isFalse);
+    expect(simpleGraph.numberOfVertices, equals(6));
+    expect(simpleGraph.numberOfEdges, equals(6));
+  });
+
+  test('Remove an edge from graph', () {
+    expect(simpleGraph.numberOfEdges, equals(6));
+    expect(simpleGraph.removeEdge(a, b), isTrue);
+    expect(simpleGraph.numberOfEdges, equals(5));
+  });
+
+  test('Do no remove edge that does not exist', () {
+    expect(simpleGraph.numberOfEdges, equals(6));
+    expect(simpleGraph.removeEdge(a, c), isFalse);
+    expect(simpleGraph.numberOfEdges, equals(6));
+  });
+
   test('Check for NULL graph', () {
     expect(emptyGraph.isNull, isTrue);
     expect(simpleGraph.isNull, isFalse);

@@ -36,6 +36,15 @@ class SimpleGraph<T> {
     lockVertices(<Vertex>{src, dst});
   }
 
+  /// Removes an Edge from [this], returns `false` if edge does not exists.
+  bool removeEdge(Vertex src, Vertex dst) {
+    unlockVertices(<Vertex>{src, dst});
+    var removed = src.removeConnection(dst);
+    lockVertices(<Vertex>{src, dst});
+
+    return removed;
+  }
+
   /// Checks if vertex is included
   bool containsVertex(Vertex vertex) => _vertices.contains(vertex);
 
@@ -50,6 +59,17 @@ class SimpleGraph<T> {
 
   /// Adds a new vertex
   bool addVertex(Vertex vertex) => _vertices.add(vertex);
+
+  /// Removes a vertex
+  bool removeVertex(Vertex vertex) {
+    var edgesRemoved = vertices.contains(vertex)
+        ? [
+            ...vertex.outgoingConnections.entries.map((e) => [vertex, e.key]),
+            ...vertex.incomingVertices.map((e) => [e, vertex])
+          ].fold(true, (acc, v) => acc && removeEdge(v[0], v[1]))
+        : false;
+    return edgesRemoved ? _vertices.remove(vertex) : edgesRemoved;
+  }
 
   Vertex<T> _getOrAddVertex(Vertex vertex) =>
       _vertices.add(vertex) ? vertex : vertex;
