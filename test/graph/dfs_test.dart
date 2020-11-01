@@ -1,11 +1,11 @@
 import 'package:test/test.dart';
 
 import 'package:algorithms/graph/dfs.dart';
-import 'package:algorithms/graph/graph.dart';
+import 'package:algorithms/graph/simple_graph.dart';
 import 'package:algorithms/graph/vertex.dart';
 
 void main() {
-  Graph graph;
+  SimpleGraph graph;
   Vertex u, v, w, x, y, z;
 
   void _initializeVertices() {
@@ -19,7 +19,7 @@ void main() {
 
   setUp(() {
     _initializeVertices();
-    graph = Graph(isDigraph: true);
+    graph = SimpleGraph(isDigraph: true);
     /*    v --- y
          /      |
         u ----- z

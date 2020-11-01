@@ -1,9 +1,9 @@
-import 'graph.dart';
+import 'simple_graph.dart';
 import 'traversal.dart';
 import 'vertex.dart';
 
 /// Recursively traverse graph in depth first.
-Traversal traverse(Graph graph, Vertex vertex) {
+Traversal traverse(SimpleGraph graph, Vertex vertex) {
   var traversal = Traversal();
 
   _doDFS(graph, vertex, traversal);
@@ -11,7 +11,7 @@ Traversal traverse(Graph graph, Vertex vertex) {
   return traversal;
 }
 
-void _doDFS(Graph graph, Vertex vertex, Traversal traversal) {
+void _doDFS(SimpleGraph graph, Vertex vertex, Traversal traversal) {
   traversal.addVisited(vertex);
   traversal.addVisit(vertex);
   for (var connectedVertex in vertex.outgoingVertices) {

@@ -1,10 +1,10 @@
 import 'dart:collection';
 
-import 'graph.dart';
+import 'simple_graph.dart';
 import 'vertex.dart';
 
 /// Returns topological sort using Kahn's algorithm
-List<Vertex> topologicalSort(Graph graph) {
+List<Vertex> topologicalSort(SimpleGraph graph) {
   var sorted = <Vertex>[];
   var inDegreeData = inDegrees(graph);
   var noInDegrees = <Vertex>{};
@@ -37,7 +37,7 @@ bool _detectCycle(HashMap<Vertex, int> inDegreeData) =>
     inDegreeData.values.where((element) => element > 0).length > 0;
 
 /// Returns in degrees of all vertices of [graph]
-HashMap<Vertex, int> inDegrees(Graph graph) {
+HashMap<Vertex, int> inDegrees(SimpleGraph graph) {
   var inDegrees = HashMap<Vertex, int>();
   var vertices = graph.vertices;
 

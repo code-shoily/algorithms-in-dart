@@ -1,7 +1,7 @@
 import 'vertex.dart';
 
 /// A Graph Type
-class Graph<T> {
+class SimpleGraph<T> {
   Set<Vertex<T>> _vertices;
 
   /// Vertices of this graph
@@ -11,11 +11,8 @@ class Graph<T> {
   /// Is this a Digraph?
   final bool isDigraph;
 
-  /// Does this graph allow loops?
-  final bool allowLoops;
-
   /// Create a new graph
-  Graph({this.isDigraph = true, this.allowLoops = false}) {
+  SimpleGraph({this.isDigraph = true}) {
     _vertices = <Vertex<T>>{};
   }
 
@@ -29,7 +26,7 @@ class Graph<T> {
   /// Adds an edge
   void addEdge(Vertex src, Vertex dst, [num weight = 1]) {
     unlockVertices(<Vertex>{src, dst});
-    if (src.key == dst.key && !allowLoops) throw Error();
+    if (src.key == dst.key) throw Error();
 
     src = _getOrAddVertex(src);
     dst = _getOrAddVertex(dst);

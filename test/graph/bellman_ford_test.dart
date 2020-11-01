@@ -1,11 +1,11 @@
 import 'package:test/test.dart';
 
 import 'package:algorithms/graph/bellman_ford.dart';
-import 'package:algorithms/graph/graph.dart';
+import 'package:algorithms/graph/simple_graph.dart';
 import 'package:algorithms/graph/vertex.dart';
 
 void main() {
-  Graph graph;
+  SimpleGraph graph;
   Vertex a, b, c, d, e;
 
   void _initializeVertices() {
@@ -18,7 +18,7 @@ void main() {
 
   setUp(() {
     _initializeVertices();
-    graph = Graph();
+    graph = SimpleGraph();
     graph.addEdge(a, b, -1);
     graph.addEdge(a, c, 4);
     graph.addEdge(b, c, 3);

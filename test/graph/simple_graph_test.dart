@@ -1,10 +1,10 @@
 import 'package:test/test.dart';
 
-import 'package:algorithms/graph/graph.dart';
+import 'package:algorithms/graph/simple_graph.dart';
 import 'package:algorithms/graph/vertex.dart';
 
 void main() {
-  Graph emptyGraph, simpleGraph;
+  SimpleGraph emptyGraph, simpleGraph;
   Vertex a, b, c, d, e, f, u, v;
 
   void _initializeVertices() {
@@ -20,7 +20,7 @@ void main() {
 
   setUp(() {
     _initializeVertices();
-    emptyGraph = Graph();
+    emptyGraph = SimpleGraph();
 
     /*    b -4- c            
          /      | 
@@ -28,7 +28,7 @@ void main() {
          \      
           f -7- e 
     */
-    simpleGraph = Graph();
+    simpleGraph = SimpleGraph();
 
     simpleGraph.addEdge(a, b);
     simpleGraph.addEdge(a, f);
@@ -48,31 +48,25 @@ void main() {
     expect(simpleGraph.numberOfEdges, equals(6));
   });
 
-  test('Loops are not allowed', () {
-    var graph = Graph(allowLoops: false);
+  test('Loops are not allowed for a simple graph', () {
+    var graph = SimpleGraph();
     expect(() => graph.addEdge(a, a), throwsA(isA<Error>()));
   });
 
-  test('Loops are allowed if settings permits', () {
-    var graph = Graph(allowLoops: true);
-    graph.addEdge(u, u);
-    expect(graph.numberOfVertices, equals(1));
-  });
-
   test('Digraphs add connections in one way', () {
-    var graph = Graph(isDigraph: true);
+    var graph = SimpleGraph(isDigraph: true);
     graph.addEdge(u, v);
     expect(graph.numberOfEdges, equals(1));
   });
 
   test('Non-digraphs add connections in both ways', () {
-    var graph = Graph(isDigraph: false);
+    var graph = SimpleGraph(isDigraph: false);
     graph.addEdge(u, v);
     expect(graph.numberOfEdges, equals(2));
   });
 
   test('Checks for vertex', () {
-    var graph = Graph();
+    var graph = SimpleGraph();
     graph.addEdge(u, v);
     expect(graph.containsVertex(u), isTrue);
     expect(graph.containsVertex(v), isTrue);
@@ -107,7 +101,7 @@ void main() {
     expect(emptyGraph.isSingleton, isFalse);
     expect(simpleGraph.isSingleton, isFalse);
 
-    var graph = Graph();
+    var graph = SimpleGraph();
     graph.addVertex(u);
     expect(graph.isSingleton, isTrue);
   });
@@ -116,7 +110,7 @@ void main() {
     expect(emptyGraph.isEmpty, isTrue);
     expect(simpleGraph.isEmpty, isFalse);
 
-    var graph = Graph();
+    var graph = SimpleGraph();
     graph.addVertex(u);
     graph.addVertex(v);
     expect(graph.isEmpty, isTrue);

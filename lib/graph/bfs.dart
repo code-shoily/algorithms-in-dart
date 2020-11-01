@@ -1,10 +1,10 @@
 import '../lists/queue.dart';
-import 'graph.dart';
+import 'simple_graph.dart';
 import 'traversal.dart';
 import 'vertex.dart';
 
 /// Recursively traverse graph in depth first.
-Traversal traverse(Graph graph, Vertex vertex) {
+Traversal traverse(SimpleGraph graph, Vertex vertex) {
   var traversal = Traversal();
 
   _doBFS(graph, vertex, traversal);
@@ -12,7 +12,7 @@ Traversal traverse(Graph graph, Vertex vertex) {
   return traversal;
 }
 
-void _doBFS(Graph graph, Vertex vertex, Traversal traversal) {
+void _doBFS(SimpleGraph graph, Vertex vertex, Traversal traversal) {
   var queue = Queue<Vertex>();
   traversal.addVisited(vertex);
   queue.enqueue(vertex);
