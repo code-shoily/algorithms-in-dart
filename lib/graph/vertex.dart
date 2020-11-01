@@ -87,14 +87,24 @@ class Vertex<T> {
 
   @override
   String toString() => key;
+
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) => other is Vertex && key == other.key;
+
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  int get hashCode => key.hashCode;
 }
 
 /// Unlocks a set of vertices
 void unlockVertices(Set<Vertex> vertices) {
-  vertices.forEach((v) => v.unlock());
+  for (var vertex in vertices) {
+    vertex.unlock();
+  }
 }
 
 /// Locks a set of vertices
 void lockVertices(Set<Vertex> vertices) {
-  vertices.forEach((v) => v.lock());
+  for (var vertex in vertices) {
+    vertex.lock();
+  }
 }

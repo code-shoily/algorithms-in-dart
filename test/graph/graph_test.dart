@@ -91,8 +91,10 @@ void main() {
   });
 
   test('Does not add vertex with existing key', () {
+    var aDuplicate = Vertex(a.key);
     expect(simpleGraph.numberOfVertices, equals(6));
     expect(simpleGraph.addVertex(a), isFalse);
+    expect(simpleGraph.addVertex(aDuplicate), isFalse);
     expect(simpleGraph.numberOfVertices, equals(6));
   });
 

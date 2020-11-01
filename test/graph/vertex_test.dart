@@ -14,7 +14,7 @@ void main() {
 
   void _initializeVertices() {
     root = Vertex('A');
-    rootWithValue = Vertex('a', 'Wake up');
+    rootWithValue = Vertex('i', 'Wake up');
     connectedVertex = Vertex('0');
     toBeAdded = Vertex('1');
     anotherVertex = Vertex('2');
@@ -46,7 +46,7 @@ void main() {
   test('Initialization of a node', () {
     expect(root.key, equals('A'));
     expect(root.value, equals('A'));
-    expect(rootWithValue.key, equals('a'));
+    expect(rootWithValue.key, equals('i'));
     expect(rootWithValue.value, equals('Wake up'));
   });
 
@@ -59,9 +59,15 @@ void main() {
     expect(c.incomingVertices.contains(root), isTrue);
   });
 
-  test('Unsuccessfully add a vertex', () {
-    root.addConnection(b);
+  test('Cannot add vertex that already exists', () {
+    expect(root.addConnection(b), isTrue);
     expect(root.addConnection(b), isFalse);
+  });
+
+  test('Cannot add vertex with the same key', () {
+    expect(root.addConnection(b), isTrue);
+    var bDuplicate = Vertex(b.key)..unlock();
+    expect(root.addConnection(bDuplicate), isFalse);
   });
 
   test('Successfully remove a vertex', () {
