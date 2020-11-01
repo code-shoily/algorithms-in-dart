@@ -88,3 +88,13 @@ class Vertex<T> {
   @override
   String toString() => key;
 }
+
+/// Unlocks a set of vertices
+void unlockVertices(Set<Vertex> vertices) {
+  vertices.forEach((v) => v.unlock());
+}
+
+/// Locks a set of vertices
+void lockVertices(Set<Vertex> vertices) {
+  vertices.forEach((v) => v.lock());
+}

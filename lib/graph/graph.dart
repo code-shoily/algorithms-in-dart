@@ -28,8 +28,7 @@ class Graph<T> {
 
   /// Adds an edge
   void addEdge(Vertex src, Vertex dst, [num weight = 1]) {
-    src.unlock();
-    dst.unlock();
+    unlockVertices(<Vertex>{src, dst});
     if (src.key == dst.key && !allowLoops) throw Error();
 
     src = _getOrAddVertex(src);
@@ -37,8 +36,7 @@ class Graph<T> {
     src.addConnection(dst, weight);
 
     if (!isDigraph) dst.addConnection(src, weight);
-    src.lock();
-    dst.lock();
+    lockVertices(<Vertex>{src, dst});
   }
 
   /// Checks if vertex is included
