@@ -28,15 +28,6 @@ abstract class TreeADT<N extends NodeADT, V extends Comparable> {
   /// Deletes [value] from the tree and updates it's [root].
   void delete(V value);
 
-  /// In Order Traversal.
-  List<V> inOrder();
-
   /// Empty the tree.
   void nullify();
-
-  /// PostOrder Traversal.
-  List<V> postOrder();
-
-  /// PreOrder Traversal.
-  List<V> preOrder();
 }
