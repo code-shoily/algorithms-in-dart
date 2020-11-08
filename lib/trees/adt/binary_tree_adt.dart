@@ -1,4 +1,4 @@
-import './tree_adt.dart';
+import 'tree_adt.dart';
 
 /// Declares members of a binary node.
 abstract class BinaryNodeADT<N extends BinaryNodeADT<N, V>,
