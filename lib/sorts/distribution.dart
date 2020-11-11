@@ -1,5 +1,96 @@
 import 'common.dart';
 
+/// Types for functions that only sort integers
+typedef IntSorterFn = List<int> Function(List<int>);
+
+List<List<int>> _partitionBySign(List<int> list) =>
+  list.fold([[], []], (acc, x) {
+    acc[x < 0 ? 0 : 1].add(x);
+    return acc;
+  });
+
+
+List<int> _sortNegativeByInversion(List<int> list, IntSorterFn sortFn) =>
+  sortFn(list.map((n) => n * -1).toList()).reversed.map((n) => n * -1).toList();
+
+List<int> _sortByPartitioningIntegerSigns(List<int> list, IntSorterFn sortFn) {
+  var partitions = _partitionBySign(list);
+  var negatives = _sortNegativeByInversion(partitions[0], sortFn);
+  var positives = sortFn(partitions[1]);
+
+  return [...negatives, ...positives];
+}
+
+List<int> _countingSort(List<int> list) {
+  if (list.isEmpty) return list;
+
+  var boundaries = findMinMax(list);
+  var bucket = List<int>.filled(boundaries['max'] + 1, 0);
+  var sorted = List<int>(list.length);
+
+  for (var item in list) {
+    bucket[item]++;
+  }
+
+  for (var i = 1; i < bucket.length; i++) {
+    bucket[i] = bucket[i - 1] + bucket[i];
+  }
+
+  for (var item in list) {
+    bucket[item]--;
+    sorted[bucket[item]] = item;
+  }
+
+  return sorted;
+}
+
+/// Implement countingSort
+List<int> countingSort(List<int> list, {bool desc = false}) {
+  var sorted = _sortByPartitioningIntegerSigns(list, _countingSort);
+  return desc ? sorted.reversed.toList() : sorted;
+}
+
+void _inPlaceCountSort(List<int> list, int exp) {
+  var n = list.length;
+  var sorted = List<int>(n);
+  var count = List<int>.filled(10, 0);
+
+  for (var i = 0; i < n; i++) {
+    count[list[i] ~/ exp % 10]++;
+  }
+
+  for (var i = 1; i < 10; i++) {
+    count[i] += count[i - 1];
+  }
+
+  for (var i = n - 1; i >= 0; i--) {
+    sorted[count[list[i] ~/ exp % 10] - 1] = list[i];
+    count[list[i] ~/ exp % 10]--;
+  }
+
+  for (var i = 0; i < n; i++) {
+    list[i] = sorted[i];
+  }
+}
+
+List<int> _radixSort(List<int> list) {
+  if (list.isEmpty) return list;
+
+  var boundaries = findMinMax(list);
+
+  for (var exp = 1; boundaries['max'] / exp > 0; exp *= 10) {
+    _inPlaceCountSort(list, exp);
+  }
+
+  return list;
+}
+
+/// Implement radix sort
+List<int> radixSort(List<int> list, {bool desc = false}) {
+  var sorted = _sortByPartitioningIntegerSigns(list, _radixSort);
+  return desc ? sorted.reversed.toList() : sorted;
+}
+
 /// Implements pigeonhole sort algorithm.
 List<int> pigeonholeSort(List<int> list, {bool desc = false}) {
   if (list.isEmpty) return list;
@@ -22,33 +113,6 @@ List<int> pigeonholeSort(List<int> list, {bool desc = false}) {
       sorted[idx] = min + count;
       idx++;
     }
-  }
-
-  return desc ? sorted.reversed.toList() : sorted;
-}
-
-/// Implement counting sort
-List<int> countingSort(List<int> list, {bool desc = false}) {
-  if (list.isEmpty) return <int>[];
-  var boundaries = findMinMax(list);
-  if (boundaries['min'] < 0) {
-    throw FormatException('Cannot sort negative numbers');
-  }
-
-  var bucket = List<int>.filled(boundaries['max'] + 1, 0);
-  var sorted = List<int>(list.length);
-
-  for (var item in list) {
-    bucket[item]++;
-  }
-
-  for (var i = 1; i < bucket.length; i++) {
-    bucket[i] = bucket[i - 1] + bucket[i];
-  }
-
-  for (var item in list) {
-    bucket[item]--;
-    sorted[bucket[item]] = item;
   }
 
   return desc ? sorted.reversed.toList() : sorted;
