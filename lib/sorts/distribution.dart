@@ -4,14 +4,16 @@ import 'common.dart';
 typedef IntSorterFn = List<int> Function(List<int>);
 
 List<List<int>> _partitionBySign(List<int> list) =>
-  list.fold([[], []], (acc, x) {
-    acc[x < 0 ? 0 : 1].add(x);
-    return acc;
-  });
-
+    list.fold([[], []], (acc, x) {
+      acc[x < 0 ? 0 : 1].add(x);
+      return acc;
+    });
 
 List<int> _sortNegativeByInversion(List<int> list, IntSorterFn sortFn) =>
-  sortFn(list.map((n) => n * -1).toList()).reversed.map((n) => n * -1).toList();
+    sortFn(list.map((n) => n * -1).toList())
+        .reversed
+        .map((n) => n * -1)
+        .toList();
 
 List<int> _sortByPartitioningIntegerSigns(List<int> list, IntSorterFn sortFn) {
   var partitions = _partitionBySign(list);
@@ -78,7 +80,7 @@ List<int> _radixSort(List<int> list) {
 
   var boundaries = findMinMax(list);
 
-  for (var exp = 1; boundaries['max'] / exp > 0; exp *= 10) {
+  for (var exp = 1; boundaries['max'] ~/ exp > 0; exp *= 10) {
     _inPlaceCountSort(list, exp);
   }
 
