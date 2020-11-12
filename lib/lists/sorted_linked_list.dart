@@ -13,6 +13,13 @@ class SortedLinkedList<T extends Comparable> {
   /// Constructor
   SortedLinkedList({this.compareFn = ascendingFn}) : _head = null;
 
+  /// Prefills a [SortedLinkedList] with [list] values
+  SortedLinkedList.fromList(List list, {this.compareFn = ascendingFn}) {
+    for (var element in list) {
+      insert(element);
+    }
+  }
+
   @override
   String toString() => toList.toString();
 
@@ -33,7 +40,7 @@ class SortedLinkedList<T extends Comparable> {
   bool _inverseFn(T a, T b) => !compareFn(a, b);
 
   /// Returns reverse of this list
-  SortedLinkedList<T> reverse() {
+  SortedLinkedList<T> get reverse {
     var reversedList = SortedLinkedList<T>(compareFn: _inverseFn);
     for (var current = _head; current != null; current = current.next) {
       reversedList.insert(current.data);
@@ -77,10 +84,10 @@ class SortedLinkedList<T extends Comparable> {
   }
 
   /// Minimum value of this list according to sorting criteria
-  T minimum() => _head?.data;
+  T get minimum => _head?.data;
 
   /// Maximum value of this list according to sorting criteria
-  T maximum() {
+  T get maximum {
     var current = _head;
     while (current?.next != null) {
       current = current.next;
