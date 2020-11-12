@@ -1,4 +1,5 @@
 import 'common.dart';
+import 'insertion.dart';
 
 /// Types for functions that only sort integers
 typedef IntSorterFn = List<int> Function(List<int>);
@@ -117,5 +118,31 @@ List<int> pigeonholeSort(List<int> list, {bool desc = false}) {
     }
   }
 
+  return desc ? sorted.reversed.toList() : sorted;
+}
+
+/// Implement bucketSort
+List<T> bucketSort<T extends num>(List<T> list, {bool desc = false}) {
+  if (list.isEmpty) return list;
+
+  var boundaries = findMinMax(list);
+
+  if (boundaries['min'] < 0) {
+    throw FormatException('This version only takes positive numbers');
+  }
+
+  var inputLength = list.length;
+  var bucketSize = (boundaries['max'] * inputLength).ceil() + 1;
+  var buckets = List<List<T>>(bucketSize);
+  for (var i = 0; i < buckets.length; i++) {
+    buckets[i] = <T>[];
+  }
+
+  for (var i = 0; i < inputLength; i++) {
+    var idx = (inputLength * list[i]).round();
+    buckets[idx].add(list[i]);
+  }
+
+  var sorted = buckets.fold(<T>[], (acc, el) => acc + insertionSort(el));
   return desc ? sorted.reversed.toList() : sorted;
 }
