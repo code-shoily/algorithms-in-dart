@@ -2,7 +2,7 @@ import 'simple_graph.dart';
 import 'vertex.dart';
 
 /// Returns the shortest path from [source] of [graph]
-Map<Vertex, num> shortestPath(SimpleGraph graph, Vertex source) {
+Map<Vertex, num> dijkstra(SimpleGraph graph, Vertex source) {
   _ensurePositiveWeight(graph);
   var path = <Vertex, int>{source: 0};
   var pathSet = <Vertex>{};
@@ -54,7 +54,7 @@ Vertex _minimumDistance(
 void _ensurePositiveWeight(SimpleGraph g) {
   for (var edge in g.edges) {
     if (edge[2] <= 0) {
-      throw 'Negative or zero weight detected';
+      throw AssertionError('Graph cannot contain negative or zero value');
     }
   }
 }
