@@ -28,12 +28,11 @@ void _relax(Map path, Vertex u, Vertex v, num w) {
   }
 }
 
-bool _shouldRelax(Map path, Vertex u, Vertex v, num w) =>
-    path.containsKey(v)
-        ? path.containsKey(u)
+bool _shouldRelax(Map path, Vertex u, Vertex v, num w) => path.containsKey(v)
+    ? path.containsKey(u)
         ? path[v] > path[u] + w
         : false
-        : path.containsKey(u);
+    : path.containsKey(u);
 
 Vertex _minimumDistance(
     List<Vertex> vertices, Map<Vertex, int> path, Set<Vertex> pathSet) {
