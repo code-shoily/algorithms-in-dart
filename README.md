@@ -95,8 +95,8 @@ results.
 
 `lib/graph/bfs.dart` - Algorithm for BFS traversal on graphs.
 
+### Graph Paths
+
 `lib/graph/topological_sort.dart` - Topological sort on acyclic digraphs.
-
-### Shortest Path
-
-`lib/graph/bellman_ford.graph` - Bellman Ford Algorithm
+`lib/graph/bellman_ford.dart` - Bellman Ford Algorithm
+`lib/graph/dijkstra.dart` - Dijkstra's algorithm
