@@ -98,5 +98,7 @@ results.
 ### Graph Paths
 
 `lib/graph/topological_sort.dart` - Topological sort on acyclic digraphs.
+
 `lib/graph/bellman_ford.dart` - Bellman Ford Algorithm
+
 `lib/graph/dijkstra.dart` - Dijkstra's algorithm
