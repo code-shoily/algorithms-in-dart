@@ -1,9 +1,8 @@
-// @dart=2.9
 import 'vertex.dart';
 
 /// A Graph Type
 class SimpleGraph<T> {
-  Set<Vertex<T>> _vertices;
+  final Set<Vertex<T>> _vertices;
 
   /// Vertices of this graph
   List<Vertex<T>> get vertices => List<Vertex<T>>.unmodifiable(_vertices);
@@ -13,9 +12,7 @@ class SimpleGraph<T> {
   final bool isDigraph;
 
   /// Create a new graph
-  SimpleGraph({this.isDigraph = true}) {
-    _vertices = <Vertex<T>>{};
-  }
+  SimpleGraph({this.isDigraph = true}) : _vertices = <Vertex<T>>{};
 
   /// Total number of vertices for this graph
   int get numberOfVertices => _vertices.length;
@@ -25,7 +22,7 @@ class SimpleGraph<T> {
       _vertices.map((v) => v.outDegree).fold(0, (a, b) => a + b);
 
   /// Adds an edge
-  void addEdge(Vertex src, Vertex dst, [num weight = 1]) {
+  void addEdge(Vertex<T> src, Vertex<T> dst, [num weight = 1]) {
     unlockVertices(<Vertex>{src, dst});
     if (src.key == dst.key) throw Error();
 
@@ -59,7 +56,7 @@ class SimpleGraph<T> {
   bool get isEmpty => numberOfEdges == 0;
 
   /// Adds a new vertex
-  bool addVertex(Vertex vertex) => _vertices.add(vertex);
+  bool addVertex(Vertex<T> vertex) => _vertices.add(vertex);
 
   /// Removes a vertex
   bool removeVertex(Vertex vertex) {
@@ -67,12 +64,12 @@ class SimpleGraph<T> {
         ? [
             ...vertex.outgoingConnections.entries.map((e) => [vertex, e.key]),
             ...vertex.incomingVertices.map((e) => [e, vertex])
-          ].fold(true, (acc, v) => acc && removeEdge(v[0], v[1]))
+          ].fold(true, (bool acc, v) => acc && removeEdge(v[0], v[1]))
         : false;
     return edgesRemoved ? _vertices.remove(vertex) : edgesRemoved;
   }
 
-  Vertex<T> _getOrAddVertex(Vertex vertex) =>
+  Vertex<T> _getOrAddVertex(Vertex<T> vertex) =>
       _vertices.add(vertex) ? vertex : vertex;
 
   /// Gets an edge list for [this].
