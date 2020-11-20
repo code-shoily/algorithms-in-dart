@@ -68,7 +68,7 @@ linter:
     - type_annotate_public_apis # prefer
     #- prefer_typing_uninitialized_variables # consider
     - omit_local_variable_types # avoid
-    - avoid_types_on_closure_parameters # avoid
+    #- avoid_types_on_closure_parameters # avoid
     - avoid_return_types_on_setters
     - prefer_generic_function_type_aliases
     - avoid_private_typedef_functions # prefer

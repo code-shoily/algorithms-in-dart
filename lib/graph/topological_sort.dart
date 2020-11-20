@@ -16,7 +16,7 @@ List<Vertex> topologicalSort(SimpleGraph graph) {
     }
   });
 
-  while (!noInDegrees.isEmpty) {
+  while (noInDegrees.isNotEmpty) {
     var vertex = noInDegrees.first;
     noInDegrees.remove(vertex);
     sorted.add(vertex);
@@ -35,7 +35,7 @@ List<Vertex> topologicalSort(SimpleGraph graph) {
 }
 
 bool _detectCycle(HashMap<Vertex, int> inDegreeData) =>
-    inDegreeData.values.where((element) => element > 0).length > 0;
+    inDegreeData.values.where((element) => element > 0).isNotEmpty;
 
 /// Returns in degrees of all vertices of [graph]
 HashMap<Vertex, int> inDegrees(SimpleGraph graph) {

@@ -53,7 +53,7 @@ class BinarySearchTree<V extends Comparable>
   }
 
   void _balance(List<V> list) {
-    if (list.length == 0) return;
+    if (list.isEmpty) return;
     var middle = list.length ~/ 2;
     add(list[middle]);
     _balance(list.sublist(0, middle));

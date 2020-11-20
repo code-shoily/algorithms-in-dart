@@ -1,4 +1,5 @@
 // @dart=2.9
+/// Comparator function compared [left] with [right]
 typedef Comparator<T extends Comparable> = bool Function(T left, T right);
 
 /// Makes sure left is less than right.
