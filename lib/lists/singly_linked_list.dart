@@ -1,4 +1,3 @@
-// @dart=2.9
 import '../heaps/base.dart';
 
 /// A Node containing reference to the next node.
@@ -7,7 +6,7 @@ class Node<T> {
   T data;
 
   /// Reference to the [next] Node
-  Node next;
+  Node<T>? next;
 
   /// We initiate a [Node] either with just the data or with the [next]
   ///
@@ -16,7 +15,7 @@ class Node<T> {
   ///
   /// var list = Node(data: 10, next: Node(data: 20, next: Node(data: 30)))
   /// ```
-  Node({this.data, this.next});
+  Node(this.data, {this.next});
 }
 
 /// A singly linked list. Contains a Node marked as head.
@@ -29,12 +28,10 @@ class Node<T> {
 /// Read more about this at [Wiki](https://en.wikipedia.org/wiki/Linked_list)
 class SinglyLinkedList<T> {
   /// The head of the list
-  Node<T> _head;
+  Node<T>? _head;
 
   /// Initiates an empty [SinglyLinkedList]
-  SinglyLinkedList() {
-    _head = null;
-  }
+  SinglyLinkedList() : _head = null;
 
   /// Prefills a [SinglyLinkedList] with [list] values
   SinglyLinkedList.fromList(List list) {
@@ -75,42 +72,42 @@ class SinglyLinkedList<T> {
 
   /// Shows the last node of the list. `null` for empty lists.
   T peek() {
-    if (isEmpty) return null;
+    if (isEmpty) throw InvalidIndexError();
 
     var currentNode = _head;
-    while (currentNode.next != null) {
-      currentNode = currentNode.next;
+    while (currentNode?.next != null) {
+      currentNode = currentNode!.next;
     }
-    return currentNode.data;
+    return currentNode!.data;
   }
 
   /// Shows the element at position [position]. `null` for invalid positions.
   T at(int position) {
-    if (isEmpty || length < position || position < 0) return null;
+    if (isEmpty || length < position || position < 0) throw InvalidIndexError();
 
     var node = _head;
     var current = 0;
 
     while (current != position) {
-      node = node.next;
+      node = node!.next;
       current++;
     }
-    return node.data;
+    return node!.data;
   }
 
   /// Inserts [data] at the end of the list.
   void append(T data) {
-    var newNode = Node(data: data);
+    var newNode = Node(data);
 
     if (isEmpty) {
       _head = newNode;
     } else {
       var currentNode = _head;
-      while (currentNode.next != null) {
-        currentNode = currentNode.next;
+      while (currentNode?.next != null) {
+        currentNode = currentNode!.next;
       }
 
-      currentNode.next = newNode;
+      currentNode!.next = newNode;
     }
   }
 
@@ -119,14 +116,14 @@ class SinglyLinkedList<T> {
     if (length < position || position < 0) {
       throw Exception('Invalid position');
     }
-    var newNode = Node(data: data);
+    var newNode = Node(data);
     var index = 0;
     var currentNode = _head;
-    Node<T> previousNode;
+    Node<T>? previousNode;
 
     while (index != position) {
       previousNode = currentNode;
-      currentNode = currentNode.next;
+      currentNode = currentNode!.next;
       index++;
     }
 
@@ -141,11 +138,9 @@ class SinglyLinkedList<T> {
 
   /// Removes the last element. Raises exception for empty lists.
   T pop() {
-    if (isEmpty) {
-      throw InvalidIndexError();
-    }
+    if (isEmpty) throw InvalidIndexError();
 
-    Node<T> previousNode;
+    Node<T>? previousNode;
     var currentNode = _head;
 
     while (currentNode != null) {
@@ -162,35 +157,35 @@ class SinglyLinkedList<T> {
       }
     }
 
-    return currentNode.data;
+    return currentNode!.data;
   }
 
   /// Removes element at [position]. Raises exception for invalid positions.
   T remove(int position) {
     var index = 0;
     var currentNode = _head;
-    Node<T> previousNode;
+    Node<T>? previousNode;
 
     if (isEmpty || length < position || position < 0) {
       throw Exception('Invalid position');
     } else if (position == 0) {
-      _head = _head.next;
+      _head = _head!.next;
     } else {
       while (index != position) {
         previousNode = currentNode;
-        currentNode = currentNode.next;
+        currentNode = currentNode!.next;
         index++;
       }
 
       if (previousNode == null) {
         _head = null;
       } else {
-        previousNode.next = currentNode.next;
+        previousNode.next = currentNode!.next;
       }
 
-      currentNode.next = null;
+      currentNode!.next = null;
     }
 
-    return currentNode.data;
+    return currentNode!.data;
   }
 }

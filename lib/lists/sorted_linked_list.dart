@@ -1,11 +1,11 @@
-// @dart=2.9
+import '../heaps/base.dart';
 import '../sorts/common.dart';
 import 'singly_linked_list.dart';
 
 /// Creates a sorted linked list. The elements are always inserted in the right
 /// sorted order.
 class SortedLinkedList<T extends Comparable> {
-  Node<T> _head;
+  Node<T>? _head;
 
   /// The sort function, determines whether it is ascending or descending.
   /// Default value is ascending.
@@ -55,7 +55,7 @@ class SortedLinkedList<T extends Comparable> {
 
   /// Insert [data] in sorted order
   void insert(T data) {
-    var newNode = Node(data: data);
+    var newNode = Node(data);
     var current = _head;
     var previous = current;
 
@@ -70,7 +70,7 @@ class SortedLinkedList<T extends Comparable> {
           _head = newNode;
           newNode.next = current;
         } else {
-          previous.next = newNode;
+          previous!.next = newNode;
           newNode.next = current;
         }
         break;
@@ -85,30 +85,30 @@ class SortedLinkedList<T extends Comparable> {
   }
 
   /// Minimum value of this list according to sorting criteria
-  T get minimum => _head?.data;
+  T? get minimum => _head?.data;
 
   /// Maximum value of this list according to sorting criteria
-  T get maximum {
+  T? get maximum {
     var current = _head;
     while (current?.next != null) {
-      current = current.next;
+      current = current!.next;
     }
     return current?.data;
   }
 
   Node<T> _at(int position) {
-    if (isEmpty || length < position || position < 0) return null;
+    if (isEmpty || length < position || position < 0) throw InvalidIndexError();
     var node = _head;
 
     for (var current = 0; current != position; current++) {
-      node = node.next;
+      node = node!.next;
     }
 
-    return node;
+    return node!;
   }
 
   /// Shows the element at position [position]. `null` for invalid positions.
-  T at(int position) => _at(position)?.data;
+  T at(int position) => _at(position).data;
 
   /// Removes the last node
   T pop() => remove(length - 1);
@@ -116,15 +116,15 @@ class SortedLinkedList<T extends Comparable> {
   /// Removes element at [position]. Raises exception for invalid positions.
   T remove(int position) {
     T result;
-    if (isEmpty || length < position || position < 0) return null;
+    if (isEmpty || length < position || position < 0) throw InvalidIndexError();
 
     if (position == 0) {
-      result = _head.data;
+      result = _head!.data;
       _head = null;
     } else {
       var previousNode = _at(position - 1);
-      result = previousNode.next.data;
-      previousNode.next = previousNode.next.next;
+      result = previousNode.next!.data;
+      previousNode.next = previousNode.next!.next;
     }
 
     return result;
