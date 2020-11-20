@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'common.dart';
 import 'insertion.dart';
 
@@ -29,8 +28,9 @@ List<int> _countingSort(List<int> list) {
   if (list.isEmpty) return list;
 
   var boundaries = findMinMax(list);
-  var bucket = List<int>.filled(boundaries['max'] + 1, 0);
-  var sorted = List<int>(list.length);
+  var max = boundaries['max'] as int;
+  var bucket = List<int>.filled(max + 1, 0);
+  var sorted = List<int>.filled(list.length, 0);
 
   for (var item in list) {
     bucket[item]++;
@@ -56,7 +56,7 @@ List<int> countingSort(List<int> list, {bool desc = false}) {
 
 void _inPlaceCountSort(List<int> list, int exp) {
   var n = list.length;
-  var sorted = List<int>(n);
+  var sorted = List<int>.filled(n, 0);
   var count = List<int>.filled(10, 0);
 
   for (var i = 0; i < n; i++) {
@@ -81,8 +81,9 @@ List<int> _radixSort(List<int> list) {
   if (list.isEmpty) return list;
 
   var boundaries = findMinMax(list);
+  var max = boundaries['max'] as int;
 
-  for (var exp = 1; boundaries['max'] ~/ exp > 0; exp *= 10) {
+  for (var exp = 1; max ~/ exp > 0; exp *= 10) {
     _inPlaceCountSort(list, exp);
   }
 
@@ -100,11 +101,12 @@ List<int> pigeonholeSort(List<int> list, {bool desc = false}) {
   if (list.isEmpty) return list;
 
   var boundaries = findMinMax(list);
-  var min = boundaries['min'];
-  var size = (boundaries['max'] - boundaries['min']) + 1;
+  var max = boundaries['max'] as int;
+  var min = boundaries['min'] as int;
+  var size = (max - min) + 1;
 
   var pigeonHole = List<int>.filled(size, 0);
-  var sorted = List<int>(list.length);
+  var sorted = List<int>.filled(list.length, 0);
 
   for (var item in list) {
     pigeonHole[item - min]++;
@@ -127,14 +129,16 @@ List<T> bucketSort<T extends num>(List<T> list, {bool desc = false}) {
   if (list.isEmpty) return list;
 
   var boundaries = findMinMax(list);
+  var max = boundaries['max'] as num;
+  var min = boundaries['min'] as num;
 
-  if (boundaries['min'] < 0) {
+  if (min < 0) {
     throw FormatException('This version only takes positive numbers');
   }
 
   var inputLength = list.length;
-  var bucketSize = (boundaries['max'] * inputLength).ceil() + 1;
-  var buckets = List<List<T>>(bucketSize);
+  var bucketSize = (max * inputLength).ceil() + 1;
+  var buckets = List<List<T>>.filled(bucketSize, []);
   for (var i = 0; i < buckets.length; i++) {
     buckets[i] = <T>[];
   }
@@ -144,6 +148,7 @@ List<T> bucketSort<T extends num>(List<T> list, {bool desc = false}) {
     buckets[idx].add(list[i]);
   }
 
-  var sorted = buckets.fold(<T>[], (acc, el) => acc + insertionSort(el));
+  var sorted = buckets.fold(<T>[],
+          (List<T> acc, el) => acc + insertionSort(el));
   return desc ? sorted.reversed.toList() : sorted;
 }
