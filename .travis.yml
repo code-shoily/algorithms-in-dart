@@ -1,7 +1,7 @@
 language: dart
 
 dart:
-  - stable
+  - beta
 
 dart_task:
   - test
