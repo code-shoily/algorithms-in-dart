@@ -1,3 +1,4 @@
+// @dart=2.9
 /// Trie is an ordered tree data structure used to store a dynamic set
 ///  or associative array where the keys are usually strings.
 class Trie<V extends Comparable> {

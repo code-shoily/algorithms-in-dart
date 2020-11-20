@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:algorithms/trees/avl_tree.dart';
 import 'package:algorithms/trees/binary_search_tree.dart';
 import 'package:test/test.dart';

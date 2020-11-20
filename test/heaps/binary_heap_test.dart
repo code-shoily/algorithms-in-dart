@@ -86,7 +86,8 @@ void main() {
       expect(minHeap!.pop(), equals(-19));
       expect(minHeap!.items, equals([-9, 32, 0, 71, 45, 65, 10]));
 
-      var emptyHeap = BinaryHeap((Comparable a, Comparable b) => a.compareTo(b) <= 0);
+      var emptyHeap =
+          BinaryHeap((Comparable a, Comparable b) => a.compareTo(b) <= 0);
       expect(() => emptyHeap.pop(), throwsA(isA<StateError>()));
     });
   });

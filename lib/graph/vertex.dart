@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'dart:collection';
 
 /// A vertex of a [Graph]. A vertex contains a `key` uniquely identifying it.
