@@ -19,8 +19,8 @@ void main() {
 
   test('Bubble Sort', () {
     expect(bubbleSort(randomList!), equals(sortedRandomListAscending));
-    expect(
-        bubbleSort(randomList!, ascendingFn), equals(sortedRandomListAscending));
+    expect(bubbleSort(randomList!, ascendingFn),
+        equals(sortedRandomListAscending));
     expect(bubbleSort(randomList!, descendingFn),
         equals(sortedRandomListDescending));
 

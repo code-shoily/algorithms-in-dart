@@ -21,8 +21,8 @@ void main() {
     expect(heapSort(randomList!), equals(sortedRandomListAscending));
     expect(
         heapSort(randomList!, ascendingFn), equals(sortedRandomListAscending));
-    expect(
-        heapSort(randomList!, descendingFn), equals(sortedRandomListDescending));
+    expect(heapSort(randomList!, descendingFn),
+        equals(sortedRandomListDescending));
 
     expect(heapSort(emptyList!), equals(emptyList!));
     expect(heapSort(emptyList!, ascendingFn), equals(emptyList!));

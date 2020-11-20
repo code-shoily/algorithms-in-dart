@@ -3,10 +3,17 @@ import 'package:test/test.dart';
 import 'package:algorithms/sorts/distribution.dart';
 
 void main() {
-  List<int>? randomList, positiveRandomList, sortedRandomListAscending,
-      sortedRandomListDescending, sortedPositiveRandomListAscending,
-      sortedPositiveRandomListDescending, allNegatives, someNegatives,
-      sortedAllNegatives, sortedSomeNegatives, emptyList;
+  List<int>? randomList,
+      positiveRandomList,
+      sortedRandomListAscending,
+      sortedRandomListDescending,
+      sortedPositiveRandomListAscending,
+      sortedPositiveRandomListDescending,
+      allNegatives,
+      someNegatives,
+      sortedAllNegatives,
+      sortedSomeNegatives,
+      emptyList;
   List<double>? randomDistribution, randomDistributionSorted;
   setUp(() {
     emptyList = [];

@@ -148,7 +148,7 @@ List<T> bucketSort<T extends num>(List<T> list, {bool desc = false}) {
     buckets[idx].add(list[i]);
   }
 
-  var sorted = buckets.fold(<T>[],
-          (List<T> acc, el) => acc + insertionSort(el));
+  var sorted =
+      buckets.fold(<T>[], (List<T> acc, el) => acc + insertionSort(el));
   return desc ? sorted.reversed.toList() : sorted;
 }
