@@ -27,7 +27,7 @@ abstract class HeapBase<T> {
   bool get isEmpty;
 
   /// The length of this heap
-  int length;
+  int get length;
 
   /// Inserts [item] into [this]
   void insert(T item);
