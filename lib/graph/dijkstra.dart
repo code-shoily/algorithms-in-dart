@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'simple_graph.dart';
 import 'vertex.dart';
 
@@ -37,18 +36,18 @@ bool _shouldRelax(Map path, Vertex u, Vertex v, num w) => path.containsKey(v)
 
 Vertex _minimumDistance(
     List<Vertex> vertices, Map<Vertex, int> path, Set<Vertex> pathSet) {
-  int min;
-  Vertex vertex;
+  int? min;
+  Vertex? vertex;
 
   for (var v in vertices) {
-    var updateMinimum = min == null || (path.containsKey(v) && path[v] < min);
+    var updateMinimum = min == null || (path.containsKey(v) && path[v]! < min);
     if (updateMinimum && !pathSet.contains(v)) {
       min = path[v];
       vertex = v;
     }
   }
 
-  return vertex;
+  return vertex!;
 }
 
 void _ensurePositiveWeight(SimpleGraph g) {

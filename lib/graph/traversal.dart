@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'vertex.dart';
 
 /// ADT for graph traversal

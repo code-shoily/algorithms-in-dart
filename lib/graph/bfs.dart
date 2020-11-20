@@ -1,4 +1,3 @@
-// @dart=2.9
 import '../lists/queue.dart';
 import 'simple_graph.dart';
 import 'traversal.dart';

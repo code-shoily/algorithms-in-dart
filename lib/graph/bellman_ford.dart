@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'dart:collection';
 
 import 'simple_graph.dart';
@@ -6,7 +5,7 @@ import 'vertex.dart';
 
 /// Run the Bellman Ford algorithm to get the shortest paths from [source] to
 /// all vertices.
-HashMap<Vertex, num> bellmanFord(SimpleGraph graph, Vertex source) {
+HashMap<Vertex, num>? bellmanFord(SimpleGraph graph, Vertex source) {
   var distances = HashMap<Vertex, num>();
   distances[source] = 0;
 
@@ -15,7 +14,7 @@ HashMap<Vertex, num> bellmanFord(SimpleGraph graph, Vertex source) {
 
   bool shouldUpdate(Vertex u, Vertex v, num w) {
     if (!distances.containsKey(u)) return false;
-    var uValue = distances[u];
+    var uValue = distances[u]!;
     var vValue = distances[v] ?? (uValue + w + 1);
 
     return uValue + w < vValue;
@@ -27,7 +26,7 @@ HashMap<Vertex, num> bellmanFord(SimpleGraph graph, Vertex source) {
       var v = edge[1];
       var w = edge[2];
       if (shouldUpdate(u, v, w)) {
-        distances[v] = distances[u] + w;
+        distances[v] = distances[u]! + w;
       }
     }
 

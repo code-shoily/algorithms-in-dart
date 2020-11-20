@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'package:test/test.dart';
 
 import 'package:algorithms/graph/dfs.dart';
@@ -6,8 +5,8 @@ import 'package:algorithms/graph/simple_graph.dart';
 import 'package:algorithms/graph/vertex.dart';
 
 void main() {
-  SimpleGraph graph;
-  Vertex u, v, w, x, y, z;
+  SimpleGraph? graph;
+  Vertex? u, v, w, x, y, z;
 
   void _initializeVertices() {
     u = Vertex('U');
@@ -27,22 +26,22 @@ void main() {
          \
           w -- x
     */
-    graph.addEdge(u, v);
-    graph.addEdge(u, w);
-    graph.addEdge(u, z);
-    graph.addEdge(v, y);
-    graph.addEdge(w, x);
-    graph.addEdge(y, z);
+    graph!.addEdge(u!, v!);
+    graph!.addEdge(u!, w!);
+    graph!.addEdge(u!, z!);
+    graph!.addEdge(v!, y!);
+    graph!.addEdge(w!, x!);
+    graph!.addEdge(y!, z!);
   });
 
   test('Test DFS', () {
-    var traversal = traverse(graph, u);
+    var traversal = traverse(graph!, u!);
     expect(traversal.visits, equals([u, v, y, z, w, x]));
 
-    traversal = traverse(graph, w);
-    expect(traversal.visits, <Vertex>[w, x]);
+    traversal = traverse(graph!, w!);
+    expect(traversal.visits, <Vertex>[w!, x!]);
 
-    traversal = traverse(graph, z);
-    expect(traversal.visits, <Vertex>[z]);
+    traversal = traverse(graph!, z!);
+    expect(traversal.visits, <Vertex>[z!]);
   });
 }
