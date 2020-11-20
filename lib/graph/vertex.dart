@@ -11,7 +11,7 @@ class Vertex<T> {
   String get key => _key;
 
   /// Optional value
-  T value;
+  T? value;
 
   final LinkedHashSet<Vertex> _incomingVertices;
 
@@ -22,16 +22,14 @@ class Vertex<T> {
   final LinkedHashMap<Vertex, num> _outgoingConnections;
 
   /// Outgoing connections from this [Vertex]
-  UnmodifiableMapView<Vertex, num> get outgoingConnections =>
+  Map<Vertex, num> get outgoingConnections =>
       Map<Vertex, num>.unmodifiable(_outgoingConnections);
 
   /// Constructor
-  Vertex(this._key, [T value])
+  Vertex(this._key, [this.value])
       : _isLocked = true,
-        _incomingVertices = <Vertex>{} as LinkedHashSet,
-        _outgoingConnections = <Vertex, num>{} as LinkedHashMap {
-    this.value = value ?? key;
-  }
+        _incomingVertices = <Vertex>{} as LinkedHashSet<Vertex>,
+        _outgoingConnections = <Vertex, num>{} as LinkedHashMap<Vertex, num>;
 
   /// Lock [this] vertex, cannot modify after it is locked
   void lock() => _isLocked = true;

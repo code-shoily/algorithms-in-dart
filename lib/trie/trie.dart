@@ -2,7 +2,7 @@
 ///  or associative array where the keys are usually strings.
 class Trie<V extends Comparable> {
   /// Root of the trie.
-  TrieNode root;
+  TrieNode? root;
 
   /// Separates the value into it's components.
   final Function splitter;
@@ -10,9 +10,7 @@ class Trie<V extends Comparable> {
   List _components;
 
   /// Initialises trie with custom set of values.
-  Trie(Set components, this.splitter) {
-    _components = [...components];
-  }
+  Trie(Set components, this.splitter) : _components = [...components];
 
   /// Generates trie of lower-case alphabets.
   Trie.ofAlphabets()
@@ -27,22 +25,22 @@ class Trie<V extends Comparable> {
 
   /// Adds a [value] to the trie.
   void add(V value) {
-    var list = _split(value);
+    var list = _split(value) as List<V>;
     if (isEmpty) {
       root ??= TrieNode({..._components});
     }
-    _add(root, list);
+    _add(root!, list);
   }
 
   /// Checks if [value] is contained in the trie.
   bool contains(V value) {
-    var list = _split(value);
-    return isEmpty ? false : _contains(root, list);
+    var list = _split(value) as List<V>;
+    return isEmpty ? false : _contains(root!, list);
   }
 
   /// Deletes [value] from the trie.
   void delete(V value) {
-    var list = _split(value);
+    var list = _split(value) as List<V>;
     var returnValue = _delete(root, list);
     returnValue ?? nullify();
   }
@@ -60,11 +58,11 @@ class Trie<V extends Comparable> {
     var path = _indexOf(value.first);
     value = value.sublist(1);
 
-    if (node.children[path] == null) {
-      node.children[path] = TrieNode(components);
+    if (node.children![path] == null) {
+      node.children![path] = TrieNode(components);
     }
 
-    _add(node.children[path], value);
+    _add(node.children![path]!, value);
   }
 
   bool _contains(TrieNode node, List<V> value) {
@@ -74,8 +72,8 @@ class Trie<V extends Comparable> {
     var path = _indexOf(value.first);
     value = value.sublist(1);
 
-    if (node.children[path] != null) {
-      return _contains(node.children[path], value);
+    if (node.children![path] != null) {
+      return _contains(node.children![path]!, value);
     } else {
       return false;
     }
@@ -84,7 +82,7 @@ class Trie<V extends Comparable> {
   /// Traverses the path following [value] and marks
   ///  `node.isValue` to `false` at end. Deletes values eagerly i.e.
   ///  cleans up any parent nodes that are no longer necessary.
-  TrieNode _delete(TrieNode node, List<V> value) {
+  TrieNode? _delete(TrieNode? node, List<V> value) {
     if (value.isEmpty) {
       // In case trie is empty and an empty value is passed.
       if (node == null) return null;
@@ -93,7 +91,7 @@ class Trie<V extends Comparable> {
 
       // Checks all the children. If null, then deletes the node.
       var allNull = true;
-      for (var child in node.children) {
+      for (var child in node.children!) {
         if (child != null) {
           allNull = false;
           break;
@@ -109,16 +107,16 @@ class Trie<V extends Comparable> {
     value = value.sublist(1);
 
     // Path to value doesn't exist.
-    if (node.children[path] == null) {
+    if (node.children![path] == null) {
       return node;
     }
 
-    node.children[path] = _delete(node.children[path], value);
+    node.children![path] = _delete(node.children![path]!, value);
 
     // Delete node if all children are null.
-    if (node.children[path] == null) {
+    if (node.children![path] == null) {
       var allNull = true;
-      for (var child in node.children) {
+      for (var child in node.children!) {
         if (child != null) {
           allNull = false;
           break;
@@ -149,11 +147,10 @@ class TrieNode<V extends Comparable> {
   bool isValue = false;
 
   /// Connection to [children].
-  List<TrieNode> children;
+  List<TrieNode?>? children;
 
   /// Initializes the node to have as many [children]
   ///  as there are components in the trie.
-  TrieNode(Set components) {
-    children = List<TrieNode>(components.length);
-  }
+  TrieNode(Set components)
+      : children = List<TrieNode?>.filled(components.length, null);
 }

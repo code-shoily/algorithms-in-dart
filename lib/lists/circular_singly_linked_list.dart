@@ -5,16 +5,16 @@ import './singly_linked_list.dart' show Node;
 /// This circular linked list is based off of [SinglyLinkedList]
 class CircularSinglyLinkedList<T> {
   /// Head of [this]
-  Node<T> head;
+  Node<T>? head;
 
   /// Size of [this]
-  int size;
+  int length;
 
   /// Construct a CircularLinkedList
-  CircularSinglyLinkedList() : size = 0;
+  CircularSinglyLinkedList() : length = 0;
 
   /// Create and prepopulate [this] from a [List]
-  CircularSinglyLinkedList.fromList(List<T> list) : size = 0 {
+  CircularSinglyLinkedList.fromList(List<T> list) : length = 0 {
     for (var item in list) {
       append(item);
     }
@@ -24,11 +24,11 @@ class CircularSinglyLinkedList<T> {
   List<T> get toList {
     if (isEmpty) return [];
 
-    var list = <T>[head.data];
-    var currentNode = head.next;
+    var list = <T>[head!.data];
+    var currentNode = head!.next;
 
     while (currentNode != head) {
-      list.add(currentNode.data);
+      list.add(currentNode!.data);
       currentNode = currentNode.next;
     }
 
@@ -36,7 +36,7 @@ class CircularSinglyLinkedList<T> {
   }
 
   /// Checks if [this] is empty
-  bool get isEmpty => size == 0;
+  bool get isEmpty => length == 0;
 
   /// Returns the element [n].
   ///
@@ -46,23 +46,23 @@ class CircularSinglyLinkedList<T> {
     if (n < 0) throw InvalidIndexError();
 
     var currentNode = head;
-    for (var i = 0; i < n; i++, currentNode = currentNode.next) {
+    for (var i = 0; i < n; i++, currentNode = currentNode!.next) {
       ;
     }
 
-    return currentNode;
+    return currentNode!;
   }
 
   /// Adds data to the end of the list
   void append(T data) {
-    var newNode = Node(data: data);
+    var newNode = Node(data);
 
     if (isEmpty) {
       head = newNode;
       newNode.next = head;
     } else {
       var currentNode = head;
-      while (currentNode.next != head) {
+      while (currentNode!.next != head) {
         currentNode = currentNode.next;
       }
 
@@ -70,12 +70,12 @@ class CircularSinglyLinkedList<T> {
       newNode.next = head;
     }
 
-    size++;
+    length++;
   }
 
   /// Adds data to the beginning of the list.
   void prepend(T data) {
-    var newNode = Node(data: data);
+    var newNode = Node(data);
 
     if (isEmpty) {
       head = newNode;
@@ -84,7 +84,7 @@ class CircularSinglyLinkedList<T> {
       newNode.next = head;
 
       var currentNode = head;
-      while (currentNode.next != head) {
+      while (currentNode!.next != head) {
         currentNode = currentNode.next;
       }
 
@@ -92,7 +92,7 @@ class CircularSinglyLinkedList<T> {
       head = newNode;
     }
 
-    size++;
+    length++;
   }
 
   /// Remove from the end of the list
@@ -104,12 +104,12 @@ class CircularSinglyLinkedList<T> {
 
     do {
       beforeLastNode = currentNode;
-      currentNode = currentNode.next;
-    } while (currentNode.next != head);
+      currentNode = currentNode!.next;
+    } while (currentNode!.next != head);
 
-    beforeLastNode.next = head;
+    beforeLastNode!.next = head;
 
-    size--;
+    length--;
     return currentNode;
   }
 
@@ -120,14 +120,14 @@ class CircularSinglyLinkedList<T> {
     var removeMe = head;
     var currentNode = head;
 
-    while (currentNode.next != head) {
+    while (currentNode!.next != head) {
       currentNode = currentNode.next;
     }
 
-    head = head.next;
+    head = head!.next;
     currentNode.next = head;
 
-    size--;
-    return removeMe;
+    length--;
+    return removeMe!;
   }
 }

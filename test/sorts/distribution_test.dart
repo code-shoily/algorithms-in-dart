@@ -3,21 +3,18 @@ import 'package:test/test.dart';
 import 'package:algorithms/sorts/distribution.dart';
 
 void main() {
-  List<int> randomList;
-  List<int> positiveRandomList;
-  List<int> sortedRandomListAscending;
-  List<int> sortedRandomListDescending;
-  List<int> sortedPositiveRandomListAscending;
-  List<int> sortedPositiveRandomListDescending;
-  List<int> allNegatives;
-  List<int> someNegatives;
-  List<int> sortedAllNegatives;
-  List<int> sortedSomeNegatives;
-  List<num> randomDistribution;
-  List<num> randomDistributionSorted;
-
-  List<int> emptyList;
-
+  List<int>? randomList,
+      positiveRandomList,
+      sortedRandomListAscending,
+      sortedRandomListDescending,
+      sortedPositiveRandomListAscending,
+      sortedPositiveRandomListDescending,
+      allNegatives,
+      someNegatives,
+      sortedAllNegatives,
+      sortedSomeNegatives,
+      emptyList;
+  List<double>? randomDistribution, randomDistributionSorted;
   setUp(() {
     emptyList = [];
     randomList = [2, 4, 2, 1, -1, 0, 20];
@@ -38,67 +35,67 @@ void main() {
   });
 
   test('Pigeonhole Sort', () {
-    expect(pigeonholeSort(randomList), equals(sortedRandomListAscending));
-    expect(pigeonholeSort(randomList, desc: false),
+    expect(pigeonholeSort(randomList!), equals(sortedRandomListAscending));
+    expect(pigeonholeSort(randomList!, desc: false),
         equals(sortedRandomListAscending));
-    expect(pigeonholeSort(randomList, desc: true),
+    expect(pigeonholeSort(randomList!, desc: true),
         equals(sortedRandomListDescending));
 
-    expect(pigeonholeSort(emptyList), equals(emptyList));
-    expect(pigeonholeSort(emptyList, desc: false), equals(emptyList));
-    expect(pigeonholeSort(emptyList, desc: true), equals(emptyList));
+    expect(pigeonholeSort(emptyList!), equals(emptyList));
+    expect(pigeonholeSort(emptyList!, desc: false), equals(emptyList));
+    expect(pigeonholeSort(emptyList!, desc: true), equals(emptyList));
   });
 
   test('Counting Sort', () {
-    expect(countingSort(positiveRandomList),
+    expect(countingSort(positiveRandomList!),
         equals(sortedPositiveRandomListAscending));
-    expect(countingSort(positiveRandomList, desc: false),
+    expect(countingSort(positiveRandomList!, desc: false),
         equals(sortedPositiveRandomListAscending));
-    expect(countingSort(positiveRandomList, desc: true),
+    expect(countingSort(positiveRandomList!, desc: true),
         equals(sortedPositiveRandomListDescending));
 
-    expect(countingSort(emptyList), equals(emptyList));
-    expect(countingSort(emptyList, desc: false), equals(emptyList));
-    expect(countingSort(emptyList, desc: true), equals(emptyList));
+    expect(countingSort(emptyList!), equals(emptyList));
+    expect(countingSort(emptyList!, desc: false), equals(emptyList));
+    expect(countingSort(emptyList!, desc: true), equals(emptyList));
 
-    expect(countingSort(allNegatives), equals(sortedAllNegatives));
-    expect(countingSort(someNegatives), equals(sortedSomeNegatives));
+    expect(countingSort(allNegatives!), equals(sortedAllNegatives));
+    expect(countingSort(someNegatives!), equals(sortedSomeNegatives));
   });
 
   test('Radix Sort for positive numbers', () {
-    expect(radixSort(positiveRandomList),
+    expect(radixSort(positiveRandomList!),
         equals(sortedPositiveRandomListAscending));
-    expect(radixSort(positiveRandomList, desc: false),
+    expect(radixSort(positiveRandomList!, desc: false),
         equals(sortedPositiveRandomListAscending));
-    expect(radixSort(positiveRandomList, desc: true),
+    expect(radixSort(positiveRandomList!, desc: true),
         equals(sortedPositiveRandomListDescending));
 
-    expect(radixSort(emptyList), equals(emptyList));
-    expect(radixSort(emptyList, desc: false), equals(emptyList));
-    expect(radixSort(emptyList, desc: true), equals(emptyList));
+    expect(radixSort(emptyList!), equals(emptyList));
+    expect(radixSort(emptyList!, desc: false), equals(emptyList));
+    expect(radixSort(emptyList!, desc: true), equals(emptyList));
 
-    expect(radixSort(allNegatives), equals(sortedAllNegatives));
-    expect(radixSort(someNegatives), equals(sortedSomeNegatives));
+    expect(radixSort(allNegatives!), equals(sortedAllNegatives));
+    expect(radixSort(someNegatives!), equals(sortedSomeNegatives));
   });
 
   test('Bucket sort for positive numbers', () {
-    expect(bucketSort(positiveRandomList),
+    expect(bucketSort(positiveRandomList!),
         equals(sortedPositiveRandomListAscending));
-    expect(bucketSort(positiveRandomList, desc: false),
+    expect(bucketSort(positiveRandomList!, desc: false),
         equals(sortedPositiveRandomListAscending));
-    expect(bucketSort(positiveRandomList, desc: true),
+    expect(bucketSort(positiveRandomList!, desc: true),
         equals(sortedPositiveRandomListDescending));
-    expect(bucketSort(randomDistribution), equals(randomDistributionSorted));
-    expect(bucketSort(randomDistribution, desc: true),
-        equals(randomDistributionSorted.reversed));
+    expect(bucketSort(randomDistribution!), equals(randomDistributionSorted));
+    expect(bucketSort(randomDistribution!, desc: true),
+        equals(randomDistributionSorted!.reversed));
 
-    expect(bucketSort(emptyList), equals(emptyList));
-    expect(bucketSort(emptyList, desc: false), equals(emptyList));
-    expect(bucketSort(emptyList, desc: true), equals(emptyList));
+    expect(bucketSort(emptyList!), equals(emptyList));
+    expect(bucketSort(emptyList!, desc: false), equals(emptyList));
+    expect(bucketSort(emptyList!, desc: true), equals(emptyList));
   });
 
   test('Bucket sort for negative numbers', () {
-    expect(() => bucketSort(allNegatives), throwsA(isA<FormatException>()));
-    expect(() => bucketSort(someNegatives), throwsA(isA<FormatException>()));
+    expect(() => bucketSort(allNegatives!), throwsA(isA<FormatException>()));
+    expect(() => bucketSort(someNegatives!), throwsA(isA<FormatException>()));
   });
 }

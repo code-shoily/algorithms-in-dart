@@ -4,55 +4,50 @@ class QueueNode<T> {
   T data;
 
   /// Reference to the node before [this]
-  QueueNode ahead;
+  QueueNode<T>? ahead;
 
   /// Reference to the node after [this]
-  QueueNode behind;
+  QueueNode<T>? behind;
 
   /// Construct a Queue node
-  QueueNode({this.data})
-      : ahead = null,
-        behind = null;
+  QueueNode(this.data);
 }
 
 /// A simple linked list based FIFO.
 class Queue<T> {
   /// The first inserted member of the queue
-  QueueNode<T> _head;
+  QueueNode<T>? _head;
 
   /// The latest inserted member of the queue
-  QueueNode<T> _tail;
+  QueueNode<T>? _tail;
 
   /// The size of the queue
-  int size;
+  int length;
 
   /// Create an empty [Queue]
-  Queue()
-      : _head = null,
-        _tail = null,
-        size = 0;
+  Queue() : length = 0;
 
   /// Show the first element and dequeue candidate
-  T get head => _head?.data;
+  T? get head => _head?.data;
 
   /// Show the most recently enqueued element
-  T get tail => _tail?.data;
+  T? get tail => _tail?.data;
 
   /// Check if the size of the queue is empty
   bool get isEmpty => _head == null;
 
   /// Enqueue a new item to the Queue
   void enqueue(T data) {
-    var newNode = QueueNode(data: data);
+    var newNode = QueueNode(data);
 
     if (isEmpty) {
       _head = newNode;
     } else {
       newNode.ahead = _tail;
-      _tail.behind = newNode;
+      _tail!.behind = newNode;
     }
 
-    size++;
+    length++;
     _tail = newNode;
   }
 
@@ -62,14 +57,14 @@ class Queue<T> {
 
     var output = _head;
 
-    if (_head.behind == null) {
+    if (_head!.behind == null) {
       _head = null;
       _tail = null;
     } else {
-      _head = _head.behind;
+      _head = _head!.behind;
     }
 
-    size--;
-    return output.data;
+    length--;
+    return output!.data;
   }
 }

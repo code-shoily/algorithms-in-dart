@@ -1,3 +1,4 @@
+// @dart=2.9
 /// A node consists of a [value],
 ///  together with a list of references to nodes (the [_children]),
 ///  with the constraints that no reference is duplicated,

@@ -1,3 +1,6 @@
+import '../heaps/base.dart';
+
+/// Comparator function compared [left] with [right]
 typedef Comparator<T extends Comparable> = bool Function(T left, T right);
 
 /// Makes sure left is less than right.
@@ -52,7 +55,7 @@ bool isReverseSorted<T extends Comparable>(List<T> list,
 /// The minimum and maximum values are stored as "min"
 /// and "max" kets in the [Map] returned.
 Map<String, num> findMinMax(List<num> list) {
-  if (list.isEmpty) return null;
+  if (list.isEmpty) throw InvalidIndexError();
 
   var min = list[0];
   var max = list[0];

@@ -3,11 +3,11 @@ import 'package:test/test.dart';
 import 'package:algorithms/sorts/merge.dart';
 
 void main() {
-  List<int> randomList;
-  List<int> sortedRandomListAscending;
-  List<int> sortedRandomListDescending;
+  List<int>? randomList;
+  List<int>? sortedRandomListAscending;
+  List<int>? sortedRandomListDescending;
 
-  List<String> emptyList;
+  List<String>? emptyList;
 
   bool ascendingFn(left, right) => left <= right;
   bool descendingFn(left, right) => left >= right;
@@ -20,14 +20,14 @@ void main() {
   });
 
   test('Merge Sort', () {
-    expect(mergeSort(randomList), equals(sortedRandomListAscending));
+    expect(mergeSort(randomList!), equals(sortedRandomListAscending));
     expect(
-        mergeSort(randomList, ascendingFn), equals(sortedRandomListAscending));
-    expect(mergeSort(randomList, descendingFn),
+        mergeSort(randomList!, ascendingFn), equals(sortedRandomListAscending));
+    expect(mergeSort(randomList!, descendingFn),
         equals(sortedRandomListDescending));
 
-    expect(mergeSort(emptyList), equals(emptyList));
-    expect(mergeSort(emptyList, ascendingFn), equals(emptyList));
-    expect(mergeSort(emptyList, descendingFn), equals(emptyList));
+    expect(mergeSort(emptyList!), equals(emptyList));
+    expect(mergeSort(emptyList!, ascendingFn), equals(emptyList));
+    expect(mergeSort(emptyList!, descendingFn), equals(emptyList));
   });
 }
