@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/code-shoily/algorithms-in-dart.svg?branch=master)](https://travis-ci.com/code-shoily/algorithms-in-dart)
 
-##### This currently uses the beta version of Dart
+##### This currently uses the beta version of Dart (as of 11/20/2020)
 
 Implementation of several algorithms with Dart programming language.
 
