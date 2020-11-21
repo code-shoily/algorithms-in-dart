@@ -3,9 +3,6 @@ import './binary_tree_adt.dart';
 import 'binary_search_tree.dart';
 import 'binary_tree.dart';
 
-/// Sentinel node to represent leaf nodes in [RedBlackTree].
-final RedBlackNode nil = RedBlackNode.sentinalNode();
-
 /// Color states a [RedBlackNode] can be in.
 enum Color {
   /// Red colored node.
@@ -18,7 +15,9 @@ enum Color {
 /// Data structure similar to [BinaryNode], differs in having connection to it's
 ///  [parent] and an extra [color] attribute.
 class RedBlackNode<V extends Comparable>
-    extends BinaryNodeADT<RedBlackNode, V> {
+    extends BinaryNodeADT<RedBlackNode<V>, V> {
+  RedBlackNode<V> nil;
+
   /// Value of the node.
   V value;
 
@@ -26,22 +25,22 @@ class RedBlackNode<V extends Comparable>
   Color color;
 
   /// [parent] of the node.
-  RedBlackNode parent;
+  RedBlackNode<V> parent;
 
   /// Default constructor for a new node.
-  RedBlackNode(this.value, this.parent) {
+  RedBlackNode(this.value, this.parent, RedBlackNode<V> nil) {
     color = Color.red;
     left = right = nil;
   }
 
   /// Creates root with [value].
-  RedBlackNode.root(this.value) {
+  RedBlackNode.root(this.value, RedBlackNode<V> nil) {
     color = Color.black;
     left = right = nil;
   }
 
-  /// Creates a sentinal node.
-  RedBlackNode.sentinalNode() : color = Color.black;
+  /// Creates a sentinel node.
+  RedBlackNode.sentinelNode() : color = Color.black;
 }
 
 /// A self-balancing [BinarySearchTree].
@@ -54,9 +53,11 @@ class RedBlackNode<V extends Comparable>
 /// * Every path from a given node to any of its descendant [nil] nodes goes
 ///    through the same number of black nodes.
 class RedBlackTree<V extends Comparable>
-    extends BinaryTreeADT<RedBlackNode, V> {
+    extends BinaryTreeADT<RedBlackNode<V>, V> {
+  RedBlackNode<V> nil = RedBlackNode<V>.sentinelNode();
+
   /// Root of the tree.
-  RedBlackNode root;
+  RedBlackNode<V> root;
 
   /// Creates an empty Red Back tree.
   RedBlackTree();
@@ -70,12 +71,12 @@ class RedBlackTree<V extends Comparable>
 
   /// Creates a new Red Back tree with a single [value].
   RedBlackTree.withSingleValue(V value) {
-    root = RedBlackNode.root(value);
+    root = RedBlackNode.root(value, nil);
   }
 
   @override
   void add(V value) {
-    root = isEmpty ? RedBlackNode.root(value) : _add(root, value);
+    root = isEmpty ? RedBlackNode<V>.root(value, nil) : _add(root, value);
 
     _addReorder(root);
 
@@ -127,18 +128,18 @@ class RedBlackTree<V extends Comparable>
     return result;
   }
 
-  RedBlackNode _add(RedBlackNode node, V value) {
+  RedBlackNode _add(RedBlackNode<V> node, V value) {
     if (value.compareTo(node.value) < 0) {
       if (node.left != nil) {
         return _add(node.left, value);
       } else {
-        return (node.left = RedBlackNode(value, node));
+        return (node.left = RedBlackNode<V>(value, node, nil));
       }
     } else if (value.compareTo(node.value) > 0) {
       if (node.right != nil) {
         return _add(node.right, value);
       } else {
-        return (node.right = RedBlackNode(value, node));
+        return (node.right = RedBlackNode<V>(value, node, nil));
       }
     } else {
       // Duplicate value found.
@@ -146,7 +147,7 @@ class RedBlackTree<V extends Comparable>
     }
   }
 
-  void _addReorder(RedBlackNode node) {
+  void _addReorder(RedBlackNode<V> node) {
     var parent = _parent(node);
     var uncle = _uncle(node);
     var grandparent = _grandParent(node);
@@ -168,7 +169,7 @@ class RedBlackTree<V extends Comparable>
       uncle.color = parent.color = Color.black;
       grandparent.color = Color.red;
 
-      // Check if [grandparent] is not voilating any property.
+      // Check if [grandparent] is not violating any property.
       _addReorder(grandparent);
     }
 
@@ -209,14 +210,14 @@ class RedBlackTree<V extends Comparable>
     }
   }
 
-  bool _compareAndCheck(RedBlackNode node, V value) {
+  bool _compareAndCheck(RedBlackNode<V> node, V value) {
     if (node.value == value) return true;
     return (node.value.compareTo(value) >= 0
         ? (node.left != nil ? _compareAndCheck(node.left, value) : false)
         : (node.right != nil ? _compareAndCheck(node.right, value) : false));
   }
 
-  void _delete(RedBlackNode node, V value) {
+  void _delete(RedBlackNode<V> node, V value) {
     // Base Case, [value] not found.
     if (node == nil) return;
 
@@ -250,7 +251,7 @@ class RedBlackTree<V extends Comparable>
     }
   }
 
-  RedBlackNode _deleteReorder(RedBlackNode node) {
+  RedBlackNode _deleteReorder(RedBlackNode<V> node) {
     // Childless red node.
     if (node.color == Color.red) {
       return nil;
@@ -357,7 +358,7 @@ class RedBlackTree<V extends Comparable>
     }
   }
 
-  RedBlackNode _farNephew(RedBlackNode node) {
+  RedBlackNode _farNephew(RedBlackNode<V> node) {
     var parent = _parent(node);
     var sibling = _sibling(node);
 
@@ -382,16 +383,16 @@ class RedBlackTree<V extends Comparable>
   }
 
   /// Parent of [node].
-  RedBlackNode _parent(RedBlackNode node) => node?.parent;
+  RedBlackNode _parent(RedBlackNode<V> node) => node?.parent;
 
-  void _postOrder(RedBlackNode node, List<V> list) {
+  void _postOrder(RedBlackNode<V> node, List<V> list) {
     if (node == nil) return;
     _postOrder(node.left, list);
     _postOrder(node.right, list);
     list.add(node.value);
   }
 
-  void _preOrder(RedBlackNode node, List<V> list) {
+  void _preOrder(RedBlackNode<V> node, List<V> list) {
     if (node == nil) return;
     list.add(node.value);
     _preOrder(node.left, list);
@@ -406,7 +407,7 @@ class RedBlackTree<V extends Comparable>
   ///            / \          / \
   ///           ⬤               ⬤
   /// Left subtree of C becomes right subtree of N.
-  _rotateLeft(RedBlackNode node) {
+  _rotateLeft(RedBlackNode<V> node) {
     var child = node.right;
     var parent = _parent(node);
 
@@ -439,7 +440,7 @@ class RedBlackTree<V extends Comparable>
   ///         / \                / \
   ///            ⬤             ⬤
   /// Right subtree of C becomes left subtree of N.
-  _rotateRight(RedBlackNode node) {
+  _rotateRight(RedBlackNode<V> node) {
     var child = node.left;
     var parent = _parent(node);
 
@@ -465,13 +466,13 @@ class RedBlackTree<V extends Comparable>
   }
 
   /// Sibling of [node].
-  RedBlackNode _sibling(RedBlackNode node) {
+  RedBlackNode _sibling(RedBlackNode<V> node) {
     var parent = _parent(node);
     return node == parent?.left ? parent?.right : parent?.left;
   }
 
   /// Sibling of [node]'s parent.
-  RedBlackNode _uncle(RedBlackNode node) {
+  RedBlackNode _uncle(RedBlackNode<V> node) {
     var parent = _parent(node);
     return (_sibling(parent));
   }

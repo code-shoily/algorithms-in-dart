@@ -120,7 +120,7 @@ void main() {
   });
 
   test('Nullify', () {
-    var tree = AvlTree.fromList([1, 2, 3]);
+    var tree = AvlTree<int>.fromList([1, 2, 3]);
     tree.nullify();
     expect(tree.isEmpty, isTrue);
   });

@@ -46,7 +46,7 @@ void main() {
   });
 
   test('Nullify', () {
-    var test = RedBlackTree.fromList([1, 2, 3]);
+    var test = RedBlackTree<int>.fromList([1, 2, 3]);
     test.nullify();
     expect(test.isEmpty, isTrue);
   });
@@ -252,7 +252,7 @@ bool isValidRedBlackTree<T extends Comparable>(RedBlackTree tree) {
 }
 
 int _blackNodeCount(RedBlackNode node) {
-  if (node == nil) return 0;
+  if (node == node?.nil) return 0;
 
   // Red node must have black children.
   expect(

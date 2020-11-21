@@ -9,9 +9,9 @@ import 'binary_tree.dart';
 /// * It's right subtree has nodes which have greater value.
 /// * Left and right subtrees are also BST.
 class BinarySearchTree<V extends Comparable>
-    extends BinaryTreeADT<BinaryNode, V> {
+    extends BinaryTreeADT<BinaryNode<V>, V> {
   /// Root of the tree
-  BinaryNode root;
+  BinaryNode<V> root;
 
   /// Creates an empty BST.
   BinarySearchTree();

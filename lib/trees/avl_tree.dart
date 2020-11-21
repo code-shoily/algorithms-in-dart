@@ -4,7 +4,7 @@ import 'binary_search_tree.dart';
 import 'binary_tree.dart';
 
 /// Data structure similar to [BinaryNode], differs in having a [balanceFactor].
-class AvlNode<V extends Comparable> extends BinaryNodeADT<AvlNode, V> {
+class AvlNode<V extends Comparable> extends BinaryNodeADT<AvlNode<V>, V> {
   /// Difference between height of left and right subtree.
   ///
   /// [balanceFactor] ∈ `{-1, 0, 1}`.
@@ -25,9 +25,9 @@ class AvlNode<V extends Comparable> extends BinaryNodeADT<AvlNode, V> {
 ///
 /// In AVL tree, difference in the height of left and right subtrees
 ///  of any node can be at most 1.
-class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode, V> {
+class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   /// Root of the tree
-  AvlNode root;
+  AvlNode<V> root;
 
   /// If after addition, height of parent node increases.
   bool _isTaller = false;
@@ -147,7 +147,7 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode, V> {
     return node;
   }
 
-  AvlNode _add(AvlNode node, V value, bool isNull) {
+  AvlNode _add(AvlNode<V> node, V value, bool isNull) {
     if (isNull) {
       // Base case, node's value is set.
       node.value = value;
