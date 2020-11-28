@@ -85,6 +85,7 @@ void main() {
     });
   });
 
+  // TODO: Use isTrue, isFalse and equals().
   test('Add node', () {
     var test = RedBlackTree();
     var list = test.inOrder();
