@@ -1,5 +1,5 @@
 import 'adt/binary_tree_adt.dart';
-//import 'binary_tree.dart';
+import 'binary_tree.dart';
 
 /// Data structure similar to [BinaryNode], differs in having two boolean values
 ///  [leftIsThread] and [rightIsThread] to determine whether [left] and [right]

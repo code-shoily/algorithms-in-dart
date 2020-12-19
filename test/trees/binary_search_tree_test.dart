@@ -1,11 +1,10 @@
-// @dart=2.9
 import 'package:test/test.dart';
 import 'package:algorithms/trees/binary_tree.dart';
 import 'package:algorithms/trees/binary_search_tree.dart';
 
 void main() {
-  BinarySearchTree emptyTree, singleNodeTree, multiNodeTree;
-  List<BinarySearchTree> treeList;
+  late BinarySearchTree<int> emptyTree, singleNodeTree, multiNodeTree;
+  late List<BinarySearchTree<int>> treeList;
   setUp(() {
     emptyTree = BinarySearchTree();
     singleNodeTree = BinarySearchTree.withSingleValue(0);
@@ -26,8 +25,8 @@ void main() {
   });
 
   test('Test single node', () {
-    expect(singleNodeTree.root.value, equals(0));
-    expect(multiNodeTree.root.value, equals(11));
+    expect(singleNodeTree.root!.value, equals(0));
+    expect(multiNodeTree.root!.value, equals(11));
   });
 
   test('Multiple node', () {
@@ -40,24 +39,24 @@ void main() {
              / \
             0   9
     ----------------------*/
-    expect(multiNodeTree.root.value, equals(11));
-    expect(multiNodeTree.root.left.value, equals(-2));
-    expect(multiNodeTree.root.left.left.value, equals(-3));
-    expect(multiNodeTree.root.left.left.left, isNull);
-    expect(multiNodeTree.root.left.left.right, isNull);
-    expect(multiNodeTree.root.left.right.value, equals(1));
-    expect(multiNodeTree.root.left.right.left.value, equals(0));
-    expect(multiNodeTree.root.left.right.left.left, isNull);
-    expect(multiNodeTree.root.left.right.left.right, isNull);
-    expect(multiNodeTree.root.left.right.right.value, equals(9));
-    expect(multiNodeTree.root.left.right.right.left, isNull);
-    expect(multiNodeTree.root.left.right.right.right, isNull);
+    expect(multiNodeTree.root!.value, equals(11));
+    expect(multiNodeTree.root!.left!.value, equals(-2));
+    expect(multiNodeTree.root!.left!.left!.value, equals(-3));
+    expect(multiNodeTree.root!.left!.left!.left, isNull);
+    expect(multiNodeTree.root!.left!.left!.right, isNull);
+    expect(multiNodeTree.root!.left!.right!.value, equals(1));
+    expect(multiNodeTree.root!.left!.right!.left!.value, equals(0));
+    expect(multiNodeTree.root!.left!.right!.left!.left, isNull);
+    expect(multiNodeTree.root!.left!.right!.left!.right, isNull);
+    expect(multiNodeTree.root!.left!.right!.right!.value, equals(9));
+    expect(multiNodeTree.root!.left!.right!.right!.left, isNull);
+    expect(multiNodeTree.root!.left!.right!.right!.right, isNull);
 
-    expect(multiNodeTree.root.right.value, equals(21));
-    expect(multiNodeTree.root.right.right, isNull);
-    expect(multiNodeTree.root.right.left.value, equals(17));
-    expect(multiNodeTree.root.right.left.left, isNull);
-    expect(multiNodeTree.root.right.left.right, isNull);
+    expect(multiNodeTree.root!.right!.value, equals(21));
+    expect(multiNodeTree.root!.right!.right, isNull);
+    expect(multiNodeTree.root!.right!.left!.value, equals(17));
+    expect(multiNodeTree.root!.right!.left!.left, isNull);
+    expect(multiNodeTree.root!.right!.left!.right, isNull);
   });
 
   test('Add', () {
@@ -65,26 +64,26 @@ void main() {
     ascendingTree.add(10);
     ascendingTree.add(20);
     ascendingTree.add(30);
-    expect(ascendingTree.root.value, equals(10));
-    expect(ascendingTree.root.right.value, equals(20));
-    expect(ascendingTree.root.left, equals(null));
-    expect(ascendingTree.root.right.right.value, equals(30));
-    expect(ascendingTree.root.right.left, equals(null));
-    expect(ascendingTree.root.right.right.left, isNull);
-    expect(ascendingTree.root.right.right.right, isNull);
+    expect(ascendingTree.root!.value, equals(10));
+    expect(ascendingTree.root!.right!.value, equals(20));
+    expect(ascendingTree.root!.left, isNull);
+    expect(ascendingTree.root!.right!.right!.value, equals(30));
+    expect(ascendingTree.root!.right!.left, isNull);
+    expect(ascendingTree.root!.right!.right!.left, isNull);
+    expect(ascendingTree.root!.right!.right!.right, isNull);
     expect(true, isValidBinarySearchTree(ascendingTree));
 
     var descendingTree = BinarySearchTree();
     descendingTree.add(-10);
     descendingTree.add(-20);
     descendingTree.add(-30);
-    expect(descendingTree.root.value, equals(-10));
-    expect(descendingTree.root.left.value, equals(-20));
-    expect(descendingTree.root.right, equals(null));
-    expect(descendingTree.root.left.left.value, equals(-30));
-    expect(descendingTree.root.left.right, equals(null));
-    expect(descendingTree.root.left.left.right, isNull);
-    expect(descendingTree.root.left.left.left, isNull);
+    expect(descendingTree.root!.value, equals(-10));
+    expect(descendingTree.root!.left!.value, equals(-20));
+    expect(descendingTree.root!.right, equals(null));
+    expect(descendingTree.root!.left!.left!.value, equals(-30));
+    expect(descendingTree.root!.left!.right, equals(null));
+    expect(descendingTree.root!.left!.left!.right, isNull);
+    expect(descendingTree.root!.left!.left!.left, isNull);
     expect(true, isValidBinarySearchTree(descendingTree));
   });
 
@@ -247,7 +246,7 @@ void createBinarySearchTree<V extends Comparable>(
 ///
 /// If inOrder traversal of [tree] has values "in-order", it is valid.
 bool isValidBinarySearchTree(BinarySearchTree tree) {
-  if (tree == null || tree.isEmpty) return true;
+  if (tree.isEmpty) return true;
 
   var inOrder = tree.inOrder();
   for (var i = 0; i < inOrder.length - 1; i++) {
@@ -261,7 +260,7 @@ void _addLeft<V extends Comparable>(
     BinaryNode root, List<V> preOrder, List<V> inOrder) {
   root.left = BinaryNode(preOrder[0]);
 
-  createBinarySearchTree(root.left, preOrder, inOrder);
+  createBinarySearchTree(root.left!, preOrder, inOrder);
 }
 
 /// Adds right subtree to [root].
@@ -269,5 +268,5 @@ void _addRight<V extends Comparable>(
     BinaryNode root, List<V> preOrder, List<V> inOrder) {
   root.right = BinaryNode(preOrder[0]);
 
-  createBinarySearchTree(root.right, preOrder, inOrder);
+  createBinarySearchTree(root.right!, preOrder, inOrder);
 }

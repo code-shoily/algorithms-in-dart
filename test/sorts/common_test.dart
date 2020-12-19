@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 import 'package:algorithms/sorts/common.dart';
 
 void main() {
-  List<num>? anyList, singleValuedList, emptyList;
+  late List<num> anyList, singleValuedList, emptyList;
   setUp(() {
     emptyList = [];
     singleValuedList = [42];
@@ -12,26 +12,26 @@ void main() {
   });
 
   test('Is unsorted', () {
-    expect(isSorted(anyList!), equals(false));
+    expect(isSorted(anyList), equals(false));
   });
 
   test('Is sorted', () {
-    anyList!.sort();
-    expect(isSorted(anyList!), equals(true));
-    expect(isSorted(emptyList!), equals(true));
-    expect(isSorted(singleValuedList!), equals(true));
+    anyList.sort();
+    expect(isSorted(anyList), equals(true));
+    expect(isSorted(emptyList), equals(true));
+    expect(isSorted(singleValuedList), equals(true));
   });
 
   test('Is reverse sorted', () {
-    anyList!.sort();
-    expect(isReverseSorted(anyList!.reversed.toList()), equals(true));
-    expect(isReverseSorted(emptyList!), equals(true));
-    expect(isReverseSorted(singleValuedList!), equals(true));
+    anyList.sort();
+    expect(isReverseSorted(anyList.reversed.toList()), equals(true));
+    expect(isReverseSorted(emptyList), equals(true));
+    expect(isReverseSorted(singleValuedList), equals(true));
   });
 
   test('Find min and max', () {
-    expect(findMinMax(anyList!), equals({'min': -161, 'max': 233}));
-    expect(() => findMinMax(emptyList!), throwsA(isA<InvalidIndexError>()));
-    expect(findMinMax(singleValuedList!), equals({'min': 42, 'max': 42}));
+    expect(findMinMax(anyList), equals({'min': -161, 'max': 233}));
+    expect(() => findMinMax(emptyList), throwsA(isA<InvalidIndexError>()));
+    expect(findMinMax(singleValuedList), equals({'min': 42, 'max': 42}));
   });
 }
