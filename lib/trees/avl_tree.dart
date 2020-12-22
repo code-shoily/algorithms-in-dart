@@ -306,60 +306,112 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
     // Right subtree of [node]
     var rChild = node.right;
 
-    // [rChild] was balanced.
-    //          N
-    //           \
-    //            R
-    //           / \
-    //          ** **
-    if (rChild!.balanceFactor == 0) {
-      // Single left rotation about [node] is performed to balance it.
-      node = _rotateLeft(node);
+    switch (rChild!.balanceFactor) {
 
-      node.balanceFactor = -1;
-      rChild.balanceFactor = 1;
-      _isShorter = false;
-    }
+      // [rChild] was balanced, single left rotation about [node] is performed
+      // to balance the [node].
+      case 0:
+        //
+        //          N                         N                        R
+        //         / \                       /↶\                      / \
+        //     ...█...R....     ⟶      h ...█...R....     ⟶      ....N...█...
+        // h+1 ...▒../.\...              ....../.\...            .../.\..█.. h+1
+        //     .....█...█..              .....█...█..          h ..█...█.....
+        //    h+1 ..█...█.. h+1         h+1 ..█...█.. h+1        ......█.. h+1
+        //
+        node = _rotateLeft(node);
 
-    // [rChild] was right heavy.
-    //          N
-    //           \
-    //            R
-    //           / \
-    //          *  **
-    else if (rChild.balanceFactor == -1) {
-      node.balanceFactor = rChild.balanceFactor = 0;
-      // Single left rotation about [node] is performed to balance it.
-      node = _rotateLeft(node);
-    }
+        node.balanceFactor = -1;
+        rChild.balanceFactor = 1;
 
-    // [rChild] was left heavy.
-    else {
-      // Left subtree of [rChild].
-      var lGrandChild = rChild.left;
-      switch (lGrandChild!.balanceFactor) {
+        // Height of the subtree rooted at N does not change, hence [_isShorter]
+        // is made `false`.
+        _isShorter = false;
+        break;
 
-        // [lGrandChild] was balanced.
-        case 0:
-          node.balanceFactor = rChild.balanceFactor = 0;
-          break;
+      // [rChild] was right heavy, single left rotation about [node] is
+      // performed to balance the [node].
+      case -1:
+        //
+        //          N                         N                        R
+        //         / \                       /↶\                      / \
+        //     ...█...R....     ⟶      h ...█...R....     ⟶      ....N...█...
+        // h+1 ...▒../.\...              ....../.\...            .../.\..█.. h+1
+        //     .....█...█..              .. h █...█..          h ..█...█.....
+        //     ... h ...█.. h+1          .........█.. h+1        ...... h ...
+        //
+        node = _rotateLeft(node);
 
-        // [lGrandChild] was left heavy.
-        case 1:
-          node.balanceFactor = 0;
-          rChild.balanceFactor = -1;
-          break;
+        node.balanceFactor = rChild.balanceFactor = 0;
 
-        // [lGrandChild] was right heavy.
-        case -1:
-          node.balanceFactor = 1;
-          rChild.balanceFactor = 0;
-          break;
-      }
-      lGrandChild.balanceFactor = 0;
-      // Right Left rotation is perfomed to balance [node].
-      node.right = _rotateRight(rChild);
-      node = _rotateLeft(node);
+        // Height of the subtree rooted at N has changed, hence [_isShorter]
+        // remains `true`.
+        break;
+
+      // [rChild] was left heavy. In this case, a single rotation will not
+      // suffice so double rotation is performed. L is the root
+      // node of [rChild]'s left subtree.
+      //
+      //          N                       N
+      //         / \                     / \
+      //     ...█...R....            ...█...R....
+      // h+1 ...▒../.\...        h+1 ...▒. /.\...
+      //     .....█...█.. h          .... L ..█.. h
+      //     .h+1 █......                / \
+      //
+      case 1:
+
+        // Left subtree of [rChild].
+        var lGrandChild = rChild.left;
+
+        switch (lGrandChild!.balanceFactor) {
+
+          // [lGrandChild] was balanced.
+          case 0:
+            //          N                    N                    N
+            //         / \                  / \                  /↶\                    L
+            //     ...█...R....       h ...█...R....       h ...█...L......           /   \
+            // h+1 ...▒. /.\...    ⟶    ..... /↷\...    ⟶    ....../.\.....   ⟶      N     R
+            //     .... L ..█.. h       .... L ..█.. h         h..█...R....         / \   / \
+            //         / \                  / \                 ...../.\...     h..█...█.█...█..h
+            //    h ..█...█.. h        h ..█...█.. h             h..█...█.. h
+            //
+            node.balanceFactor = rChild.balanceFactor = 0;
+            break;
+
+          // [lGrandChild] was left heavy.
+          case 1:
+            //          N                    N                    N
+            //         / \                  / \                  /↶\                    L
+            //     ...█...R....       h ...█...R....       h ...█...L......           /   \
+            // h+1 ...▒. /.\...    ⟶    ..... /↷\...    ⟶    ....../.\.....   ⟶      N     R
+            //     .... L ..█.. h       .... L ..█.. h         h..█...R....         / \   / \
+            //         / \                  / \                 ...../.\...     h..█...█ ▀   █..h
+            //    h ..█...▀.. h-1      h ..█...▀.. h-1         h-1..▀...█.. h            │
+            //                                                                       h-1 ┘
+            node.balanceFactor = 0;
+            rChild.balanceFactor = -1;
+            break;
+
+          // [lGrandChild] was right heavy.
+          case -1:
+            //          N                    N                    N
+            //         / \                  / \                  /↶\                    L
+            //     ...█...R....       h ...█...R....       h ...█...L......           /   \
+            // h+1 ...▒. /.\...    ⟶    ..... /↷\...    ⟶    ....../.\.....   ⟶      N     R
+            //     .... L ..█.. h       .... L ..█.. h       h-1..▀...R....         / \   / \
+            //         / \                  / \                 ...../.\...     h..█   ▀ █...█..h
+            //  h-1 ..▀...█.. h      h-1 ..▀...█.. h             h..█...█.. h          │
+            //                                                                     h-1 ┘
+            node.balanceFactor = 1;
+            rChild.balanceFactor = 0;
+            break;
+        }
+        lGrandChild.balanceFactor = 0;
+        // Right Left rotation is perfomed to balance [node].
+        node.right = _rotateRight(rChild);
+        node = _rotateLeft(node);
+        break;
     }
     return node;
   }
@@ -451,47 +503,47 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   }
 
   /// Updates [balanceFactor] of the [node] when deletion is done from it's left
-  /// subtree.\
+  /// subtree.
   AvlNode<V> _dUpdateLeftBalanceFactor(AvlNode<V> node) {
     switch (node.balanceFactor) {
 
-      // [node] was balanced before deletion. (Both left and right subtree had
-      // the same height.)
-      //          N
-      //         / \
-      //        ** **
+      // [node] was balanced before deletion, is right heavy now.
       case 0:
-        // [node] is right heavy now.
-        //          N
-        //         / \
-        //        *  **
+        //          N                         N
+        //         / \           ⟶           / \
+        //     ...█...█...             h ...█...█...
+        // h+1 ...▒...█... h+1           .......█... h+1
+        //
         node.balanceFactor = -1;
+
+        // Balance factors of the ancestors of this [node] will remain
+        // unchanged (since height of the subtree rooted at N didn't change).
+        // Therefore [_isShorter] is set to `false`.
         _isShorter = false;
         break;
 
-      // [node] was left heavy before deletion. (Left subtree's height was one
-      // more than that of right subtree.)
-      //          N
-      //         / \
-      //        **  *
+      // [node] was left heavy before deletion, is balanced now.
       case 1:
-        // [node] is balanced now.
-        //          N
-        //         / \
-        //        *   *
+        //          N                         N
+        //         / \           ⟶           / \
+        //     ...█...█... h           h ...█...█... h
+        // h+1 ...▒.......               ...........
+        //
         node.balanceFactor = 0;
+
+        // Height of the subtree rooted at N has decreased, [_isShorter] remains
+        // `true`.
         break;
 
-      // [node] was right heavy before deletion. (Right subtree's height was one
-      // more than that of left subtree.)
-      //          N
-      //         / \
-      //        *  **
+      // [node] was right heavy before deletion, is imbalanced now, has to be
+      // balanced.
       case -1:
-        // [node] is imbalanced now, has to be balanced.
-        //          N
-        //           \
-        //           **
+        //          N                           N
+        //         / \                         / \
+        //     ...█...█...       ⟶     h-1 ...█...█...
+        //   h ...▒...█...                 .......█...
+        //     .......█... h+1             .......█... h+1
+        //
         node = _dBalanceRightHeavy(node);
     }
     return node;
