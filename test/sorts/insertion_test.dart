@@ -3,9 +3,11 @@ import 'package:test/test.dart';
 import 'package:algorithms/sorts/insertion.dart';
 
 void main() {
-  List<int>? randomList, sortedRandomListAscending, sortedRandomListDescending;
+  late List<int> randomList,
+      sortedRandomListAscending,
+      sortedRandomListDescending;
 
-  List<String>? emptyList;
+  late List<String> emptyList;
 
   bool ascendingFn(left, right) => left <= right;
   bool descendingFn(left, right) => left >= right;
@@ -18,14 +20,14 @@ void main() {
   });
 
   test('Insertion Sort', () {
-    expect(insertionSort(randomList!), equals(sortedRandomListAscending));
-    expect(insertionSort(randomList!, ascendingFn),
+    expect(insertionSort(randomList), equals(sortedRandomListAscending));
+    expect(insertionSort(randomList, ascendingFn),
         equals(sortedRandomListAscending));
-    expect(insertionSort(randomList!, descendingFn),
+    expect(insertionSort(randomList, descendingFn),
         equals(sortedRandomListDescending));
 
-    expect(insertionSort(emptyList!), equals(emptyList!));
-    expect(insertionSort(emptyList!, ascendingFn), equals(emptyList!));
-    expect(insertionSort(emptyList!, descendingFn), equals(emptyList!));
+    expect(insertionSort(emptyList), equals(emptyList));
+    expect(insertionSort(emptyList, ascendingFn), equals(emptyList));
+    expect(insertionSort(emptyList, descendingFn), equals(emptyList));
   });
 }

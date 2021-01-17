@@ -1,4 +1,3 @@
-// @dart=2.9
 import 'adt/binary_tree_adt.dart';
 import 'binary_tree.dart';
 
@@ -11,7 +10,7 @@ import 'binary_tree.dart';
 class BinarySearchTree<V extends Comparable>
     extends BinaryTreeADT<BinaryNode<V>, V> {
   /// Root of the tree
-  BinaryNode<V> root;
+  BinaryNode<V>? root;
 
   /// Creates an empty BST.
   BinarySearchTree();
@@ -32,7 +31,7 @@ class BinarySearchTree<V extends Comparable>
     if (isEmpty) {
       root = node;
     } else {
-      _compareAndAdd(root, node);
+      _compareAndAdd(root!, node);
     }
   }
 
@@ -48,7 +47,7 @@ class BinarySearchTree<V extends Comparable>
   @override
   void delete(V value) {
     if (!isEmpty) {
-      root = _delete(root, value);
+      root = _delete(root!, value);
     }
   }
 
@@ -66,30 +65,30 @@ class BinarySearchTree<V extends Comparable>
       return;
     }
 
-    if (node.value.compareTo(newNode.value) > 0) {
+    if (node.value!.compareTo(newNode.value) > 0) {
       if (node.left == null) {
         // newNode has lower value and becomes left child of the node.
         node.left = newNode;
       } else {
-        _compareAndAdd(node.left, newNode);
+        _compareAndAdd(node.left!, newNode);
       }
     } else {
       if (node.right == null) {
         // newNode has greater value and becomes right child of node.
         node.right = newNode;
       } else {
-        _compareAndAdd(node.right, newNode);
+        _compareAndAdd(node.right!, newNode);
       }
     }
   }
 
-  BinaryNode<V> _delete(BinaryNode node, V value) {
+  BinaryNode<V>? _delete(BinaryNode<V>? node, V value) {
     // Base Case, Key not found
     if (node == null) return node;
 
-    if (node.value.compareTo(value) > 0) {
+    if (node.value!.compareTo(value) > 0) {
       node.left = _delete(node.left, value);
-    } else if (node.value.compareTo(value) < 0) {
+    } else if (node.value!.compareTo(value) < 0) {
       node.right = _delete(node.right, value);
     } else {
       // Node with value found.
@@ -98,11 +97,11 @@ class BinarySearchTree<V extends Comparable>
       if (node.left != null && node.right != null) {
         // Successor to the node is the next inOrder node.
         var successor = node.right;
-        while (successor.left != null) {
+        while (successor!.left != null) {
           successor = successor.left;
         }
         node.value = successor.value;
-        node.right = _delete(node.right, successor.value);
+        node.right = _delete(node.right, successor.value!);
       } else {
         if (node.left != null) {
           // Node only has left child.
