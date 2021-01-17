@@ -57,9 +57,9 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   void add(V value) {
     if (isEmpty) {
       root = AvlNode();
-      root = _add(root!, value, true);
+      root = _add(root!, value);
     } else {
-      root = _add(root!, value, false);
+      root = _add(root!, value);
     }
   }
 
@@ -152,23 +152,20 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
     return node;
   }
 
-  AvlNode<V> _add(AvlNode<V> node, V value, bool isNull) {
-    if (isNull) {
+  AvlNode<V> _add(AvlNode<V> node, V value) {
+    if (node.value == null) {
       // Base case, node's value is set.
       node.value = value;
       _isTaller = true;
     } else if (node.value!.compareTo(value) > 0) {
       if (node.left == null) {
-        // If left subtree is null,
-        //  create a new node and pass [isNull] as true.
-        /*var newNode = _AvlNode(null);
-        node.left = newNode;
-        node.left = _add(newNode, value, true);*/
+        // If left subtree is null, create a new node so that the value can be
+        // assigned to it.
         node.left = AvlNode();
-        node.left = _add(node.left!, value, true);
+        node.left = _add(node.left!, value);
       } else {
         // Otherwise traverse to left subtree.
-        node.left = _add(node.left!, value, false);
+        node.left = _add(node.left!, value);
       }
       if (_isTaller) {
         // Update balance factor of parent after addition.
@@ -176,13 +173,12 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
       }
     } else if (node.value!.compareTo(value) < 0) {
       if (node.right == null) {
-        // If right subtree is null,
-        //  create a new node and pass [isNull] as true.
+        // If right subtree is null, create a new node.
         node.right = AvlNode();
-        node.right = _add(node.right!, value, true);
+        node.right = _add(node.right!, value);
       } else {
         // Otherwise traverse to right subtree.
-        node.right = _add(node.right!, value, false);
+        node.right = _add(node.right!, value);
       }
       if (_isTaller) {
         // Update balance factor of parent after addition.
@@ -247,55 +243,122 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
     return node;
   }
 
-  /// Balances left heavy imbalanced [node] after deletion in it's
-  /// right subtree.
+  /// Balances left heavy imbalanced [node] after deletion in it's right
+  /// subtree.
   AvlNode<V> _dBalanceLeftHeavy(AvlNode<V> node) {
     // Left subtree of [node]
     var lChild = node.left;
 
-    // [lChild] was balanced.
-    if (lChild!.balanceFactor == 0) {
-      node.balanceFactor = 1;
-      lChild.balanceFactor = -1;
-      _isShorter = false;
-      // Single right rotation about [node] is performed to balance it.
-      node = _rotateRight(node);
-    }
+    switch (lChild!.balanceFactor) {
 
-    // [lChild] was left heavy.
-    else if (lChild.balanceFactor == 1) {
-      node.balanceFactor = lChild.balanceFactor = 0;
-      // Single right rotation about [node] is performed to balance it.
-      node = _rotateRight(node);
-    }
+      // [lChild] was balanced, single right rotation about [node] is performed
+      // to balance the [node].
+      case 0:
+        //
+        //           N                         N                       L
+        //          / \                       /↷\                     / \
+        //     ....L...█..        ⟶      ....L...█.. h    ⟶        ..█...N....
+        //     .../.\..▒.. h+1           .../.\.....           h+1 ..█../.\...
+        //     ..█...█....               ..█...█....               ....█...█.. h
+        // h+1 ..█...█.. h+1         h+1 ..█...█.. h+1           h+1 ..█..
+        //
+        node = _rotateRight(node);
 
-    // [lChild] was right heavy.
-    else {
-      // Right subtree of [rChild].
-      var rGrandChild = lChild.right;
-      switch (rGrandChild!.balanceFactor) {
+        node.balanceFactor = 1;
+        lChild.balanceFactor = -1;
 
-        // [rGrandChild] was balanced.
-        case 0:
-          node.balanceFactor = lChild.balanceFactor = 0;
-          break;
+        // Height of the subtree rooted at L (previously N) does not change,
+        // hence [_isShorter] is made `false`.
+        _isShorter = false;
+        break;
 
-        // [rGrandChild] was left heavy.
-        case 1:
-          node.balanceFactor = -1;
-          lChild.balanceFactor = 0;
-          break;
+      // [lChild] was left heavy, single right rotation about [node] is
+      // performed to balance it.
+      case 1:
+        //
+        //           N                       N                       L
+        //          / \                     /↷\                     / \
+        //       ..L...█..       ⟶       ..L...█.. h    ⟶        ..█...N..
+        //      ../.\..▒.. h+1          ../.\....            h+1 ..█../.\..
+        //     ..█...█..               ..█...█..                   ..█...█..
+        // h+1 ..█.... h           h+1 ..█.... h                   h       h
+        //
+        node = _rotateRight(node);
+        node.balanceFactor = lChild.balanceFactor = 0;
 
-        // [rGrandChild] was right heavy.
-        case -1:
-          node.balanceFactor = 0;
-          lChild.balanceFactor = 1;
-          break;
-      }
-      rGrandChild.balanceFactor = 0;
-      // Left Right rotation is perfomed to balance [node].
-      node.left = _rotateLeft(lChild);
-      node = _rotateRight(node);
+        // Height of the subtree rooted at L (previously N) has changed, hence
+        // [_isShorter] remains `true`.
+        break;
+
+      // [lChild] was right heavy. In this case, a single rotation will not
+      // suffice so double rotation is performed. R is the root
+      // node of [lChild]'s right subtree.
+      //
+      //         N                     N
+      //        / \                   / \
+      //     ..L...█..             ..L...█..
+      //    ../.\..▒.. h+1        ../.\..▒.. h+1
+      // h ..█...█..           h ..█.. R .
+      //   ......█ h+1                / \
+      //
+      case -1:
+
+        // Right subtree of [rChild].
+        var rGrandChild = lChild.right;
+
+        switch (rGrandChild!.balanceFactor) {
+
+          // [rGrandChild] was balanced.
+          case 0:
+            //         N                      N                      N
+            //        / \                    / \                    /↷\                  R
+            //     ..L...█..              ..L...█.. h        ......R...█.. h           /   \
+            //    ../.\..▒.. h+1   ⟶     ../↶\.....     ⟶    ...../.\....     ⟶       L     N
+            // h ..█.. R ..           h ..█.. R ..           ....L...█.. h           / \   / \
+            //    ..../.\..               .../.\..           .../.\....          h..█...█.█...█..h
+            //   h ..█...█.. h          h ..█...█.. h      h ..█...█.. h
+            //
+            node.balanceFactor = lChild.balanceFactor = 0;
+            break;
+
+          // [rGrandChild] was left heavy.
+          case 1:
+            //         N                      N                      N
+            //        / \                    / \                    /↷\                  R
+            //     ..L...█..              ..L...█.. h        ......R...█.. h           /   \
+            //    ../.\..▒.. h+1   ⟶     ../↶\.....     ⟶    ...../.\....     ⟶       L     N
+            // h ..█.. R ..           h ..█.. R ..           ....L...▀.. h-1         / \   / \
+            //    ..../.\..               .../.\..           .../.\....          h..█...█ ▀   █..h
+            //   h ..█...▀.. h-1        h ..█...▀.. h-1    h ..█...█.. h                  │
+            //                                                                        h-1 ┘
+            //
+            node.balanceFactor = -1;
+            lChild.balanceFactor = 0;
+            break;
+
+          // [rGrandChild] was right heavy.
+          case -1:
+            //         N                      N                      N
+            //        / \                    / \                    /↷\                  R
+            //     ..L...█..              ..L...█.. h        ......R...█.. h           /   \
+            //    ../.\..▒.. h+1   ⟶     ../↶\.....     ⟶    ...../.\....     ⟶       L     N
+            // h ..█.. R ..           h ..█.. R ..           ....L...█.. h           / \   / \
+            //    ..../.\..               .../.\..           .../.\....          h..█   ▀ █...█..h
+            // h-1 ..▀...█.. h        h-1 ..▀...█.. h      h ..█...▀.. h-1              │
+            //                                                                      h-1 ┘
+            //
+            node.balanceFactor = 0;
+            lChild.balanceFactor = 1;
+            break;
+        }
+        rGrandChild.balanceFactor = 0;
+        // Left Right rotation is perfomed to balance [node].
+        node.left = _rotateLeft(lChild);
+        node = _rotateRight(node);
+
+        // Height of the subtree rooted at R (previously N) has changed, hence
+        // [_isShorter] remains `true`.
+        break;
     }
     return node;
   }
@@ -324,8 +387,8 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
         node.balanceFactor = -1;
         rChild.balanceFactor = 1;
 
-        // Height of the subtree rooted at N does not change, hence [_isShorter]
-        // is made `false`.
+        // Height of the subtree rooted at R (previously N) does not change,
+        // hence [_isShorter] is made `false`.
         _isShorter = false;
         break;
 
@@ -335,29 +398,29 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
         //
         //          N                         N                        R
         //         / \                       /↶\                      / \
-        //     ...█...R....     ⟶      h ...█...R....     ⟶      ....N...█...
-        // h+1 ...▒../.\...              ....../.\...            .../.\..█.. h+1
-        //     .....█...█..              .. h █...█..          h ..█...█.....
-        //     ... h ...█.. h+1          .........█.. h+1        ...... h ...
+        //     ...█...R....       ⟶     h ..█...R....     ⟶      ....N...█...
+        // h+1 ...▒../.\...               ...../.\...            .../.\..█.. h+1
+        //     .....█...█..               . h █...█..          h ..█...█.....
+        //     ... h ...█.. h+1           ........█.. h+1        ...... h ...
         //
         node = _rotateLeft(node);
 
         node.balanceFactor = rChild.balanceFactor = 0;
 
-        // Height of the subtree rooted at N has changed, hence [_isShorter]
-        // remains `true`.
+        // Height of the subtree rooted at R (previously N) has changed, hence
+        // [_isShorter] remains `true`.
         break;
 
       // [rChild] was left heavy. In this case, a single rotation will not
       // suffice so double rotation is performed. L is the root
       // node of [rChild]'s left subtree.
       //
-      //          N                       N
-      //         / \                     / \
-      //     ...█...R....            ...█...R....
-      // h+1 ...▒../.\...        h+1 ...▒. /.\...
-      //     .....█...█.. h          .... L ..█.. h
-      //     .h+1 █......                / \
+      //         N                       N
+      //        / \                     / \
+      //     ..█...R..               ..█...R..
+      // h+1 ..▒../.\..          h+1 ..▒. /.\..
+      //      ...█...█.. h            .. L ..█.. h
+      //     h+1 █......                / \
       //
       case 1:
 
@@ -411,6 +474,9 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
         // Right Left rotation is perfomed to balance [node].
         node.right = _rotateRight(rChild);
         node = _rotateLeft(node);
+
+        // Height of the subtree rooted at L (previously N) has changed, hence
+        // [_isShorter] remains `true`.
         break;
     }
     return node;
@@ -421,8 +487,8 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   /// After every deletion, sets [_isShorter] to `true`. During unwinding, if
   /// [_isShorter] is `true`, [_delete] calls either [_dUpdateLeftBalanceFactor]
   /// or [_dUpdateRightBalanceFactor] to balance the node of the current call
-  /// stack depending on whether the deletion was done in it's left subtree or
-  /// the right subtree respectively.
+  /// stack depending on whether the deletion was done in the [node]'s left
+  /// subtree or the right subtree respectively.
   ///
   /// The process of checking [balanceFactor] stops when [_isShorter] becomes
   /// `false`.
@@ -549,29 +615,48 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
     return node;
   }
 
-  /// Updates [balanceFactor] of the [node]  when deletion is done from it's
+  /// Updates [balanceFactor] of the [node] when deletion is done from it's
   /// right subtree.
-  /// Subsequently, during unwinding, it can be made `false` inside
-  /// [_dUpdateLeftBalanceFactor] or [_dUpdateRightBalanceFactor].
   AvlNode<V> _dUpdateRightBalanceFactor(AvlNode<V> node) {
     switch (node.balanceFactor) {
 
-      // node was balanced.
+      // node was balanced before deletion, is left heavy now.
       case 0:
-        // node is left heavy now.
+        //          N                         N
+        //         / \           ⟶           / \
+        //     ...█...█...               ...█...█... h
+        // h+1 ...█...▒... h+1       h+1 ...█.......
+        //
         node.balanceFactor = 1;
+
+        // Balance factors of the ancestors of this [node] will remain
+        // unchanged (since height of the subtree rooted at N didn't change).
+        // Therefore [_isShorter] is set to `false`.
         _isShorter = false;
         break;
 
-      // node was right heavy.
+      // node was right heavy before deletion, is balanced now.
       case -1:
-        // node is balanced now.
+        //          N                         N
+        //         / \           ⟶           / \
+        //   h ...█...█...             h ...█...█... h
+        //     .......▒... h+1           ...........
+        //
         node.balanceFactor = 0;
+
+        // Height of the subtree rooted at N has decreased, [_isShorter] remains
+        // `true`.
         break;
 
-      // node was left heavy.
+      // node was left heavy before deletion, is imbalanced now, has to be
+      // balanced.
       case 1:
-        // node is imbalanced now, has to be balanced.
+        //          N                           N
+        //         / \                         / \
+        //     ...█...█...       ⟶         ...█...█... h-1
+        //     ...█...▒... h               ...█.......
+        // h+1 ...█.......             h+1 ...█.......
+        //
         node = _dBalanceLeftHeavy(node);
     }
     return node;
