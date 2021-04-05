@@ -5,8 +5,8 @@ import 'package:algorithms/graph/topological_sort.dart';
 import 'package:algorithms/graph/vertex.dart';
 
 void main() {
-  SimpleGraph? emptyGraph, singleGraph, graph;
-  Vertex? a, b, c, d, e, f, g, h, i, j, k, x, y;
+  late SimpleGraph emptyGraph, singleGraph, graph;
+  late Vertex a, b, c, d, e, f, g, h, i, j, k, x, y;
 
   void _initializeVertex() {
     a = Vertex('A');
@@ -34,55 +34,55 @@ void main() {
       _|     _|      _/   \_
       (d) -> (e) -> (g)   (j) <- (k)
     */
-    graph?.addEdge(a!, b!);
-    graph?.addEdge(b!, c!);
-    graph?.addEdge(c!, f!);
-    graph?.addEdge(h!, f!);
-    graph?.addEdge(a!, d!);
-    graph?.addEdge(b!, e!);
-    graph?.addEdge(d!, e!);
-    graph?.addEdge(e!, g!);
-    graph?.addEdge(i!, g!);
-    graph?.addEdge(i!, j!);
-    graph?.addEdge(k!, j!);
+    graph.addEdge(a, b);
+    graph.addEdge(b, c);
+    graph.addEdge(c, f);
+    graph.addEdge(h, f);
+    graph.addEdge(a, d);
+    graph.addEdge(b, e);
+    graph.addEdge(d, e);
+    graph.addEdge(e, g);
+    graph.addEdge(i, g);
+    graph.addEdge(i, j);
+    graph.addEdge(k, j);
 
     singleGraph = SimpleGraph();
-    singleGraph!.addEdge(x!, y!);
+    singleGraph.addEdge(x, y);
   });
 
   test('Get in degrees', () {
     var expectedInDegrees = <Vertex, int>{
-      a!: 0,
-      b!: 1,
-      c!: 1,
-      d!: 1,
-      e!: 2,
-      f!: 2,
-      g!: 2,
-      h!: 0,
-      i!: 0,
-      j!: 2,
-      k!: 0,
+      a: 0,
+      b: 1,
+      c: 1,
+      d: 1,
+      e: 2,
+      f: 2,
+      g: 2,
+      h: 0,
+      i: 0,
+      j: 2,
+      k: 0,
     };
-    expect(inDegrees(emptyGraph!), isEmpty);
-    expect(inDegrees(graph!), equals(expectedInDegrees));
+    expect(inDegrees(emptyGraph), isEmpty);
+    expect(inDegrees(graph), equals(expectedInDegrees));
   });
 
   test('Test topological sort using Kahn', () {
-    expect(topologicalSort(emptyGraph!), isEmpty);
+    expect(topologicalSort(emptyGraph), isEmpty);
     expect(
-        topologicalSort(singleGraph!),
+        topologicalSort(singleGraph),
         anyOf([
-          <Vertex>[x!, y!],
-          <Vertex>[y!, x!]
+          <Vertex>[x, y],
+          <Vertex>[y, x]
         ]));
     var expectedSort = <Set<Vertex>>[
-      {a!, h!, i!, k!},
-      {d!, b!, j!},
-      {c!, e!},
-      {f!, g!}
+      {a, h, i, k},
+      {d, b, j},
+      {c, e},
+      {f, g}
     ];
-    var sortedList = topologicalSort(graph!)!;
+    var sortedList = topologicalSort(graph)!;
     var actualSort = [
       {...sortedList.sublist(0, 4)},
       {...sortedList.sublist(4, 7)},
@@ -94,8 +94,8 @@ void main() {
   });
 
   test('Test topological sort fails on cycle', () {
-    graph?.addEdge(j!, k!);
-    expect(topologicalSort(graph!), isNull);
+    graph.addEdge(j, k);
+    expect(topologicalSort(graph), isNull);
   });
 
   test('Topological sort fails on undirected graph', () {
