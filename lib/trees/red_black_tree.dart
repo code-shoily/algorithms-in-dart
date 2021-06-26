@@ -400,11 +400,11 @@ class RedBlackTree<V extends Comparable>
 
   /// Rotates [node] N to left and makes C it's parent.
   ///
-  ///          N                 C
-  ///         /↶\              /  \
-  ///             C     ⟶     N
-  ///            / \          / \
-  ///           ⬤               ⬤
+  ///          N                   C
+  ///         /↶\                 / \
+  ///            C       ⟶       N
+  ///           / \             / \
+  ///          ⬤                  ⬤
   /// Left subtree of C becomes right subtree of N.
   _rotateLeft(RedBlackNode<V> node) {
     var child = node.right;
@@ -433,11 +433,11 @@ class RedBlackTree<V extends Comparable>
 
   /// Rotates [node] N to right and makes C it's parent.
   ///
-  ///            N             C
-  ///           /↷\    ⟶    /  \
-  ///          C                  N
-  ///         / \                / \
-  ///            ⬤             ⬤
+  ///            N                 C
+  ///           /↷\       ⟶       / \
+  ///          C                     N
+  ///         / \                   / \
+  ///            ⬤                ⬤
   /// Right subtree of C becomes left subtree of N.
   _rotateRight(RedBlackNode<V> node) {
     var child = node.left;
