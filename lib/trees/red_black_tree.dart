@@ -303,7 +303,6 @@ class RedBlackTree<V extends Comparable>
         if (sibling?.color == Color.black &&
             (nearNephew!.color == Color.red || farNephew!.color == Color.red)) {
           switch (farNephew!.color) {
-
             // Far nephew is black, perform rotation on [sibling]
             //  and convert it to other case.
             case Color.black:

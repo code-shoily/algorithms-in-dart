@@ -1,7 +1,6 @@
-import 'package:test/test.dart';
-
 import 'package:algorithms/heaps/base.dart';
 import 'package:algorithms/heaps/binary_heap.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Index Mixin Tests', () {

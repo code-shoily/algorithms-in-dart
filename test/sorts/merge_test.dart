@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:algorithms/sorts/merge.dart';
+import 'package:test/test.dart';
 
 void main() {
   late List<int> randomList,

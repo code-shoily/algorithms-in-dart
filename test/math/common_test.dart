@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:algorithms/math/common.dart';
+import 'package:test/test.dart';
 
 void main() {
   test('Test for LCM', () {

@@ -1,6 +1,5 @@
-import '../heaps/base.dart';
-
 import './doubly_linked_list.dart' show Node;
+import '../heaps/base.dart';
 
 /// This circular linked list is based off of [DoublyLinkedList]
 class CircularDoublyLinkedList<T> {

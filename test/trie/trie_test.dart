@@ -1,5 +1,5 @@
-import 'package:test/test.dart';
 import 'package:algorithms/trie/trie.dart';
+import 'package:test/test.dart';
 
 void main() {
   late Trie emptyTrie, trie, customTrie;

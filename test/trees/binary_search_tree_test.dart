@@ -1,6 +1,6 @@
-import 'package:test/test.dart';
-import 'package:algorithms/trees/binary_tree.dart';
 import 'package:algorithms/trees/binary_search_tree.dart';
+import 'package:algorithms/trees/binary_tree.dart';
+import 'package:test/test.dart';
 
 void main() {
   late BinarySearchTree<int> emptyTree, singleNodeTree, multiNodeTree;

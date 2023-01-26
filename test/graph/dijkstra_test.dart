@@ -1,8 +1,7 @@
-import 'package:test/test.dart';
-
 import 'package:algorithms/graph/dijkstra.dart';
 import 'package:algorithms/graph/simple_graph.dart';
 import 'package:algorithms/graph/vertex.dart';
+import 'package:test/test.dart';
 
 void main() {
   late SimpleGraph graph;

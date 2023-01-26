@@ -85,7 +85,6 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
     else {
       var rGrandChild = lChild.right;
       switch (rGrandChild!.balanceFactor) {
-
         // Addition is done in right subtree of [rGrandChild].
         case -1:
           node.balanceFactor = 0;
@@ -126,7 +125,6 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
     else {
       var lGrandChild = rChild.left;
       switch (lGrandChild!.balanceFactor) {
-
         // Addition is done in right subtree of [lGrandChild].
         case -1:
           node.balanceFactor = 1;
@@ -194,7 +192,6 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   /// Updates [balanceFactor] when addition is done in left subtree of [node].
   AvlNode<V> _aUpdateLeftBalanceFactor(AvlNode<V> node) {
     switch (node.balanceFactor) {
-
       // node was balanced.
       case 0:
         // node is left heavy now.
@@ -220,7 +217,6 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   /// Updates [balanceFactor] when addition is done in right subtree of [node].
   AvlNode<V> _aUpdateRightBalanceFactor(AvlNode<V> node) {
     switch (node.balanceFactor) {
-
       // node was balanced.
       case 0:
         // node is right heavy now.
@@ -250,7 +246,6 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
     var lChild = node.left;
 
     switch (lChild!.balanceFactor) {
-
       // [lChild] was balanced, single right rotation about [node] is performed
       // to balance the [node].
       case 0:
@@ -302,12 +297,10 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
       //   ......█ h+1                / \
       //
       case -1:
-
         // Right subtree of [rChild].
         var rGrandChild = lChild.right;
 
         switch (rGrandChild!.balanceFactor) {
-
           // [rGrandChild] was balanced.
           case 0:
             //         N                      N                      N
@@ -370,7 +363,6 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
     var rChild = node.right;
 
     switch (rChild!.balanceFactor) {
-
       // [rChild] was balanced, single left rotation about [node] is performed
       // to balance the [node].
       case 0:
@@ -423,12 +415,10 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
       //     h+1 █......                / \
       //
       case 1:
-
         // Left subtree of [rChild].
         var lGrandChild = rChild.left;
 
         switch (lGrandChild!.balanceFactor) {
-
           // [lGrandChild] was balanced.
           case 0:
             //          N                    N                    N
@@ -572,7 +562,6 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   /// subtree.
   AvlNode<V> _dUpdateLeftBalanceFactor(AvlNode<V> node) {
     switch (node.balanceFactor) {
-
       // [node] was balanced before deletion, is right heavy now.
       case 0:
         //          N                         N
@@ -619,7 +608,6 @@ class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   /// right subtree.
   AvlNode<V> _dUpdateRightBalanceFactor(AvlNode<V> node) {
     switch (node.balanceFactor) {
-
       // node was balanced before deletion, is left heavy now.
       case 0:
         //          N                         N

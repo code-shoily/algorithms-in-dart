@@ -1,6 +1,5 @@
-import 'package:test/test.dart';
-
 import 'package:algorithms/graph/vertex.dart';
+import 'package:test/test.dart';
 
 void main() {
   late Vertex root,

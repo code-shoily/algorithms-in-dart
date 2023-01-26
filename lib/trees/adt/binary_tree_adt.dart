@@ -8,10 +8,12 @@ abstract class BinaryNodeADT<N extends BinaryNodeADT<N, V>,
 
   /// Left child node.
   N? get left => children![0];
+
   set left(N? node) => children![0] = node;
 
   /// Right child node.
   N? get right => children![1];
+
   set right(N? node) => children![1] = node;
 
   @override
@@ -29,6 +31,7 @@ abstract class BinaryTreeADT<N extends BinaryNodeADT<N, V>,
 
   @override
   bool contains(V value) => isEmpty ? false : _compareAndCheck(root!, value);
+
   bool _compareAndCheck(N node, V value) {
     if (node.value == value) return true;
     return (node.value!.compareTo(value) >= 0
