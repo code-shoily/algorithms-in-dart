@@ -1,6 +1,6 @@
 # Algorithms in Dart
 
-[![Build Status](https://travis-ci.com/code-shoily/algorithms-in-dart.svg?branch=master)](https://travis-ci.com/code-shoily/algorithms-in-dart)
+[![Build Status](https://github.com/code-shoily/algorithms-in-dart/actions/workflows/dart.yml/badge.svg)](https://github.com/code-shoily/algorithms-in-dart/actions)
 
 Implementation of several algorithms with Dart programming language.
 
