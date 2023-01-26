@@ -5,7 +5,6 @@ import 'dart:collection';
 /// the vertex. By default, the `key` and `value` are the same.
 class Vertex<T> {
   final String _key;
-  bool _isLocked;
 
   /// Uniquely identifiable key to this [Vertex]
   String get key => _key;
@@ -27,21 +26,11 @@ class Vertex<T> {
 
   /// Constructor
   Vertex(this._key, [this.value])
-      : _isLocked = true,
-        _incomingVertices = <Vertex>{} as LinkedHashSet<Vertex>,
+      : _incomingVertices = <Vertex>{} as LinkedHashSet<Vertex>,
         _outgoingConnections = <Vertex, num>{} as LinkedHashMap<Vertex, num>;
-
-  /// Lock [this] vertex, cannot modify after it is locked
-  void lock() => _isLocked = true;
-
-  /// Unlock [this] vertex, can modify after it is unlock
-  void unlock() => _isLocked = false;
 
   /// Adds a connection with [Vertex] `dst` and with `weight`
   bool addConnection(Vertex dst, [num weight = 1]) {
-    if (_isLocked || dst._isLocked) {
-      throw UnsupportedError('Cannot add to a locked vertex');
-    }
     if (_outgoingConnections.containsKey(dst)) {
       return false;
     }
@@ -53,9 +42,6 @@ class Vertex<T> {
   /// Removes a connection with `other` with `weight`. `false` for non-existent
   /// connection.
   bool removeConnection(Vertex other, [num weight = 1]) {
-    if (_isLocked || other._isLocked) {
-      throw UnsupportedError('Cannot remove from a locked vertex');
-    }
     var outgoingRemoved = _outgoingConnections.remove(other) != null;
     var incomingRemoved = other._incomingVertices.remove(this);
 
@@ -91,18 +77,4 @@ class Vertex<T> {
 
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode => key.hashCode;
-}
-
-/// Unlocks a set of vertices
-void unlockVertices(Set<Vertex> vertices) {
-  for (var vertex in vertices) {
-    vertex.unlock();
-  }
-}
-
-/// Locks a set of vertices
-void lockVertices(Set<Vertex> vertices) {
-  for (var vertex in vertices) {
-    vertex.lock();
-  }
 }

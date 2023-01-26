@@ -23,7 +23,6 @@ class SimpleGraph<T> {
 
   /// Adds an edge
   void addEdge(Vertex<T> src, Vertex<T> dst, [num weight = 1]) {
-    unlockVertices(<Vertex>{src, dst});
     if (src.key == dst.key) throw Error();
 
     src = _getOrAddVertex(src);
@@ -31,14 +30,11 @@ class SimpleGraph<T> {
     src.addConnection(dst, weight);
 
     if (!isDigraph) dst.addConnection(src, weight);
-    lockVertices(<Vertex>{src, dst});
   }
 
   /// Removes an Edge from [this], returns `false` if edge does not exists.
   bool removeEdge(Vertex src, Vertex dst) {
-    unlockVertices(<Vertex>{src, dst});
     var removed = src.removeConnection(dst);
-    lockVertices(<Vertex>{src, dst});
 
     return removed;
   }

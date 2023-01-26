@@ -167,12 +167,4 @@ void main() {
     };
     expect(simpleGraph.edges.toSet(), equals(expectedEdges));
   });
-
-  test('addConnection on a cherry picked vertex throws error', () {
-    var vertices = simpleGraph.vertices;
-    var leak = Vertex('LEAK');
-    leak.unlock();
-    expect(() => vertices[0].addConnection(leak),
-        throwsA(isA<UnsupportedError>()));
-  });
 }

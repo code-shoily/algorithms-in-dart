@@ -22,22 +22,8 @@ void main() {
     c = Vertex('c');
   }
 
-  void _unlockVertices() {
-    unlockVertices(<Vertex>{
-      root,
-      rootWithValue,
-      connectedVertex,
-      toBeAdded,
-      anotherVertex,
-      a,
-      b,
-      c,
-    });
-  }
-
   setUp(() {
     _initializeVertices();
-    _unlockVertices();
     connectedVertex.addConnection(toBeAdded);
     connectedVertex.addConnection(anotherVertex);
   });
@@ -65,7 +51,7 @@ void main() {
 
   test('Cannot add vertex with the same key', () {
     expect(root.addConnection(b), isTrue);
-    var bDuplicate = Vertex(b.key)..unlock();
+    var bDuplicate = Vertex(b.key);
     expect(root.addConnection(bDuplicate), isFalse);
   });
 
@@ -79,44 +65,8 @@ void main() {
     expect(connectedVertex.removeConnection(a), isFalse);
   });
 
-  test('Trying to add to a locked vertex throws error', () {
-    var locked = Vertex('PROTECTED');
-    expect(() => locked.addConnection(root), throwsA(isA<UnsupportedError>()));
-    root.lock();
-    expect(() => root.addConnection(root), throwsA(isA<UnsupportedError>()));
-  });
-
-  test('Trying to add a locked vertex throws error', () {
-    var locked = Vertex('PROTECTED');
-    expect(() => root.addConnection(locked), throwsA(isA<UnsupportedError>()));
-    locked.unlock();
-    root.lock();
-    expect(() => locked.addConnection(root), throwsA(isA<UnsupportedError>()));
-  });
-
-  test('Trying to remove from a locked vertex throws error', () {
-    toBeAdded.lock();
-    expect(() => connectedVertex.removeConnection(toBeAdded),
-        throwsA(isA<UnsupportedError>()));
-  });
-
-  test('Trying to remove a locked vertex throws error', () {
-    connectedVertex.lock();
-    expect(() => connectedVertex.removeConnection(toBeAdded),
-        throwsA(isA<UnsupportedError>()));
-  });
-
-  test('Trying to remove a locked vertex throws error', () {
-    var locked = Vertex('PROTECTED');
-    expect(() => root.addConnection(locked), throwsA(isA<UnsupportedError>()));
-    locked.unlock();
-    root.lock();
-    expect(() => locked.addConnection(root), throwsA(isA<UnsupportedError>()));
-  });
-
   test('Check for vertex containment', () {
     var newVertex = Vertex('DISCONNECTED');
-    newVertex.unlock();
     expect(connectedVertex.containsConnectionTo(toBeAdded), isTrue);
     expect(connectedVertex.containsConnectionTo(newVertex), isFalse);
   });
