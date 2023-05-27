@@ -28,8 +28,8 @@ void main() {
   });
 
   test('Prepend', () {
-    emptyList.prepend('¯\_(ツ)_/¯');
-    expect(emptyList.toList, equals(['¯\_(ツ)_/¯']));
+    emptyList.prepend('¯\\_(ツ)_/¯');
+    expect(emptyList.toList, equals(['¯\\_(ツ)_/¯']));
     expect(emptyList.length, equals(1));
 
     singleItemList

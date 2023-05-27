@@ -7,7 +7,7 @@ void main() {
   late SimpleGraph graph;
   late Vertex u, v, w, x, y, z;
 
-  void _initializeVertices() {
+  void initializeVertices() {
     u = Vertex('U');
     v = Vertex('V');
     w = Vertex('W');
@@ -17,7 +17,7 @@ void main() {
   }
 
   setUp(() {
-    _initializeVertices();
+    initializeVertices();
     graph = SimpleGraph(isDigraph: true);
     /*    v --- y
          /      |

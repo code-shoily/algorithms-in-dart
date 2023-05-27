@@ -3,7 +3,7 @@ import 'common.dart';
 /// Implement Merge Sort.
 List<T> mergeSort<T extends Comparable>(List<T> list,
     [Comparator<T> compareFn = ascendingFn]) {
-  void _merge(
+  void merge(
       List<T> list, int left, int middle, int right, Comparator<T> compareFn) {
     var leftList = list.sublist(left, middle + 1);
     var rightList = list.sublist(middle + 1, right + 1);
@@ -30,18 +30,18 @@ List<T> mergeSort<T extends Comparable>(List<T> list,
     }
   }
 
-  void _mergeSort(List<T> list, int left, int right, Comparator<T> compareFn) {
+  void mergeSort(List<T> list, int left, int right, Comparator<T> compareFn) {
     if (right > left) {
       var middle = (left + right) ~/ 2;
 
-      _mergeSort(list, left, middle, compareFn);
-      _mergeSort(list, middle + 1, right, compareFn);
+      mergeSort(list, left, middle, compareFn);
+      mergeSort(list, middle + 1, right, compareFn);
 
-      _merge(list, left, middle, right, compareFn);
+      merge(list, left, middle, right, compareFn);
     }
   }
 
-  _mergeSort(list, 0, list.length - 1, compareFn);
+  mergeSort(list, 0, list.length - 1, compareFn);
 
   return list;
 }

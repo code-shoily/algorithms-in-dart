@@ -7,7 +7,7 @@ void main() {
   late SimpleGraph graph;
   late Vertex a, b, c, d, e;
 
-  void _initializeVertices() {
+  void initializeVertices() {
     a = Vertex('A');
     b = Vertex('B');
     c = Vertex('C');
@@ -16,7 +16,7 @@ void main() {
   }
 
   setUp(() {
-    _initializeVertices();
+    initializeVertices();
     graph = SimpleGraph();
     graph.addEdge(a, b, 1);
     graph.addEdge(a, c, 4);

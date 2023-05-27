@@ -4,6 +4,7 @@ import 'tree_adt.dart';
 abstract class BinaryNodeADT<N extends BinaryNodeADT<N, V>,
     V extends Comparable> implements NodeADT<N, V> {
   /// Binary node only has two children, [left] and [right].
+  @override
   List<N?>? children = List<N?>.filled(2, null);
 
   /// Left child node.

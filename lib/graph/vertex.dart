@@ -73,8 +73,10 @@ class Vertex<T> {
   String toString() => key;
 
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  @override
   bool operator ==(Object other) => other is Vertex && key == other.key;
 
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  @override
   int get hashCode => key.hashCode;
 }

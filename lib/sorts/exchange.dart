@@ -60,7 +60,7 @@ List<T> gnomeSort<T extends Comparable>(List<T> list,
 /// Quick Sort
 List<T> quickSort<T extends Comparable>(List<T> list,
     [Comparator<T> compareFn = ascendingFn]) {
-  int _partition(List<T> list, int low, int high) {
+  int partition(List<T> list, int low, int high) {
     var pivot = list[high], i = low;
 
     for (var j = low; j < high; j++) {
@@ -73,14 +73,14 @@ List<T> quickSort<T extends Comparable>(List<T> list,
     return i;
   }
 
-  void _sort(List<T> list, int low, int high) {
+  void sort(List<T> list, int low, int high) {
     if (low < high) {
-      var p = _partition(list, low, high);
-      _sort(list, low, p - 1);
-      _sort(list, p + 1, high);
+      var p = partition(list, low, high);
+      sort(list, low, p - 1);
+      sort(list, p + 1, high);
     }
   }
 
-  _sort(list, 0, list.length - 1);
+  sort(list, 0, list.length - 1);
   return list;
 }

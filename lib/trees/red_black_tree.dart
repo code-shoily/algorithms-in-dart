@@ -16,6 +16,7 @@ enum Color {
 class RedBlackNode<V extends Comparable>
     extends BinaryNodeADT<RedBlackNode<V>, V> {
   /// Value of the node.
+  @override
   V? value;
 
   /// [color] of the node.
@@ -56,6 +57,7 @@ class RedBlackTree<V extends Comparable>
   RedBlackNode<V> nil = RedBlackNode<V>.sentinelNode();
 
   /// Root of the tree.
+  @override
   RedBlackNode<V>? root;
 
   /// Creates an empty Red Back tree.
@@ -342,12 +344,13 @@ class RedBlackTree<V extends Comparable>
 
       // Black node with one child.
       else {
-        var parent = _parent(node), child;
+        var parent = _parent(node);
+        late RedBlackNode<V>? child;
 
         if (node.left != nil) {
-          child = node.left;
+          child = node.left!;
         } else {
-          child = node.right;
+          child = node.right!;
         }
         child.parent = parent;
         child.color = Color.black;

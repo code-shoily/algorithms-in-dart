@@ -10,6 +10,7 @@ import 'binary_tree.dart';
 class BinarySearchTree<V extends Comparable>
     extends BinaryTreeADT<BinaryNode<V>, V> {
   /// Root of the tree
+  @override
   BinaryNode<V>? root;
 
   /// Creates an empty BST.

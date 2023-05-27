@@ -4,9 +4,9 @@ import 'package:test/test.dart';
 
 void main() {
   group('Index Mixin Tests', () {
-    var indexer;
+    late BinaryHeap indexer;
     setUp(() {
-      indexer = BinaryHeap((_a, _b) => true);
+      indexer = BinaryHeap((a, b) => true);
     });
     test('Test Left', () {
       expect(indexer.leftOf(0), equals(1));

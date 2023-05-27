@@ -6,7 +6,7 @@ void main() {
   late SimpleGraph emptyGraph, simpleGraph;
   late Vertex a, b, c, d, e, f, u, v;
 
-  void _initializeVertices() {
+  void initializeVertices() {
     a = Vertex('a');
     b = Vertex('b');
     c = Vertex('c');
@@ -18,7 +18,7 @@ void main() {
   }
 
   setUp(() {
-    _initializeVertices();
+    initializeVertices();
     emptyGraph = SimpleGraph();
 
     /*    b -4- c            

@@ -45,9 +45,7 @@ class CircularSinglyLinkedList<T> {
     if (n < 0) throw InvalidIndexError();
 
     var currentNode = head;
-    for (var i = 0; i < n; i++, currentNode = currentNode!.next) {
-      ;
-    }
+    for (var i = 0; i < n; i++, currentNode = currentNode!.next) {}
 
     return currentNode!;
   }

@@ -7,7 +7,7 @@ void main() {
   late Traversal emptyTraversal;
   late Vertex v, w, x, y, z;
 
-  void _initializeVertices() {
+  void initializeVertices() {
     v = Vertex('V');
     w = Vertex('W');
     x = Vertex('X');
@@ -16,7 +16,7 @@ void main() {
   }
 
   setUp(() {
-    _initializeVertices();
+    initializeVertices();
     emptyTraversal = Traversal();
     hydratedTraversal = Traversal();
     for (var v in <Vertex>[x, y, z]) {

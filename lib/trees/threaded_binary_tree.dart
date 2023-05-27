@@ -6,6 +6,7 @@ import 'binary_tree.dart';
 ///  are threads or point to a child instead.
 class ThreadedBinaryNode<V extends Comparable>
     extends BinaryNodeADT<ThreadedBinaryNode<V>, V> {
+  @override
   V? value;
 
   /// Stores if [left] is a thread.
@@ -28,6 +29,7 @@ class ThreadedBinaryNode<V extends Comparable>
 ///  to the in-order predecessor of the node.
 class ThreadedBinaryTree<V extends Comparable>
     extends BinaryTreeADT<ThreadedBinaryNode<V>, V> {
+  @override
   ThreadedBinaryNode<V>? root;
 
   /// Creates an empty Threaded Binary tree.
@@ -82,7 +84,7 @@ class ThreadedBinaryTree<V extends Comparable>
         newNode.right = parent;
 
         // Parent was the leftmost node of the tree.
-        newNode.leftIsThread = parent.leftIsThread ?? null;
+        newNode.leftIsThread = parent.leftIsThread;
 
         parent.leftIsThread = false;
         parent.left = newNode;
@@ -91,7 +93,7 @@ class ThreadedBinaryTree<V extends Comparable>
         newNode.right = parent.right;
 
         // Parent was the rightmost node of the tree.
-        newNode.rightIsThread = parent.rightIsThread ?? null;
+        newNode.rightIsThread = parent.rightIsThread;
 
         parent.rightIsThread = false;
         parent.right = newNode;

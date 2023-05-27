@@ -11,7 +11,7 @@ void main() {
       b,
       c;
 
-  void _initializeVertices() {
+  void initializeVertices() {
     root = Vertex('A');
     rootWithValue = Vertex('i', 'Wake up');
     connectedVertex = Vertex('0');
@@ -23,7 +23,7 @@ void main() {
   }
 
   setUp(() {
-    _initializeVertices();
+    initializeVertices();
     connectedVertex.addConnection(toBeAdded);
     connectedVertex.addConnection(anotherVertex);
   });

@@ -15,6 +15,7 @@ class AvlNode<V extends Comparable> extends BinaryNodeADT<AvlNode<V>, V> {
   int balanceFactor = 0;
 
   /// [value] of the [node].
+  @override
   V? value;
 
   /// Creates an empty [AvlNode].
@@ -30,6 +31,7 @@ class AvlNode<V extends Comparable> extends BinaryNodeADT<AvlNode<V>, V> {
 /// of any [node] can be at most `1`.
 class AvlTree<V extends Comparable> extends BinaryTreeADT<AvlNode<V>, V> {
   /// Root of the tree.
+  @override
   AvlNode<V>? root;
 
   /// If after addition, height of parent node increases and results in an
