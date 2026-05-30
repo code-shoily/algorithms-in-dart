@@ -30,7 +30,8 @@ void main() {
 
   test('Find min and max', () {
     expect(sorts.findMinMax(anyList), equals({'min': -161, 'max': 233}));
-    expect(() => sorts.findMinMax(emptyList), throwsA(isA<InvalidIndexError>()));
+    expect(
+        () => sorts.findMinMax(emptyList), throwsA(isA<InvalidIndexError>()));
     expect(sorts.findMinMax(singleValuedList), equals({'min': 42, 'max': 42}));
   });
 }
