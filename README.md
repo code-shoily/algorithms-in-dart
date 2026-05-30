@@ -37,7 +37,10 @@ A collection of classical data structures and algorithms implemented in Dart.
 | **Trees** | `AvlTree<V>` | [`lib/trees/avl_tree.dart`](lib/trees/avl_tree.dart) | Self-balancing BST with rotations |
 | **Trees** | `RedBlackTree<V>` | [`lib/trees/red_black_tree.dart`](lib/trees/red_black_tree.dart) | Self-balancing BST with color invariants |
 | **Trees** | `ThreadedBinaryTree<V>` | [`lib/trees/threaded_binary_tree.dart`](lib/trees/threaded_binary_tree.dart) | Threaded pointers for stack-free traversal |
+| **Trees** | `BTree<V>` | [`lib/trees/b_tree.dart`](lib/trees/b_tree.dart) | Multi-way search tree with configurable degree |
+| **Trees** | `BPlusTree<V>` | [`lib/trees/b_plus_tree.dart`](lib/trees/b_plus_tree.dart) | B+ Tree with linked leaves for fast range scans |
 | **Trie** | `Trie<V>` | [`lib/trie/trie.dart`](lib/trie/trie.dart) | Prefix tree for string keys |
+| **Trie** | `RadixTree` | [`lib/trie/radix_tree.dart`](lib/trie/radix_tree.dart) | Compressed trie with string edge labels |
 | **Graph** | `SimpleGraph<T>` | [`lib/graph/simple_graph.dart`](lib/graph/simple_graph.dart) | Digraph / undirected graph with weighted edges |
 | **Graph** | `Vertex<T>` | [`lib/graph/vertex.dart`](lib/graph/vertex.dart) | Graph vertex with in/out connections |
 | **Graph** | `Traversal` | [`lib/graph/traversal.dart`](lib/graph/traversal.dart) | Result ADT for graph traversals |
