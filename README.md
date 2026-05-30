@@ -1,6 +1,8 @@
 # Algorithms in Dart
 
-[![Build Status](https://github.com/code-shoily/algorithms-in-dart/actions/workflows/dart.yml/badge.svg)](https://github.com/code-shoily/algorithms-in-dart/actions)
+[![Dart CI](https://github.com/code-shoily/algorithms-in-dart/actions/workflows/dart.yml/badge.svg)](https://github.com/code-shoily/algorithms-in-dart/actions)
+[![Dart Version](https://img.shields.io/badge/dart-%3E%3D3.0.0-0175C2?logo=dart)](https://dart.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A collection of classical data structures and algorithms implemented in Dart.
 
